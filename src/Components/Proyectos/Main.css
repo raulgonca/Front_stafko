@@ -1,108 +1,109 @@
 .main-container {
-  width: 80%;
-  margin: 0 auto;
-  padding: 20px;
-  overflow-y: auto; /* Habilitar desplazamiento vertical si el contenido es demasiado largo */
-
-}
-
-.header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 20px;
-}
-
-.crear-proyecto-btn {
-  background: linear-gradient(to right, #FF6B6B, #6B66FF);
-  color: white;
-  border: none;
-  padding: 8px 16px;
-  border-radius: 4px;
-  cursor: pointer;
-}
-.ventana-emergente {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  background-color: rgba(255, 255, 255, 0.9); /* Fondo blanco con transparencia */
-  padding: 30px; /* Mayor espacio de relleno */
-  border-radius: 8px;
-  box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.2); /* Sombra más suave */
-  max-width: 90%; /* Ancho máximo para ocupar más espacio */
-  max-height: 80%; /* Altura máxima para evitar que se extienda demasiado */
-  overflow: auto; /* Permitir desplazamiento si el contenido es demasiado grande */
-}
-
-.ventana-emergente .contenido {
-  /* Estilos opcionales para el contenido si es necesario */
-}
-
-.ventana-emergente h3 {
-  margin-top: 0; /* Eliminar margen superior */
-  color: #333; /* Color de texto oscuro */
-}
-
-.ventana-emergente p {
-  color: #666; /* Color de texto más claro */
-}
-
-.ventana-emergente .btn-cerrar {
-  position: absolute;
-  top: 10px;
-  right: 10px;
-  background: none;
-  border: none;
-  color: #666;
-  font-size: 20px;
-  cursor: pointer;
-}
-
-.ventana-emergente .btn-cerrar:hover {
-  color: #333; /* Cambiar color al pasar el ratón */
-}
-
-
-.proyectos-lista {
-  list-style: none;
-  padding: 0;
-}
-
-.proyecto {
-  margin-bottom: 20px;
-  padding: 10px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  background: white;
-}
-
-.proyecto-info {
-  margin-right: 10px;
-  color: rgb(0, 0, 0);
-}
-
-.botones-proyecto button {
-  background: linear-gradient(to right, #FF6B6B, #6B66FF);
-  color: white;
-  border: none;
-  padding: 8px 16px;
-  border-radius: 4px;
-  cursor: pointer;
-}
-
-.botones-proyecto button:hover {
-  opacity: 0.8;
-}
-
-.editar-btn {
-  background: linear-gradient(to right, #FF6B6B, #6B66FF);
-}
-
-.eliminar-btn {
-  background: linear-gradient(to right, #FF6B6B, #6B66FF);
-}
-
+    width: 80%;
+    margin: 0 auto;
+    padding: 20px;
+    overflow-y: auto; /* Habilitar desplazamiento vertical si el contenido es demasiado largo */
+  
+  }
+  
+  .header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+  }
+  
+  .crear-proyecto-btn {
+    background: linear-gradient(to right, #FF6B6B, #6B66FF);
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  .ventana-emergente {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: rgba(255, 255, 255, 0.9); /* Fondo blanco con transparencia */
+    padding: 30px; /* Mayor espacio de relleno */
+    border-radius: 8px;
+    box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.2); /* Sombra más suave */
+    max-width: 90%; /* Ancho máximo para ocupar más espacio */
+    max-height: 80%; /* Altura máxima para evitar que se extienda demasiado */
+    overflow: auto; /* Permitir desplazamiento si el contenido es demasiado grande */
+  }
+  
+  .ventana-emergente .contenido {
+    /* Estilos opcionales para el contenido si es necesario */
+  }
+  
+  .ventana-emergente h3 {
+    margin-top: 0; /* Eliminar margen superior */
+    color: #333; /* Color de texto oscuro */
+  }
+  
+  .ventana-emergente p {
+    color: #666; /* Color de texto más claro */
+  }
+  
+  .ventana-emergente .btn-cerrar {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: none;
+    border: none;
+    color: #666;
+    font-size: 20px;
+    cursor: pointer;
+  }
+  
+  .ventana-emergente .btn-cerrar:hover {
+    color: #333; /* Cambiar color al pasar el ratón */
+  }
+  
+  
+  .proyectos-lista {
+    list-style: none;
+    padding: 0;
+  }
+  
+  .proyecto {
+    margin-bottom: 20px;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: white;
+  }
+  
+  .proyecto-info {
+    margin-right: 10px;
+    color: rgb(0, 0, 0);
+  }
+  
+  .botones-proyecto button {
+    background: linear-gradient(to right, #FF6B6B, #6B66FF);
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  
+  .botones-proyecto button:hover {
+    opacity: 0.8;
+  }
+  
+  .editar-btn {
+    background: linear-gradient(to right, #FF6B6B, #6B66FF);
+  }
+  
+  .eliminar-btn {
+    background: linear-gradient(to right, #FF6B6B, #6B66FF);
+  }
+  
+  

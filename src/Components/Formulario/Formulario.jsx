@@ -1,5 +1,5 @@
-import Swal from "sweetalert2";
-import './Formulario.css';
+import Swal from 'sweetalert2';
+import "./Formulario"
 
 
 const Formulario = (props) => {

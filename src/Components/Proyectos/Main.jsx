@@ -50,20 +50,20 @@ const Main = () => {
   };
 
 //Mirar mejor este metodo
-  const handleEliminarProyecto = async () => {
-    try {
-      const response = await fetch(`http://localhost:3000/projects/${projects.id}`, {
-        method: "DELETE"
-      });
-      if (response.ok) {
-        setProyectos(proyectos.filter(proyecto => proyecto.id !== id));
-      } else {
-        console.error("Error al eliminar el proyecto:", response.statusText);
-      }
-    } catch (error) {
-      console.error("Error al comunicarse con el servidor:", error);
-    }
-  };
+//  const handleEliminarProyecto = async () => {
+//    try {
+//      const response = await fetch(`http://localhost:3000/projects/${projects.id}`, {
+//        method: "DELETE"
+//      });
+//      if (response.ok) {
+//        setProyectos(proyectos.filter(proyecto => proyecto.id !== id));
+//      } else {
+//        console.error("Error al eliminar el proyecto:", response.statusText);
+//      }
+//    } catch (error) {
+//      console.error("Error al comunicarse con el servidor:", error);
+//    }
+//  };
 
   const handleEditarProyecto = (id) => {
     // Lógica para editar el proyecto con el ID proporcionado
@@ -97,7 +97,7 @@ const Main = () => {
             </div>
             <div className="botones-proyecto">
               <button className="editar-btn" onClick={() => handleEditarProyecto(proyecto.id)}>Editar</button>
-              <button className="eliminar-btn" onClick={() => handleEliminarProyecto(proyecto.id)}>Eliminar</button>
+              {/* <button className="eliminar-btn" onClick={() => handleEliminarProyecto(proyecto.id)}>Eliminar</button> */}
             </div>
           </li>
         ))}
