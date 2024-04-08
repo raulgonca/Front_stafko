@@ -1,0 +1,83 @@
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  background-image: url("/src/Image/fondologin2.jpg");
+  background-size: cover;
+  background-repeat: no-repeat;
+
+}
+
+.container {
+  margin: 50px auto;
+  padding: 20px;
+  background-color: whitesmoke;
+  border-radius: 8px;
+  border-color: black;
+  box-shadow: 0 0 10px rgba(139, 20, 20, 0.1);
+  font-size:larger;
+  
+}
+
+h2 {
+  margin-top: 0;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+}
+
+.pruebauser {
+  margin-top: 80px ;
+}
+
+.pruebapassword {
+  margin-top: 10px ;
+}
+
+
+label {
+  margin-bottom: 5px;
+  margin-top: 10px;
+}
+
+input {
+  width: 100%;
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid #ffffff;
+    border-radius: 20px;
+    box-sizing: border-box;
+    background-color: #848484;
+}
+
+button {
+  padding: 10px 20px;
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: #0056b3;
+}
+
+a {
+  color: #007bff;
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+.olvido {
+  text-align: center;
+  margin-top: 10px;
+  background-color: transparent;
+  color: blue;
+}
+

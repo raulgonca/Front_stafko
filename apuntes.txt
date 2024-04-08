@@ -1,0 +1,96 @@
+import React, { useState, useEffect } from "react";
+import ProyectoForm from "./ProyectoForm";
+import "./Main.css";
+
+const Main = () => {
+  const [proyectos, setProyectos] = useState([]);
+  const [mostrarFormulario, setMostrarFormulario] = useState(false);
+
+  useEffect(() => {
+    getAllProject();
+  }, []); // Este efecto se ejecutará solo una vez cuando el componente se monte
+
+  const getAllProject = async () => {
+    try {
+      const response = await fetch("URL_DEL_ENDPOINT");
+      if (response.ok) {
+        const data = await response.json();
+        setProyectos(data);
+      } else {
+        console.error("Error al obtener los proyectos:", response.statusText);
+      }
+    } catch (error) {
+      console.error("Error al comunicarse con el servidor:", error);
+    }
+  };
+
+  const handleCrearProyecto = async (proyecto) => {
+    try {
+      const response = await fetch("http://localhost:3000/projects/", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify(proyecto)
+      });
+      if (response.ok) {
+        const proyectoCreado = await response.json();
+        setProyectos([...proyectos, proyectoCreado]);
+        toggleFormulario();
+      } else {
+        console.error("Error al guardar el proyecto:", response.statusText);
+      }
+    } catch (error) {
+      console.error("Error al comunicarse con el servidor:", error);
+    }
+  };
+
+  const toggleFormulario = () => {
+    setMostrarFormulario(!mostrarFormulario);
+  };
+
+  const handleEditarProyecto = (id) => {
+    // Lógica para editar el proyecto con el ID proporcionado
+    console.log("Editar proyecto con ID:", id);
+  };
+
+  const handleEliminarProyecto = (id) => {
+    // Lógica para eliminar el proyecto con el ID proporcionado
+    console.log("Eliminar proyecto con ID:", id);
+  };
+
+  return (
+    <div className="menu">
+      <div className="crear-proyecto-container">
+        <button onClick={toggleFormulario}>Crear Proyecto</button>
+      </div>
+
+      <div className="proyectos-container">
+        {mostrarFormulario && (
+          <ProyectoForm onSubmit={handleCrearProyecto} />
+        )}
+
+        <h2>Proyectos</h2>
+        <div className="proyectos-lista">
+          {proyectos.map((proyecto, index) => (
+            
+            <div className="proyecto" key={index}>
+              <div className="nombre-proyecto">{proyecto.nameproject}</div>
+              <div className="descripcion-proyecto">{proyecto.description}</div>
+              <div className="fechas-proyecto">
+                <span>Fecha de Inicio: {proyecto.fechaInicio}</span>
+                <span>Fecha de Finalización: {proyecto.fechaFinalizacion}</span>
+              </div>
+              <div className="botones-proyecto">
+                <button onClick={() => handleEditarProyecto(proyecto.id)}>Editar</button>
+                <button onClick={() => handleEliminarProyecto(proyecto.id)}>Eliminar</button>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default Main;
