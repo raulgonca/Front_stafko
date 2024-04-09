@@ -2,31 +2,37 @@ import React, { useState } from 'react';
 import Formulario from '../Components/Formulario/Formulario';
 import { useNavigate } from 'react-router-dom';
 import Swal from 'sweetalert2';
-import axios from 'axios';
 
 const Login = () => {
-  const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
-  const [errorMessage, setErrorMessage] = useState('');
+  const [ username, setUsername ] = useState('');
+  const [ password, setPassword ] = useState('');
+  const [ setErrorMessage ] = useState('');
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
+  
     try {
-      const response = await axios.post('http://localhost:3000/users/login', {
-        username: username,
-        password: password
-      }, {
-        withCredentials: true // Envía cookies de autenticación si las hay
+      const response = await fetch('http://localhost:3000/users/login', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        credentials: 'include',
+        body: JSON.stringify({
+          username: username,
+          password: password
+        })
       });
-
-      if (response.status === 200) {
+  
+      if (response.ok) {
         console.log('Inicio de sesión exitoso');
-        navigate(`/main/${username}`);
+        navigate(`/main/${ username }`);
+      } else {
+        throw new Error('Error al iniciar sesión');
       }
     } catch (error) {
-      console.error('Error al iniciar sesión:', error.response);
+      console.error('Error al iniciar sesión:', error);
       setErrorMessage('Error al iniciar sesión'); // Mensaje de error genérico
       Swal.fire({
         icon: 'error',
@@ -35,6 +41,8 @@ const Login = () => {
       });
     }
   };
+
+
 
   return (
     <div>
@@ -48,3 +56,16 @@ const Login = () => {
 };
 
 export default Login;
+
+
+
+
+
+
+
+
+
+
+
+
+

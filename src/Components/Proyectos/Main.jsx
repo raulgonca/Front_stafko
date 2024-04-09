@@ -1,11 +1,14 @@
 import React, { useState, useEffect } from "react";
 import ProyectoForm from "./ProyectoForm";
+import ProyectoEdit from "./ProyectoEdit";
+import { FaEdit, FaTrash, FaPlus, FaTimes } from 'react-icons/fa';
 import "./Main.css";
 
-const Main = () => {
+const Main = ({onSave, onDelete}) => {
   const [proyectos, setProyectos] = useState([]);
   const [mostrarFormulario, setMostrarFormulario] = useState(false);
-
+  const [proyectoEditar, setProyectoEditar] = useState(null);
+  
   useEffect(() => {
     getAllProject();
   }, []);
@@ -24,64 +27,70 @@ const Main = () => {
     }
   };
 
-  const handleCrearProyecto = async (proyecto) => {
+  const handleCrearProyecto = () => {
+    setProyectoEditar(null); // Limpiar cualquier proyecto de edición
+    setMostrarFormulario(true);
+  };
+
+  const handleEditarProyecto = (proyecto) => {
+    setProyectoEditar(proyecto);
+    setMostrarFormulario(true);
+  };
+
+  const handleEliminarProyecto = async (proyectoId) => {
+
+    const confirmDelete = window.confirm("¿Estás seguro de borrar este proyecto?");
+    if (!confirmDelete) return;
+
     try {
-      const response = await fetch("http://localhost:3000/projects/", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json"
-        },
-        body: JSON.stringify(proyecto)
+      const response = await fetch(`http://localhost:3000/projects/${proyectoId}`, {
+        method: "DELETE"
+        
       });
+      console.log(response);
       if (response.ok) {
-        const proyectoCreado = await response.json();
-        setProyectos([...proyectos, proyectoCreado]);
-        toggleFormulario();
+        onDelete(proyectoId);
+        console.log("proyecto eliminado" + proyectoId)
       } else {
-        console.error("Error al guardar el proyecto:", response.statusText);
+        console.error("Error al eliminar el proyecto:", response.statusText);
       }
     } catch (error) {
       console.error("Error al comunicarse con el servidor:", error);
     }
   };
+    
 
-  const toggleFormulario = () => {
-    setMostrarFormulario(!mostrarFormulario);
+  const handleCloseFormulario = () => {
+    setMostrarFormulario(false);
   };
 
-//Mirar mejor este metodo
-//  const handleEliminarProyecto = async () => {
-//    try {
-//      const response = await fetch(`http://localhost:3000/projects/${projects.id}`, {
-//        method: "DELETE"
-//      });
-//      if (response.ok) {
-//        setProyectos(proyectos.filter(proyecto => proyecto.id !== id));
-//      } else {
-//        console.error("Error al eliminar el proyecto:", response.statusText);
-//      }
-//    } catch (error) {
-//      console.error("Error al comunicarse con el servidor:", error);
-//    }
-//  };
-
-  const handleEditarProyecto = (id) => {
-    // Lógica para editar el proyecto con el ID proporcionado
-    console.log("Editar proyecto con ID:", id);
-    // Aquí deberías implementar la lógica para editar el proyecto
+  const handleSubmit = () => {
+    handleCloseFormulario();
   };
 
   return (
     <div className="main-container">
       <div className="header">
         <h2>Proyectos</h2>
-        <button className="crear-proyecto-btn" onClick={toggleFormulario}>✛</button>
+        <button className="crear-proyecto-btn" onClick={handleCrearProyecto}>
+          <FaPlus />
+        </button>
       </div>
 
       {mostrarFormulario && (
         <div className="ventana-emergente">
+          <div className="cerrar-ventana">
+            {/* Botón de cerrar */}
+            <button className="cerrar-btn" onClick={handleCloseFormulario}>
+              <FaTimes />
+            </button>
+          </div>
           <div className="contenido">
-            <ProyectoForm onSubmit={handleCrearProyecto} />
+            {proyectoEditar ? (
+              <ProyectoEdit proyectoInicial={proyectoEditar} onSubmit={handleSubmit} />
+            ) : (
+              <ProyectoForm onSubmit={handleSubmit} />
+            )}
           </div>
         </div>
       )}
@@ -96,8 +105,12 @@ const Main = () => {
               <div><strong>Fecha Finalización:</strong> {proyecto.fechaFinalizacion}</div>
             </div>
             <div className="botones-proyecto">
-              <button className="editar-btn" onClick={() => handleEditarProyecto(proyecto.id)}>Editar</button>
-              {/* <button className="eliminar-btn" onClick={() => handleEliminarProyecto(proyecto.id)}>Eliminar</button> */}
+              <button className="editar-btn" onClick={() => handleEditarProyecto(proyecto)}>
+                <FaEdit />
+              </button>
+              <button className="eliminar-btn" onClick={() => handleEliminarProyecto(proyecto.id)}>
+                <FaTrash />
+              </button>
             </div>
           </li>
         ))}

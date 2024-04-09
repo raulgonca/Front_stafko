@@ -1,109 +1,151 @@
+/* Estilos del contenedor principal */
 .main-container {
-    width: 80%;
-    margin: 0 auto;
-    padding: 20px;
-    overflow-y: auto; /* Habilitar desplazamiento vertical si el contenido es demasiado largo */
-  
-  }
-  
-  .header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 20px;
-  }
-  
-  .crear-proyecto-btn {
-    background: linear-gradient(to right, #FF6B6B, #6B66FF);
-    color: white;
-    border: none;
-    padding: 8px 16px;
-    border-radius: 4px;
-    cursor: pointer;
-  }
-  .ventana-emergente {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    background-color: rgba(255, 255, 255, 0.9); /* Fondo blanco con transparencia */
-    padding: 30px; /* Mayor espacio de relleno */
-    border-radius: 8px;
-    box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.2); /* Sombra más suave */
-    max-width: 90%; /* Ancho máximo para ocupar más espacio */
-    max-height: 80%; /* Altura máxima para evitar que se extienda demasiado */
-    overflow: auto; /* Permitir desplazamiento si el contenido es demasiado grande */
-  }
-  
-  .ventana-emergente .contenido {
-    /* Estilos opcionales para el contenido si es necesario */
-  }
-  
-  .ventana-emergente h3 {
-    margin-top: 0; /* Eliminar margen superior */
-    color: #333; /* Color de texto oscuro */
-  }
-  
-  .ventana-emergente p {
-    color: #666; /* Color de texto más claro */
-  }
-  
-  .ventana-emergente .btn-cerrar {
-    position: absolute;
-    top: 10px;
-    right: 10px;
-    background: none;
-    border: none;
-    color: #666;
-    font-size: 20px;
-    cursor: pointer;
-  }
-  
-  .ventana-emergente .btn-cerrar:hover {
-    color: #333; /* Cambiar color al pasar el ratón */
-  }
-  
-  
-  .proyectos-lista {
-    list-style: none;
-    padding: 0;
-  }
-  
-  .proyecto {
-    margin-bottom: 20px;
-    padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    background: white;
-  }
-  
-  .proyecto-info {
-    margin-right: 10px;
-    color: rgb(0, 0, 0);
-  }
-  
-  .botones-proyecto button {
-    background: linear-gradient(to right, #FF6B6B, #6B66FF);
-    color: white;
-    border: none;
-    padding: 8px 16px;
-    border-radius: 4px;
-    cursor: pointer;
-  }
-  
-  .botones-proyecto button:hover {
-    opacity: 0.8;
-  }
-  
-  .editar-btn {
-    background: linear-gradient(to right, #FF6B6B, #6B66FF);
-  }
-  
-  .eliminar-btn {
-    background: linear-gradient(to right, #FF6B6B, #6B66FF);
-  }
-  
-  
+  width: 80%;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+/* Estilos del encabezado */
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+/* Botón para agregar proyecto */
+.crear-proyecto-btn {
+  background-color: #4CAF50; /* Verde */
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 4px 2px;
+  cursor: pointer;
+  border-radius: 4px;
+  transition: background-color 0.3s;
+}
+
+/* Cambiar color de fondo al pasar el ratón sobre el botón de agregar proyecto */
+.crear-proyecto-btn:hover {
+  background-color: #45a049;
+}
+
+/* Estilos de la ventana emergente */
+.ventana-emergente {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: rgba(255, 255, 255, 0.9); /* Fondo blanco con transparencia */
+  padding: 30px; /* Mayor espacio de relleno */
+  border-radius: 8px;
+  box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.2); /* Sombra más suave */
+  max-width: 90%; /* Ancho máximo para ocupar más espacio */
+  max-height: 80%; /* Altura máxima para evitar que se extienda demasiado */
+  overflow: auto; /* Permitir desplazamiento si el contenido es demasiado grande */
+} 
+
+/* Estilos del botón de cerrar ventana emergente */
+.ventana-emergente .btn-cerrar {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: none;
+  border: none;
+  color: #666;
+  font-size: 20px;
+  cursor: pointer;
+}
+
+/* Cambiar color al pasar el ratón sobre el botón de cerrar ventana emergente */
+.ventana-emergente .btn-cerrar:hover {
+  color: #333;
+}
+
+.cerrar-ventana {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+}
+
+.cerrar-btn {
+  background-color: transparent;
+  border: none;
+  color: #ccc;
+  font-size: 20px;
+  cursor: pointer;
+}
+
+.cerrar-btn:hover {
+  color: #333; /* Cambiar color al pasar el ratón */
+}
+
+
+/* Estilos de la lista de proyectos */
+.proyectos-lista {
+  list-style: none;
+  padding: 0;
+}
+
+/* Estilos de cada proyecto */
+.proyecto {
+  margin-bottom: 20px;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #f9f9f9; /* Color de fondo más claro */
+}
+
+/* Estilos de la información del proyecto */
+.proyecto-info {
+  margin-right: 10px;
+  color: #333; /* Color de texto oscuro */
+  max-width: 625em; /* Ancho máximo para la descripción */
+  overflow-wrap: break-word; /* Permite que el texto haga saltos de línea */
+}
+
+
+/* Estilos de los botones de cada proyecto */
+.botones-proyecto {
+  display: flex;
+  align-items: center;
+}
+
+.botones-proyecto button {
+  background-color: #e0e0e0; /* Gris */
+  color: #333; /* Color de texto oscuro */
+  border: none;
+  padding: 8px 16px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  margin-left: 8px; /* Separación entre botones */
+}
+
+/* Cambiar color de fondo al pasar el ratón sobre los botones de proyecto */
+.botones-proyecto button:hover {
+  background-color: #bdbdbd; /* Gris más oscuro */
+}
+
+/* Estilos específicos para el botón de editar proyecto */
+.editar-btn {
+  background-color: #64b5f6; /* Azul */
+  color: white;
+}
+
+/* Estilos específicos para el botón de eliminar proyecto */
+.eliminar-btn {
+  background-color: #f44336; /* Rojo */
+  color: white;
+}
+
+h2 {
+  color: black;
+}

@@ -1,14 +1,29 @@
-import React, { useState } from "react";
-import "./ProyectoForm.css"
+import React, { useState, useEffect } from "react";
+import "./ProyectoForm.css";
 
-const ProyectoForm = ({ onSubmit, proyectoInicial }) => {
-  const [proyecto, setProyecto] = useState(proyectoInicial || {
+const ProyectoForm = ({ onSubmit, proyectoEditar }) => {
+  const [proyecto, setProyecto] = useState({
     id: null,
     nameproject: "",
     description: "",
     fechaInicio: "",
     fechaFinalizacion: ""
   });
+
+  // Cuando proyectoEditar cambia, actualiza el estado del proyecto
+  useEffect(() => {
+    if (proyectoEditar) {
+      setProyecto(proyectoEditar);
+    } else {
+      setProyecto({
+        id: null,
+        nameproject: "",
+        description: "",
+        fechaInicio: "",
+        fechaFinalizacion: ""
+      });
+    }
+  }, [proyectoEditar]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -18,16 +33,26 @@ const ProyectoForm = ({ onSubmit, proyectoInicial }) => {
     });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    onSubmit(proyecto);
-    setProyecto({
-      id: null,
-      nameproject: "",
-      description: "",
-      fechaInicio: "",
-      fechaFinalizacion: ""
-    });
+    try {
+      const response = await fetch("http://localhost:3000/projects/", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(proyecto),
+      });
+      if (response.ok) {
+        console.log("Proyecto creado correctamente");
+        onSubmit(); // Cerrar el formulario
+        window.location.reload(); // Recargar la página
+      } else {
+        console.error("Error al crear el proyecto:", response.statusText);
+      }
+    } catch (error) {
+      console.error("Error al comunicarse con el servidor:", error);
+    }
   };
 
   return (
