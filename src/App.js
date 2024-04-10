@@ -8,7 +8,7 @@ const App = () => {
     <Router>
       <div>
         <Routes>
-          <Route path="/" element={<Login />} /> {/* Ruta por defecto */}
+          <Route path="/" element={<Registro />} /> {/* Ruta por defecto */}
           <Route path="/login" element={<Login/>} />
           <Route path="/main/:username" element={<Main/>} />
           <Route path="/register" element={<Registro/>} />
@@ -17,5 +17,6 @@ const App = () => {
     </Router>
   );
 }
+
 
 export default App;

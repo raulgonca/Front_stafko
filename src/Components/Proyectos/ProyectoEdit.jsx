@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from "react";
+import Swal from 'sweetalert2';
 import "./ProyectoEdit";
 
-const EditarProyectoForm = ({ proyectoInicial, onSubmit }) => {
+const EditarProyectoForm = ({ proyectoInicial, onSubmit, onProjectUpdate }) => {
   const [proyecto, setProyecto] = useState({
     id: null,
     nameproject: "",
@@ -19,15 +20,50 @@ const EditarProyectoForm = ({ proyectoInicial, onSubmit }) => {
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setProyecto({
-      ...proyecto,
+    setProyecto((prevProyecto) => ({
+      ...prevProyecto,
       [name]: value
-    });
+    }));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    onSubmit(proyecto);
+    try {
+      const response = await fetch(`http://localhost:3000/projects/${proyecto.id}`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(proyecto),
+      });
+      if (response.ok) {
+        console.log("Proyecto actualizado correctamente");
+        onSubmit(proyecto); // Informar al componente padre que el proyecto ha sido actualizado
+        onProjectUpdate(); // Llamar a la función de actualización para actualizar Main
+        Swal.fire({
+          title: 'Cambios guardados',
+          text: 'Los cambios han sido guardados exitosamente.',
+          icon: 'success',
+          confirmButtonText: 'Aceptar'
+        });
+      } else {
+        console.error("Error al actualizar el proyecto:", response.statusText);
+        Swal.fire({
+          title: 'Error',
+          text: 'Hubo un error al guardar los cambios.',
+          icon: 'error',
+          confirmButtonText: 'Aceptar'
+        });
+      }
+    } catch (error) {
+      console.error("Error al comunicarse con el servidor:", error);
+      Swal.fire({
+        title: 'Error',
+        text: 'Hubo un error al guardar los cambios.',
+        icon: 'error',
+        confirmButtonText: 'Aceptar'
+      });
+    }
   };
 
   return (

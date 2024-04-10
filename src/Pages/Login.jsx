@@ -3,6 +3,7 @@ import Formulario from '../Components/Formulario/Formulario';
 import { useNavigate } from 'react-router-dom';
 import Swal from 'sweetalert2';
 
+
 const Login = () => {
   const [ username, setUsername ] = useState('');
   const [ password, setPassword ] = useState('');
@@ -42,15 +43,13 @@ const Login = () => {
     }
   };
 
-
-
   return (
     <div>
-      <Formulario
-        handleChangeUser={setUsername}
-        handleChangePassword={setPassword}
-        handleSubmit={handleSubmit}
-      />
+        <Formulario
+          handleChangeUser={setUsername}
+          handleChangePassword={setPassword}
+          handleSubmit={handleSubmit}
+        />
     </div>
   );
 };

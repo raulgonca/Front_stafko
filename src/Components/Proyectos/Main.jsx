@@ -1,14 +1,15 @@
 import React, { useState, useEffect } from "react";
+import Swal from 'sweetalert2';
 import ProyectoForm from "./ProyectoForm";
 import ProyectoEdit from "./ProyectoEdit";
-import { FaEdit, FaTrash, FaPlus, FaTimes } from 'react-icons/fa';
 import "./Main.css";
+import { FaEdit, FaTrash, FaPlus, FaTimes } from 'react-icons/fa';
 
-const Main = ({onSave, onDelete}) => {
+const Main = ({ onDelete }) => {
   const [proyectos, setProyectos] = useState([]);
   const [mostrarFormulario, setMostrarFormulario] = useState(false);
   const [proyectoEditar, setProyectoEditar] = useState(null);
-  
+
   useEffect(() => {
     getAllProject();
   }, []);
@@ -38,19 +39,21 @@ const Main = ({onSave, onDelete}) => {
   };
 
   const handleEliminarProyecto = async (proyectoId) => {
-
-    const confirmDelete = window.confirm("¿Estás seguro de borrar este proyecto?");
-    if (!confirmDelete) return;
-
     try {
       const response = await fetch(`http://localhost:3000/projects/${proyectoId}`, {
         method: "DELETE"
-        
       });
-      console.log(response);
       if (response.ok) {
         onDelete(proyectoId);
-        console.log("proyecto eliminado" + proyectoId)
+        // Mostrar una alerta SweetAlert al eliminar el proyecto
+        Swal.fire({
+          title: 'Proyecto eliminado',
+          text: 'El proyecto ha sido eliminado exitosamente.',
+          icon: 'success',
+          confirmButtonText: 'Aceptar'
+        });
+        // Actualizar la lista de proyectos después de eliminar uno
+        getAllProject();
       } else {
         console.error("Error al eliminar el proyecto:", response.statusText);
       }
@@ -58,14 +61,13 @@ const Main = ({onSave, onDelete}) => {
       console.error("Error al comunicarse con el servidor:", error);
     }
   };
-    
+
+  const handleActualizarProyectos = () => {
+    getAllProject();
+  };
 
   const handleCloseFormulario = () => {
     setMostrarFormulario(false);
-  };
-
-  const handleSubmit = () => {
-    handleCloseFormulario();
   };
 
   return (
@@ -80,16 +82,15 @@ const Main = ({onSave, onDelete}) => {
       {mostrarFormulario && (
         <div className="ventana-emergente">
           <div className="cerrar-ventana">
-            {/* Botón de cerrar */}
             <button className="cerrar-btn" onClick={handleCloseFormulario}>
               <FaTimes />
             </button>
           </div>
           <div className="contenido">
             {proyectoEditar ? (
-              <ProyectoEdit proyectoInicial={proyectoEditar} onSubmit={handleSubmit} />
+              <ProyectoEdit proyectoInicial={proyectoEditar} onSubmit={() => handleCloseFormulario()} onProjectUpdate={handleActualizarProyectos} />
             ) : (
-              <ProyectoForm onSubmit={handleSubmit} />
+              <ProyectoForm onSubmit={() => handleCloseFormulario()} onProjectUpdate={handleActualizarProyectos} />
             )}
           </div>
         </div>
@@ -108,7 +109,21 @@ const Main = ({onSave, onDelete}) => {
               <button className="editar-btn" onClick={() => handleEditarProyecto(proyecto)}>
                 <FaEdit />
               </button>
-              <button className="eliminar-btn" onClick={() => handleEliminarProyecto(proyecto.id)}>
+              <button className="eliminar-btn" onClick={() => {
+                // Mostrar una alerta SweetAlert para confirmar la eliminación
+                Swal.fire({
+                  title: '¿Estás seguro?',
+                  text: '¿Estás seguro de que deseas eliminar este proyecto?',
+                  icon: 'warning',
+                  showCancelButton: true,
+                  confirmButtonText: 'Sí, eliminar',
+                  cancelButtonText: 'Cancelar'
+                }).then((result) => {
+                  if (result.isConfirmed) {
+                    handleEliminarProyecto(proyecto.id);
+                  }
+                });
+              }}>
                 <FaTrash />
               </button>
             </div>

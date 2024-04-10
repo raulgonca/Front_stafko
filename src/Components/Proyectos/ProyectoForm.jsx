@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import Swal from 'sweetalert2';
 import "./ProyectoForm.css";
 
 const ProyectoForm = ({ onSubmit, proyectoEditar }) => {
@@ -35,6 +36,16 @@ const ProyectoForm = ({ onSubmit, proyectoEditar }) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    // Validar longitud máxima para la descripción
+    if (proyecto.description.length > 100) {
+      Swal.fire({
+        title: 'Error',
+        text: 'La descripción debe tener como máximo 100 caracteres.',
+        icon: 'error',
+        confirmButtonText: 'Aceptar'
+      });
+      return;
+    }
     try {
       const response = await fetch("http://localhost:3000/projects/", {
         method: "POST",
