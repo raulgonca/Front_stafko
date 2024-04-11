@@ -44,7 +44,6 @@ const Main = ({ onDelete }) => {
         method: "DELETE"
       });
       if (response.ok) {
-        onDelete(proyectoId);
         // Mostrar una alerta SweetAlert al eliminar el proyecto
         Swal.fire({
           title: 'Proyecto eliminado',
@@ -73,7 +72,7 @@ const Main = ({ onDelete }) => {
   return (
     <div className="main-container">
       <div className="header">
-        <h2>Proyectos</h2>
+        <h2><u>Proyectos</u></h2>
         <button className="crear-proyecto-btn" onClick={handleCrearProyecto}>
           <FaPlus />
         </button>

@@ -1,3 +1,6 @@
+body{
+  place-items: auto;
+}
 /* Estilos del contenedor principal */
 .main-container {
   width: 85%;
@@ -64,6 +67,7 @@
 /* Cambiar color al pasar el ratón sobre el botón de cerrar ventana emergente */
 .ventana-emergente .btn-cerrar:hover {
   color: #333;
+  background-color: none;
 }
 
 .cerrar-ventana {
@@ -79,11 +83,6 @@
   font-size: 20px;
   cursor: pointer;
 }
-
-.cerrar-btn:hover {
-  color: #333; /* Cambiar color al pasar el ratón */
-}
-
 
 /* Estilos de la lista de proyectos */
 .proyectos-lista {
@@ -148,4 +147,5 @@
 
 h2 {
   color: black;
+  font-size: 30; /* Tamaño del texto en 24 píxeles */
 }

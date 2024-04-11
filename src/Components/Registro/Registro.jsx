@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import '../Formulario/Formulario.css';
 import { useNavigate } from 'react-router-dom';
+import Swal from 'sweetalert2';
+
 
 function Registro() {
   const [username, setUsername] = useState('');
@@ -32,7 +34,12 @@ function Registro() {
       }
 
       // Por ahora, simplemente mostraremos un mensaje de éxito
-      alert('Registro exitoso. ¡Bienvenido!');
+      Swal.fire({
+        title: 'Bienvenido',
+        text: 'Registro exitoso. ¡Bienvenido!',
+        icon: 'success',
+        confirmButtonText: 'Aceptar'
+      });
     } catch (error) {
       setErrorMessage(error.message);
     }
