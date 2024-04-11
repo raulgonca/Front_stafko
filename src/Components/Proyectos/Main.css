@@ -1,14 +1,14 @@
-body{
-  place-items: auto;
-}
-/* Estilos del contenedor principal */
+/* Main.css */
+
 .main-container {
-  width: 85%;
-  margin: 0 auto;
+  max-width: 800px;
+  margin: 20px auto;
   padding: 20px;
+  background-color: #f2f2f2; /* Gris claro */
+  border-radius: 10px;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
 }
 
-/* Estilos del encabezado */
 .header {
   display: flex;
   justify-content: space-between;
@@ -16,136 +16,95 @@ body{
   margin-bottom: 20px;
 }
 
-/* Botón para agregar proyecto */
+.header h2 {
+  margin: 0;
+  font-size: 24px;
+  color: #333;
+}
+
 .crear-proyecto-btn {
-  background-color: #4CAF50; /* Verde */
-  color: white;
-  border: none;
   padding: 10px 20px;
-  text-align: center;
-  text-decoration: none;
-  display: inline-block;
-  font-size: 16px;
-  margin: 4px 2px;
+  background-color: #8d6e63; /* Marrón claro */
+  color: #fff;
+  border: none;
+  border-radius: 5px;
   cursor: pointer;
-  border-radius: 4px;
   transition: background-color 0.3s;
 }
 
-/* Cambiar color de fondo al pasar el ratón sobre el botón de agregar proyecto */
 .crear-proyecto-btn:hover {
-  background-color: #45a049;
+  background-color: #795548; /* Marrón más oscuro */
 }
 
-/* Estilos de la ventana emergente */
-.ventana-emergente {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  background-color: rgba(255, 255, 255, 0.9); /* Fondo blanco con transparencia */
-  padding: 30px; /* Mayor espacio de relleno */
-  border-radius: 8px;
-  box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.2); /* Sombra más suave */
-  max-width: 90%; /* Ancho máximo para ocupar más espacio */
-  max-height: 80%; /* Altura máxima para evitar que se extienda demasiado */
-  overflow: auto; /* Permitir desplazamiento si el contenido es demasiado grande */
-} 
-
-/* Estilos del botón de cerrar ventana emergente */
-.ventana-emergente .btn-cerrar {
-  position: absolute;
-  top: 10px;
-  right: 10px;
-  background: none;
-  border: none;
-  color: #666;
-  font-size: 20px;
-  cursor: pointer;
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
-/* Cambiar color al pasar el ratón sobre el botón de cerrar ventana emergente */
-.ventana-emergente .btn-cerrar:hover {
-  color: #333;
-  background-color: none;
+.modal-content {
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
 }
 
-.cerrar-ventana {
+.close-btn {
   position: absolute;
   top: 10px;
   right: 10px;
-}
-
-.cerrar-btn {
+  padding: 5px;
   background-color: transparent;
   border: none;
-  color: #ccc;
-  font-size: 20px;
   cursor: pointer;
 }
 
-/* Estilos de la lista de proyectos */
-.proyectos-lista {
-  list-style: none;
-  padding: 0;
+.form-container {
+  margin-top: 20px;
 }
 
-/* Estilos de cada proyecto */
 .proyecto {
   margin-bottom: 20px;
-  padding: 10px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  background: #f9f9f9; /* Color de fondo más claro */
+  padding: 20px;
+  background-color: #fff;
+  border-radius: 10px;
+  box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.1);
+  border: 1px solid #ccc; /* Borde gris */
+  list-style-type: none; /* Quitar puntos de la lista */
 }
 
-/* Estilos de la información del proyecto */
 .proyecto-info {
-  margin-right: 10px;
-  color: #333; /* Color de texto oscuro */
-  max-width: 625em; /* Ancho máximo para la descripción */
-  overflow-wrap: break-word; /* Permite que el texto haga saltos de línea */
+  margin-bottom: 15px;
 }
 
+.proyecto-info div {
+  margin-bottom: 10px;
+  font-size: 16px;
+}
 
-/* Estilos de los botones de cada proyecto */
 .botones-proyecto {
   display: flex;
-  align-items: center;
+  justify-content: flex-end; /* Botones a la derecha */
 }
 
 .botones-proyecto button {
-  background-color: #e0e0e0; /* Gris */
-  color: #333; /* Color de texto oscuro */
+  padding: 8px 15px;
+  margin-left: 10px; /* Separación mínima entre botones */
+  background-color: #8d6e63; /* Marrón claro */
+  color: #fff;
   border: none;
-  padding: 8px 16px;
-  border-radius: 4px;
+  border-radius: 5px;
   cursor: pointer;
   transition: background-color 0.3s;
-  margin-left: 8px; /* Separación entre botones */
 }
 
-/* Cambiar color de fondo al pasar el ratón sobre los botones de proyecto */
 .botones-proyecto button:hover {
-  background-color: #bdbdbd; /* Gris más oscuro */
+  background-color: #795548; /* Marrón más oscuro */
 }
 
-/* Estilos específicos para el botón de editar proyecto */
-.editar-btn {
-  background-color: #64b5f6; /* Azul */
-  color: white;
-}
-
-/* Estilos específicos para el botón de eliminar proyecto */
-.eliminar-btn {
-  background-color: #f44336; /* Rojo */
-  color: white;
-}
-
-h2 {
-  color: black;
-  font-size: 30; /* Tamaño del texto en 24 píxeles */
-}

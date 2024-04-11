@@ -5,7 +5,7 @@ import ProyectoEdit from "./ProyectoEdit";
 import "./Main.css";
 import { FaEdit, FaTrash, FaPlus, FaTimes } from 'react-icons/fa';
 
-const Main = ({ onDelete }) => {
+const Main = () => {
   const [proyectos, setProyectos] = useState([]);
   const [mostrarFormulario, setMostrarFormulario] = useState(false);
   const [proyectoEditar, setProyectoEditar] = useState(null);
@@ -21,15 +21,21 @@ const Main = ({ onDelete }) => {
         const data = await response.json();
         setProyectos(data);
       } else {
-        console.error("Error al obtener los proyectos:", response.statusText);
+        throw new Error("Error al obtener los proyectos: " + response.statusText);
       }
     } catch (error) {
       console.error("Error al comunicarse con el servidor:", error);
+      Swal.fire({
+        title: 'Error',
+        text: 'Hubo un problema al cargar los proyectos. Por favor, intenta nuevamente más tarde.',
+        icon: 'error',
+        confirmButtonText: 'Aceptar'
+      });
     }
   };
 
   const handleCrearProyecto = () => {
-    setProyectoEditar(null); // Limpiar cualquier proyecto de edición
+    setProyectoEditar(null);
     setMostrarFormulario(true);
   };
 
@@ -44,20 +50,24 @@ const Main = ({ onDelete }) => {
         method: "DELETE"
       });
       if (response.ok) {
-        // Mostrar una alerta SweetAlert al eliminar el proyecto
         Swal.fire({
           title: 'Proyecto eliminado',
           text: 'El proyecto ha sido eliminado exitosamente.',
           icon: 'success',
           confirmButtonText: 'Aceptar'
         });
-        // Actualizar la lista de proyectos después de eliminar uno
         getAllProject();
       } else {
-        console.error("Error al eliminar el proyecto:", response.statusText);
+        throw new Error("Error al eliminar el proyecto: " + response.statusText);
       }
     } catch (error) {
       console.error("Error al comunicarse con el servidor:", error);
+      Swal.fire({
+        title: 'Error',
+        text: 'Hubo un problema al eliminar el proyecto. Por favor, intenta nuevamente más tarde.',
+        icon: 'error',
+        confirmButtonText: 'Aceptar'
+      });
     }
   };
 
@@ -71,33 +81,33 @@ const Main = ({ onDelete }) => {
 
   return (
     <div className="main-container">
-      <div className="header">
-        <h2><u>Proyectos</u></h2>
+      <header className="header">
+        <h2>Proyectos</h2>
         <button className="crear-proyecto-btn" onClick={handleCrearProyecto}>
-          <FaPlus />
+          <FaPlus /> Crear Proyecto
         </button>
-      </div>
+      </header>
 
       {mostrarFormulario && (
-        <div className="ventana-emergente">
-          <div className="cerrar-ventana">
-            <button className="cerrar-btn" onClick={handleCloseFormulario}>
+        <div className="modal" onClick={handleCloseFormulario}>
+          <div className="modal-content" onClick={(e) => e.stopPropagation()}>
+            <button className="close-btn" onClick={handleCloseFormulario}>
               <FaTimes />
             </button>
-          </div>
-          <div className="contenido">
-            {proyectoEditar ? (
-              <ProyectoEdit proyectoInicial={proyectoEditar} onSubmit={() => handleCloseFormulario()} onProjectUpdate={handleActualizarProyectos} />
-            ) : (
-              <ProyectoForm onSubmit={() => handleCloseFormulario()} onProjectUpdate={handleActualizarProyectos} />
-            )}
+            <div className="form-container">
+              {proyectoEditar ? (
+                <ProyectoEdit proyectoInicial={proyectoEditar} onSubmit={handleCloseFormulario} onProjectUpdate={handleActualizarProyectos} />
+              ) : (
+                <ProyectoForm onSubmit={handleCloseFormulario} onProjectUpdate={handleActualizarProyectos} />
+              )}
+            </div>
           </div>
         </div>
       )}
 
       <ul className="proyectos-lista">
-        {proyectos.map((proyecto, index) => (
-          <li className="proyecto" key={index}>
+        {proyectos.map((proyecto) => (
+          <li className="proyecto" key={proyecto.id}>
             <div className="proyecto-info">
               <div><strong>Nombre:</strong> {proyecto.nameproject}</div>
               <div><strong>Descripción:</strong> {proyecto.description}</div>
@@ -106,10 +116,9 @@ const Main = ({ onDelete }) => {
             </div>
             <div className="botones-proyecto">
               <button className="editar-btn" onClick={() => handleEditarProyecto(proyecto)}>
-                <FaEdit />
+                <FaEdit /> Editar
               </button>
               <button className="eliminar-btn" onClick={() => {
-                // Mostrar una alerta SweetAlert para confirmar la eliminación
                 Swal.fire({
                   title: '¿Estás seguro?',
                   text: '¿Estás seguro de que deseas eliminar este proyecto?',
@@ -123,7 +132,7 @@ const Main = ({ onDelete }) => {
                   }
                 });
               }}>
-                <FaTrash />
+                <FaTrash /> Eliminar
               </button>
             </div>
           </li>

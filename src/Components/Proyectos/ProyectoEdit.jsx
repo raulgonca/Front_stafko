@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
 import Swal from 'sweetalert2';
-import "./ProyectoEdit";
+import "./ProyectoEdit.css";
 
-const EditarProyectoForm = ({ proyectoInicial, onSubmit, onProjectUpdate }) => {
+const ProyectoEdit = ({ proyectoInicial, onSubmit, onProjectUpdate }) => {
   const [proyecto, setProyecto] = useState({
     id: null,
     nameproject: "",
@@ -11,7 +11,6 @@ const EditarProyectoForm = ({ proyectoInicial, onSubmit, onProjectUpdate }) => {
     fechaFinalizacion: ""
   });
 
-  // Actualiza el estado del proyecto cuando proyectoInicial cambia
   useEffect(() => {
     if (proyectoInicial) {
       setProyecto(proyectoInicial);
@@ -38,8 +37,8 @@ const EditarProyectoForm = ({ proyectoInicial, onSubmit, onProjectUpdate }) => {
       });
       if (response.ok) {
         console.log("Proyecto actualizado correctamente");
-        onSubmit(proyecto); // Informar al componente padre que el proyecto ha sido actualizado
-        onProjectUpdate(); // Llamar a la función de actualización para actualizar Main
+        onSubmit(proyecto);
+        onProjectUpdate();
         Swal.fire({
           title: 'Cambios guardados',
           text: 'Los cambios han sido guardados exitosamente.',
@@ -67,32 +66,37 @@ const EditarProyectoForm = ({ proyectoInicial, onSubmit, onProjectUpdate }) => {
   };
 
   return (
-    <div>
+    <div className="proyecto-edit-container">
       <h2>Editar Proyecto</h2>
       <form onSubmit={handleSubmit}>
         <div className="form-group">
-          <label>Nombre del Proyecto:</label>
+          <label htmlFor="nameproject">Nombre del Proyecto:</label>
           <input
             type="text"
+            id="nameproject"
             name="nameproject"
             value={proyecto.nameproject}
             onChange={handleChange}
             placeholder="Ingrese el nombre del proyecto aquí"
+            required
           />
         </div>
         <div className="form-group">
-          <label>Descripción:</label>
+          <label htmlFor="description">Descripción:</label>
           <textarea
+            id="description"
             name="description"
             value={proyecto.description}
             onChange={handleChange}
             placeholder="Descripción del proyecto"
+            required
           />
         </div>
         <div className="form-group">
-          <label>Fecha de Inicio:</label>
+          <label htmlFor="fechaInicio">Fecha de Inicio:</label>
           <input
             type="date"
+            id="fechaInicio"
             name="fechaInicio"
             value={proyecto.fechaInicio}
             onChange={handleChange}
@@ -100,12 +104,14 @@ const EditarProyectoForm = ({ proyectoInicial, onSubmit, onProjectUpdate }) => {
           />
         </div>
         <div className="form-group">
-          <label>Fecha de Finalización:</label>
+          <label htmlFor="fechaFinalizacion">Fecha de Finalización:</label>
           <input
             type="date"
+            id="fechaFinalizacion"
             name="fechaFinalizacion"
             value={proyecto.fechaFinalizacion}
             onChange={handleChange}
+            required
           />
         </div>
         <button type="submit">Guardar Cambios</button>
@@ -114,4 +120,4 @@ const EditarProyectoForm = ({ proyectoInicial, onSubmit, onProjectUpdate }) => {
   );
 };
 
-export default EditarProyectoForm;
+export default ProyectoEdit;

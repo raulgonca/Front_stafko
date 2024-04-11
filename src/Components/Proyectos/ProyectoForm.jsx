@@ -11,7 +11,6 @@ const ProyectoForm = ({ onSubmit, proyectoEditar }) => {
     fechaFinalizacion: ""
   });
 
-  // Cuando proyectoEditar cambia, actualiza el estado del proyecto
   useEffect(() => {
     if (proyectoEditar) {
       setProyecto(proyectoEditar);
@@ -36,7 +35,6 @@ const ProyectoForm = ({ onSubmit, proyectoEditar }) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    // Validar longitud máxima para la descripción
     if (proyecto.description.length > 100) {
       Swal.fire({
         title: 'Error',
@@ -56,8 +54,8 @@ const ProyectoForm = ({ onSubmit, proyectoEditar }) => {
       });
       if (response.ok) {
         console.log("Proyecto creado correctamente");
-        onSubmit(); // Cerrar el formulario
-        window.location.reload(); // Recargar la página
+        onSubmit();
+        window.location.reload();
       } else {
         console.error("Error al crear el proyecto:", response.statusText);
       }
@@ -67,44 +65,52 @@ const ProyectoForm = ({ onSubmit, proyectoEditar }) => {
   };
 
   return (
-    <div>
+    <div className="proyecto-form-container">
       <h2>{proyecto.id ? "Editar Proyecto" : "Crear Nuevo Proyecto"}</h2>
       <form onSubmit={handleSubmit}>
         <div className="form-group">
-          <label>Nombre del Proyecto:</label>
+          <label htmlFor="nameproject">Nombre del Proyecto:</label>
           <input
             type="text"
+            id="nameproject"
             name="nameproject"
             value={proyecto.nameproject}
             onChange={handleChange}
             placeholder="Ingrese el nombre del proyecto aquí"
+            required
           />
         </div>
         <div className="form-group">
-          <label>Descripción:</label>
+          <label htmlFor="description">Descripción:</label>
           <textarea
+            id="description"
             name="description"
             value={proyecto.description}
             onChange={handleChange}
             placeholder="Descripción del proyecto"
+            required
           />
         </div>
         <div className="form-group">
-          <label>Fecha de Inicio:</label>
+          <label htmlFor="fechaInicio">Fecha de Inicio:</label>
           <input
             type="date"
+            id="fechaInicio"
             name="fechaInicio"
             value={proyecto.fechaInicio}
             onChange={handleChange}
+            required
           />
         </div>
         <div className="form-group">
-          <label>Fecha de Finalización:</label>
+          <label htmlFor="fechaFinalizacion">Fecha de Finalización:</label>
           <input
             type="date"
+            id="fechaFinalizacion"
             name="fechaFinalizacion"
             value={proyecto.fechaFinalizacion}
             onChange={handleChange}
+            required
           />
         </div>
         <button type="submit">{proyecto.id ? "Guardar Cambios" : "Crear Proyecto"}</button>

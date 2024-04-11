@@ -28,12 +28,12 @@ function Registro() {
       const data = await response.json();
 
       if (response.ok) {
-        navigate('/login'); // Navegar a la página de dashboard después del registro exitoso
+        navigate('/login'); // Navegar a la página de login después del registro exitoso
       } else {
         throw new Error(data.message);
       }
 
-      // Por ahora, simplemente mostraremos un mensaje de éxito
+      //Simplemente mostraremos un mensaje de éxito
       Swal.fire({
         title: 'Bienvenido',
         text: 'Registro exitoso. ¡Bienvenido!',

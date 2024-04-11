@@ -50,7 +50,7 @@ input {
   background-color: #848484;
 }
 
-button {
+/*button {
   padding: 10px 20px;
   background-color: #007bff;
   color: #fff;
@@ -58,11 +58,11 @@ button {
   border-radius: 5px;
   cursor: pointer;
   margin-top: 3px;
-}
+}*/
 
-button:hover {
+/*button:hover {
   background-color: #0056b3;
-}
+}*/
 
 a {
   color: #007bff;
