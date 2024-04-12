@@ -84,7 +84,7 @@ const Main = () => {
       <header className="header">
         <h2>Proyectos</h2>
         <button className="crear-proyecto-btn" onClick={handleCrearProyecto}>
-          <FaPlus /> Crear Proyecto
+          <FaPlus />
         </button>
       </header>
 
@@ -116,7 +116,7 @@ const Main = () => {
             </div>
             <div className="botones-proyecto">
               <button className="editar-btn" onClick={() => handleEditarProyecto(proyecto)}>
-                <FaEdit /> Editar
+                <FaEdit />
               </button>
               <button className="eliminar-btn" onClick={() => {
                 Swal.fire({
@@ -132,7 +132,7 @@ const Main = () => {
                   }
                 });
               }}>
-                <FaTrash /> Eliminar
+                <FaTrash />
               </button>
             </div>
           </li>
