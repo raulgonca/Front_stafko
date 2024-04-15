@@ -1,3 +1,4 @@
+// Importa useState, useEffect y otras dependencias necesarias
 import React, { useState, useEffect } from "react";
 import Swal from 'sweetalert2';
 import ProyectoForm from "./ProyectoForm";
@@ -16,7 +17,8 @@ const Main = () => {
 
   const getAllProject = async () => {
     try {
-      const response = await fetch("http://localhost:3000/projects/");
+      const userId = localStorage.getItem('userId'); // Obtener el ID del usuario desde el almacenamiento local
+      const response = await fetch(`http://localhost:3000/projects/user/${userId}`);
       if (response.ok) {
         const data = await response.json();
         setProyectos(data);

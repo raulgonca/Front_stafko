@@ -25,8 +25,10 @@ const Login = () => {
       });
 
       if (response.ok) {
+        const userData = await response.json(); // Obtener datos del usuario incluyendo su ID
+        localStorage.setItem('userId', userData.id); // Almacenar ID del usuario en el almacenamiento local
         console.log('Inicio de sesión exitoso');
-        navigate(`/main/${username}`);
+        navigate('/main');
       } else {
         throw new Error('Error al iniciar sesión');
       }
