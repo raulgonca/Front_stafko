@@ -1,0 +1,16 @@
+/* styles.css */
+@import url('https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css');
+
+navbar {
+  @apply bg-base-100 shadow-lg fixed top-0 left-0 right-0 z-50;
+}
+
+avatar img {
+  @apply w-10 h-10 rounded-full; /* Ajusta el tamaño de la imagen aquí */
+}
+
+dropdown-content {
+  @apply mt-3 z-[1] p-2 shadow menu menu-sm dropdown-content bg-base-100 rounded-box w-52;
+}
+
+/* Agrega otros estilos según sea necesario */

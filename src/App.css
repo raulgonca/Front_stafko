@@ -13,4 +13,44 @@
   color: #888;
 }
 
+/* Estilos para el encabezado */
+header {
+  background-color: #333; /* Color de fondo */
+  color: #fff; /* Color del texto */
+  padding: 10px 20px; /* Espaciado interno */
+  box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1); /* Sombra */
+}
+
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.navbar-brand {
+  font-size: 1.5rem; /* Tamaño del texto del logotipo */
+  font-weight: bold; /* Peso de la fuente */
+  text-decoration: none; /* Quita subrayado */
+  color: #fff; /* Color del texto */
+}
+
+.navbar-nav {
+  list-style: none; /* Quita los puntos de lista */
+  margin: 0;
+  padding: 0;
+}
+
+.navbar-nav li {
+  margin-right: 15px; /* Espaciado entre elementos del menú */
+}
+
+.navbar-nav li a {
+  text-decoration: none; /* Quita subrayado */
+  color: #fff; /* Color del texto */
+  transition: color 0.3s; /* Transición suave del color del texto */
+}
+
+.navbar-nav li a:hover {
+  color: #ffcc00; /* Cambia el color del texto al pasar el mouse */
+}
 

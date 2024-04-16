@@ -1,34 +1,8 @@
 import React, { useState, useEffect } from "react";
-import ReactDOM from "react-dom";
 import Swal from 'sweetalert2';
-import { FaPlus, FaTimes } from 'react-icons/fa';
+import { FaPlus, FaTimes, FaEdit, FaTrash } from 'react-icons/fa';
 import ProyectoForm from "./ProyectoForm";
 import ProyectoEdit from "./ProyectoEdit";
-
-const ProyectoCard = ({ proyecto, onEditar, onEliminar }) => {
-  return (
-    <div className="bg-white shadow-lg rounded-lg p-6 flex flex-col justify-between">
-      <div>
-        <h3 className="text-lg font-semibold text-gray-800">{proyecto.nameproject}</h3>
-        <p className="text-gray-600 mt-2">{proyecto.description}</p>
-      </div>
-      <div className="flex justify-between mt-4">
-        <button
-          onClick={() => onEditar(proyecto)}
-          className="px-4 py-2 bg-blue-600 text-white font-semibold rounded-lg shadow-md transition duration-300 hover:bg-blue-700 focus:outline-none"
-        >
-          Editar
-        </button>
-        <button
-          onClick={() => onEliminar(proyecto.id)}
-          className="px-4 py-2 bg-red-600 text-white font-semibold rounded-lg shadow-md transition duration-300 hover:bg-red-700 focus:outline-none"
-        >
-          Eliminar
-        </button>
-      </div>
-    </div>
-  );
-};
 
 
 const Main = () => {
@@ -64,79 +38,112 @@ const Main = () => {
     setProyectoEditar(null);
     setMostrarFormulario(true);
   };
-
+  
   const handleEditarProyecto = (proyecto) => {
     setProyectoEditar(proyecto);
     setMostrarFormulario(true);
   };
 
   const handleEliminarProyecto = async (proyectoId) => {
-    try {
-      const response = await fetch(`http://localhost:3000/projects/${proyectoId}`, {
-        method: "DELETE"
-      });
-      if (response.ok) {
+    const confirmacion = await Swal.fire({
+      title: '¿Estás seguro?',
+      text: 'Esta acción eliminará el proyecto permanentemente.',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Sí, eliminar',
+      cancelButtonText: 'Cancelar'
+    });
+    
+    if (confirmacion.isConfirmed) {
+      try {
+        const response = await fetch(`http://localhost:3000/projects/${proyectoId}`, {
+          method: "DELETE"
+        });
+        if (response.ok) {
+          Swal.fire({
+            title: 'Proyecto eliminado',
+            text: 'El proyecto ha sido eliminado exitosamente.',
+            icon: 'success',
+            confirmButtonText: 'Aceptar'
+          });
+          getAllProject();
+        } else {
+          throw new Error("Error al eliminar el proyecto: " + response.statusText);
+        }
+      } catch (error) {
+        console.error("Error al comunicarse con el servidor:", error);
         Swal.fire({
-          title: 'Proyecto eliminado',
-          text: 'El proyecto ha sido eliminado exitosamente.',
-          icon: 'success',
+          title: 'Error',
+          text: 'Hubo un problema al eliminar el proyecto. Por favor, intenta nuevamente más tarde.',
+          icon: 'error',
           confirmButtonText: 'Aceptar'
         });
-        getAllProject();
-      } else {
-        throw new Error("Error al eliminar el proyecto: " + response.statusText);
       }
-    } catch (error) {
-      console.error("Error al comunicarse con el servidor:", error);
-      Swal.fire({
-        title: 'Error',
-        text: 'Hubo un problema al eliminar el proyecto. Por favor, intenta nuevamente más tarde.',
-        icon: 'error',
-        confirmButtonText: 'Aceptar'
-      });
     }
   };
-
+  
   const handleActualizarProyectos = () => {
     getAllProject();
   };
-
+  
   const handleCloseFormulario = () => {
     setMostrarFormulario(false);
   };
-
-  const modalContainer = document.getElementById('modal-container');
+  
+  const ProyectoCard = ({ proyecto, onEditar }) => {
+    return (
+      <div className="flex flex-col justify-between bg-white shadow-lg rounded-lg p-6 mb-6">
+        <div>
+          <h3 className="text-lg font-semibold text-gray-800">{proyecto.nameproject}</h3>
+          <p className="text-gray-600 mt-2">{proyecto.description}</p>
+        </div>
+        <div className="flex justify-between mt-4">
+          <button
+            onClick={() => onEditar(proyecto)}
+            className="flex items-center px-4 py-2 bg-blue-500 text-white font-semibold rounded-lg shadow-md transition duration-300 hover:bg-blue-600 focus:outline-none"
+          >
+            <FaEdit className="mr-1" /> Editar
+          </button>
+          <button
+            onClick={() => handleEliminarProyecto(proyecto.id)}
+            className="flex items-center px-4 py-2 bg-red-500 text-white font-semibold rounded-lg shadow-md transition duration-300 hover:bg-red-600 focus:outline-none"
+          >
+            <FaTrash className="mr-1" /> Eliminar
+          </button>
+        </div>
+      </div>
+    );
+  };
 
   return (
     <>
-      {ReactDOM.createPortal(
-        mostrarFormulario ? (
-          <div id="modal-container" className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
-            <div className="bg-gray-100 p-4 rounded-lg shadow-lg relative z-50">
-              <button
-                onClick={handleCloseFormulario}
-                className="absolute top-2 right-2 text-gray-500 hover:text-gray-700 focus:outline-none"
+      {mostrarFormulario && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
+          <div className="bg-gray-100 w-96 p-4 rounded-lg shadow-lg relative z-50">
+            <button
+              onClick={handleCloseFormulario}
+              className="absolute top-2 right-2 text-gray-500 hover:text-gray-700 focus:outline-none"
               >
-                <FaTimes />
-              </button>
-              <div className="form-container">
-                {proyectoEditar ? (
-                  <ProyectoEdit
-                    proyectoInicial={proyectoEditar}
-                    onSubmit={handleCloseFormulario}
-                    onProjectUpdate={handleActualizarProyectos}
-                  />
-                ) : (
-                  <ProyectoForm
-                    onSubmit={handleCloseFormulario}
-                    onProjectUpdate={handleActualizarProyectos}
-                  />
-                )}
-              </div>
+              <FaTimes />
+            </button>
+            <div className="form-container">
+              {proyectoEditar ? (
+                <ProyectoEdit
+                proyectoInicial={proyectoEditar}
+                onSubmit={handleCloseFormulario}
+                onProjectUpdate={handleActualizarProyectos}
+                />
+              ) : (
+                <ProyectoForm
+                  onSubmit={handleCloseFormulario}
+                  onProjectUpdate={handleActualizarProyectos}
+                />
+              )}
             </div>
           </div>
-        ) : null,
-        modalContainer
+        </div>
       )}
 
       <div className="max-w-4xl mx-auto p-6">
