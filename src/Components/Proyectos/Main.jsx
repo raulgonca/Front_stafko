@@ -1,10 +1,35 @@
-// Importa useState, useEffect y otras dependencias necesarias
 import React, { useState, useEffect } from "react";
+import ReactDOM from "react-dom";
 import Swal from 'sweetalert2';
+import { FaPlus, FaTimes } from 'react-icons/fa';
 import ProyectoForm from "./ProyectoForm";
 import ProyectoEdit from "./ProyectoEdit";
-import "./Main.css";
-import { FaEdit, FaTrash, FaPlus, FaTimes } from 'react-icons/fa';
+
+const ProyectoCard = ({ proyecto, onEditar, onEliminar }) => {
+  return (
+    <div className="bg-white shadow-lg rounded-lg p-6 flex flex-col justify-between">
+      <div>
+        <h3 className="text-lg font-semibold text-gray-800">{proyecto.nameproject}</h3>
+        <p className="text-gray-600 mt-2">{proyecto.description}</p>
+      </div>
+      <div className="flex justify-between mt-4">
+        <button
+          onClick={() => onEditar(proyecto)}
+          className="px-4 py-2 bg-blue-600 text-white font-semibold rounded-lg shadow-md transition duration-300 hover:bg-blue-700 focus:outline-none"
+        >
+          Editar
+        </button>
+        <button
+          onClick={() => onEliminar(proyecto.id)}
+          className="px-4 py-2 bg-red-600 text-white font-semibold rounded-lg shadow-md transition duration-300 hover:bg-red-700 focus:outline-none"
+        >
+          Eliminar
+        </button>
+      </div>
+    </div>
+  );
+};
+
 
 const Main = () => {
   const [proyectos, setProyectos] = useState([]);
@@ -17,8 +42,7 @@ const Main = () => {
 
   const getAllProject = async () => {
     try {
-      const userId = localStorage.getItem('userId'); // Obtener el ID del usuario desde el almacenamiento local
-      const response = await fetch(`http://localhost:3000/projects/user/${userId}`);
+      const response = await fetch("http://localhost:3000/projects/");
       if (response.ok) {
         const data = await response.json();
         setProyectos(data);
@@ -81,66 +105,63 @@ const Main = () => {
     setMostrarFormulario(false);
   };
 
-  return (
-    <div className="main-container">
-      <header className="header">
-        <h2>Proyectos</h2>
-        <button className="crear-proyecto-btn" onClick={handleCrearProyecto}>
-          <FaPlus />
-        </button>
-      </header>
+  const modalContainer = document.getElementById('modal-container');
 
-      {mostrarFormulario && (
-        <div className="modal" onClick={handleCloseFormulario}>
-          <div className="modal-content" onClick={(e) => e.stopPropagation()}>
-            <button className="close-btn" onClick={handleCloseFormulario}>
-              <FaTimes />
-            </button>
-            <div className="form-container">
-              {proyectoEditar ? (
-                <ProyectoEdit proyectoInicial={proyectoEditar} onSubmit={handleCloseFormulario} onProjectUpdate={handleActualizarProyectos} />
-              ) : (
-                <ProyectoForm onSubmit={handleCloseFormulario} onProjectUpdate={handleActualizarProyectos} />
-              )}
+  return (
+    <>
+      {ReactDOM.createPortal(
+        mostrarFormulario ? (
+          <div id="modal-container" className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
+            <div className="bg-gray-100 p-4 rounded-lg shadow-lg relative z-50">
+              <button
+                onClick={handleCloseFormulario}
+                className="absolute top-2 right-2 text-gray-500 hover:text-gray-700 focus:outline-none"
+              >
+                <FaTimes />
+              </button>
+              <div className="form-container">
+                {proyectoEditar ? (
+                  <ProyectoEdit
+                    proyectoInicial={proyectoEditar}
+                    onSubmit={handleCloseFormulario}
+                    onProjectUpdate={handleActualizarProyectos}
+                  />
+                ) : (
+                  <ProyectoForm
+                    onSubmit={handleCloseFormulario}
+                    onProjectUpdate={handleActualizarProyectos}
+                  />
+                )}
+              </div>
             </div>
           </div>
-        </div>
+        ) : null,
+        modalContainer
       )}
 
-      <ul className="proyectos-lista">
-        {proyectos.map((proyecto) => (
-          <li className="proyecto" key={proyecto.id}>
-            <div className="proyecto-info">
-              <div><strong>Nombre:</strong> {proyecto.nameproject}</div>
-              <div><strong>Descripción:</strong> {proyecto.description}</div>
-              <div><strong>Fecha Inicio:</strong> {proyecto.fechaInicio}</div>
-              <div><strong>Fecha Finalización:</strong> {proyecto.fechaFinalizacion}</div>
-            </div>
-            <div className="botones-proyecto">
-              <button className="editar-btn" onClick={() => handleEditarProyecto(proyecto)}>
-                <FaEdit />
-              </button>
-              <button className="eliminar-btn" onClick={() => {
-                Swal.fire({
-                  title: '¿Estás seguro?',
-                  text: '¿Estás seguro de que deseas eliminar este proyecto?',
-                  icon: 'warning',
-                  showCancelButton: true,
-                  confirmButtonText: 'Sí, eliminar',
-                  cancelButtonText: 'Cancelar'
-                }).then((result) => {
-                  if (result.isConfirmed) {
-                    handleEliminarProyecto(proyecto.id);
-                  }
-                });
-              }}>
-                <FaTrash />
-              </button>
-            </div>
-          </li>
-        ))}
-      </ul>
-    </div>
+      <div className="max-w-4xl mx-auto p-6">
+        <header className="flex justify-between items-center mb-8">
+          <h2 className="text-3xl font-bold text-gray-800">Proyectos</h2>
+          <button
+            onClick={handleCrearProyecto}
+            className="flex items-center px-4 py-2 bg-blue-600 text-white font-semibold rounded-lg shadow-md transition duration-300 hover:bg-blue-700 hover:scale-105 focus:outline-none"
+          >
+            <FaPlus className="mr-2" /> Nuevo Proyecto
+          </button>
+        </header>
+
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+          {proyectos.map((proyecto) => (
+            <ProyectoCard
+              key={proyecto.id}
+              proyecto={proyecto}
+              onEditar={handleEditarProyecto}
+              onEliminar={handleEliminarProyecto}
+            />
+          ))}
+        </div>
+      </div>
+    </>
   );
 };
 
