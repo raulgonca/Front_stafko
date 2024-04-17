@@ -8,7 +8,9 @@ function Header() {
         <div className="flex justify-between h-16">
           {/* Logo */}
           <div className="flex-shrink-0 flex items-center">
-            <a href="/" className="text-white font-semibold text-xl">Your Logo</a>
+          <a href="/login">
+              <img className="h-8 w-8 rounded-full" src="/src/Image/Logito.svg" alt="Logo" />
+            </a>
           </div>
           {/* Search */}
           <div className="flex-1 flex justify-center px-2 lg:ml-6 lg:justify-end">
