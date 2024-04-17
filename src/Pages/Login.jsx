@@ -1,5 +1,3 @@
-// Login.js
-
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Swal from 'sweetalert2';
@@ -44,14 +42,16 @@ const Login = () => {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
-      <div className="max-w-md w-full space-y-8">
-        <div>
-          <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900">Iniciar sesión</h2>
+    <div className="min-h-screen flex items-center justify-center ">
+      <div className="max-w-lg w-full bg-white p-8 rounded-lg shadow-lg flex">
+        <div className="w-1/3 pr-4 flex justify-center"> {/* Logo de la empresa a la izquierda */}
+          <a href="/login">
+            <img className="h-50 w-50 rounded-full" src="https://raw.githubusercontent.com/raulgonca/Front_stafko/main/src/Image/Logito.svg" alt="Logo" />
+          </a>
         </div>
-        <form className="mt-8 space-y-6" onSubmit={handleSubmit}>
-          <input type="hidden" name="remember" defaultValue="true" />
-          <div className="rounded-md shadow-sm -space-y-px">
+        <div className="w-2/3 pl-4"> {/* Formulario a la derecha */}
+          <h2 className="text-3xl font-extrabold text-gray-900 mb-4">Login</h2>
+          <form className="space-y-4" onSubmit={handleSubmit}>
             <div>
               <label htmlFor="username" className="sr-only">Nombre de usuario</label>
               <input
@@ -60,7 +60,7 @@ const Login = () => {
                 type="text"
                 autoComplete="username"
                 required
-                className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
+                className="input-field w-full"
                 placeholder="Nombre de usuario"
                 value={username}
                 onChange={(e) => setUsername(e.target.value)} />
@@ -73,25 +73,24 @@ const Login = () => {
                 type="password"
                 autoComplete="current-password"
                 required
-                className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
+                className="input-field w-full"
                 placeholder="Contraseña"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)} />
             </div>
-          </div>
-
-          <div>
-            <button
-              type="submit"
-              className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-            >
-              Iniciar sesión
-            </button>
-          </div>
-        </form>
-        {errorMessage && (
-          <p className="text-red-500 text-center">{errorMessage}</p>
-        )}
+            <div>
+              <button
+                type="submit"
+                className="btn-primary w-full"
+              >
+                Iniciar sesión
+              </button>
+            </div>
+          </form>
+          {errorMessage && (
+            <p className="text-red-500 text-center">{errorMessage}</p>
+          )}
+        </div>
       </div>
     </div>
   );

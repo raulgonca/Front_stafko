@@ -1,16 +1,26 @@
 /* styles.css */
 @import url('https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css');
 
+/* Estilos generales */
+body {
+  @apply min-h-screen overflow-hidden; /* Altura fija y deshabilitar el scroll */
+  background-color: #f3f4f6; /* Color de fondo */
+}
+
+/* Estilos específicos para el navbar */
 navbar {
-  @apply bg-base-100 shadow-lg fixed top-0 left-0 right-0 z-50;
+  @apply bg-base-100 shadow-lg fixed top-1 left-0 right-0;
 }
 
 avatar img {
   @apply w-10 h-10 rounded-full; /* Ajusta el tamaño de la imagen aquí */
 }
 
-dropdown-content {
-  @apply mt-3 z-[1] p-2 shadow menu menu-sm dropdown-content bg-base-100 rounded-box w-52;
+/* Asegura que el contenido esté centrado y tenga márgenes laterales */
+.container {
+  @apply mx-auto px-4; /* Margen lateral */
+  max-width: calc(100% - 2rem); /* Ancho máximo */
 }
 
-/* Agrega otros estilos según sea necesario */
+
+

@@ -9,12 +9,13 @@ const App = () => {
   return (
     <Router>
       <Header />
-      <div>
+      <div className="mt-16">
         <Routes>
           <Route path="/" element={<Registro />} /> {/* Ruta por defecto */}
           <Route path="/login" element={<Login/>} />
           <Route path="/main/:username" element={<Main/>} />
           <Route path="/register" element={<Registro/>} />
+
 
         </Routes>
       </div>
