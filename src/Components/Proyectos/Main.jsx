@@ -95,7 +95,7 @@ const Main = () => {
  
   const ProyectoCard = ({ proyecto }) => {
     return (
-      <div className="flex flex-col justify-between bg-white shadow-lg rounded-lg p-6 mb-6">
+      <div className="flex flex-col justify-between bg-white shadow-lg rounded-lg p-6 mb-6 w-64">
         <div>
           <h3 className="text-lg font-semibold text-gray-800">{proyecto.nameproject}</h3>
           <p className="text-gray-600 mt-2">{proyecto.description}</p>
@@ -147,18 +147,18 @@ const Main = () => {
         </div>
       )}
 
-      <div className="max-w-4xl mx-auto p-6">
+      <div className="max-w-4xl mx-auto p-6 mt-8"> {/* Cambiado a mt-8 */}
         <header className="flex justify-between items-center mb-8">
-          <h2 className="text-3xl font-bold text-gray-800">Proyectos</h2>
+          <h2 className="text-3xl font-bold text-gray-800">Projects</h2>
           <button
             onClick={handleCrearProyecto}
             className="flex items-center px-4 py-2 bg-blue-600 text-white font-semibold rounded-lg shadow-md transition duration-300 hover:bg-blue-700 hover:scale-105 focus:outline-none"
           >
-            <FaPlus className="mr-2" /> Nuevo Proyecto
+            <FaPlus className="mr-2" /> New Project
           </button>
         </header>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+        <div className="grid grid-cols-3 gap-6">
           {proyectos.map((proyecto) => (
             <ProyectoCard
               key={proyecto.id}

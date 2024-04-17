@@ -4,7 +4,7 @@
 /* Estilos generales */
 body {
   @apply min-h-screen overflow-hidden; /* Altura fija y deshabilitar el scroll */
-  background-color: #f3f4f6; /* Color de fondo */
+  background-color: #577ac2; /* Color de fondo */
 }
 
 /* Estilos específicos para el navbar */

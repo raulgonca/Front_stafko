@@ -44,9 +44,9 @@ const Login = () => {
   return (
     <div className="min-h-screen flex items-center justify-center ">
       <div className="max-w-lg w-full bg-white p-8 rounded-lg shadow-lg flex">
-        <div className="w-1/3 pr-4 flex justify-center"> {/* Logo de la empresa a la izquierda */}
+        <div className="w-1/3 pr-4 flex justify-center items-center"> {/* Logo de la empresa a la izquierda */}
           <a href="/login">
-            <img className="h-50 w-50 rounded-full" src="https://raw.githubusercontent.com/raulgonca/Front_stafko/main/src/Image/Logito.svg" alt="Logo" />
+            <img className="h-36 w-36 rounded-full" src="https://raw.githubusercontent.com/raulgonca/Front_stafko/main/src/Image/Logito.svg" alt="Logo" />
           </a>
         </div>
         <div className="w-2/3 pl-4"> {/* Formulario a la derecha */}
