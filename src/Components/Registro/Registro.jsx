@@ -6,11 +6,45 @@ function Registro() {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [email, setEmail] = useState('');
+  const [usernameError, setUsernameError] = useState('');
+  const [passwordError, setPasswordError] = useState('');
+  const [emailError, setEmailError] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
-  const navigate = useNavigate(); // Obtener la función navigate
+  const navigate = useNavigate();
+
+  const validateForm = () => {
+    let valid = true;
+
+    if (!username.trim()) {
+      setUsernameError('Por favor ingresa un nombre de usuario.');
+      valid = false;
+    } else {
+      setUsernameError('');
+    }
+
+    if (!password.trim()) {
+      setPasswordError('Por favor ingresa una contraseña.');
+      valid = false;
+    } else {
+      setPasswordError('');
+    }
+
+    if (!email.trim()) {
+      setEmailError('Por favor ingresa un correo electrónico.');
+      valid = false;
+    } else {
+      setEmailError('');
+    }
+
+    return valid;
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    if (!validateForm()) {
+      return;
+    }
 
     try {
       const newUser = { username, password, email };
@@ -26,18 +60,17 @@ function Registro() {
       const data = await response.json();
 
       if (response.ok) {
-        navigate('/login'); // Navegar a la página de login después del registro exitoso
+        Swal.fire({
+          title: 'Bienvenido',
+          text: 'Registro exitoso. ¡Bienvenido!',
+          icon: 'success',
+          confirmButtonText: 'Aceptar'
+        }).then(() => {
+          navigate('/login');
+        });
       } else {
         throw new Error(data.message);
       }
-
-      //Simplemente mostraremos un mensaje de éxito
-      Swal.fire({
-        title: 'Bienvenido',
-        text: 'Registro exitoso. ¡Bienvenido!',
-        icon: 'success',
-        confirmButtonText: 'Aceptar'
-      });
     } catch (error) {
       setErrorMessage(error.message);
     }
@@ -57,10 +90,11 @@ function Registro() {
               type="text"
               autoComplete="username"
               required
-              className="input-field"
+              className={`input-field appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-indigo-500 ${usernameError && 'border-red-500'}`}
               placeholder="Nombre de usuario"
               value={username}
               onChange={(e) => setUsername(e.target.value)} />
+            {usernameError && <p className="text-red-500 text-xs mt-1">{usernameError}</p>}
           </div>
           <div className="mb-4">
             <label htmlFor="password" className="block text-gray-700">Contraseña</label>
@@ -70,10 +104,11 @@ function Registro() {
               type="password"
               autoComplete="new-password"
               required
-              className="input-field"
+              className={`input-field appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-indigo-500 ${passwordError && 'border-red-500'}`}
               placeholder="Contraseña"
               value={password}
               onChange={(e) => setPassword(e.target.value)} />
+            {passwordError && <p className="text-red-500 text-xs mt-1">{passwordError}</p>}
           </div>
           <div className="mb-6">
             <label htmlFor="email" className="block text-gray-700">Correo electrónico</label>
@@ -83,10 +118,11 @@ function Registro() {
               type="email"
               autoComplete="email"
               required
-              className="input-field"
+              className={`input-field appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-indigo-500 ${emailError && 'border-red-500'}`}
               placeholder="Correo electrónico"
               value={email}
               onChange={(e) => setEmail(e.target.value)} />
+            {emailError && <p className="text-red-500 text-xs mt-1">{emailError}</p>}
           </div>
 
           <button
