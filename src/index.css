@@ -15,7 +15,10 @@ body {
 #root {
   justify-content: center;
   align-items: center;
-  height: 100vh; /* Tamaño del viewport */
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  
 }
 
 /* Otros estilos específicos para tu aplicación */

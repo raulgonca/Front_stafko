@@ -53,35 +53,32 @@ const Login = () => {
           <h2 className="text-3xl font-extrabold text-gray-900 mb-4">Login</h2>
           <form className="space-y-4" onSubmit={handleSubmit}>
             <div>
-              <label htmlFor="username" className="sr-only">Nombre de usuario</label>
+              <label htmlFor="username" className="block text-gray-700">Nombre de usuario</label>
               <input
                 id="username"
                 name="username"
                 type="text"
                 autoComplete="username"
                 required
-                className="input-field w-full"
-                placeholder="Nombre de usuario"
+                className="input-field appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-indigo-500"
                 value={username}
                 onChange={(e) => setUsername(e.target.value)} />
             </div>
             <div>
-              <label htmlFor="password" className="sr-only">Contraseña</label>
+              <label htmlFor="password" className="block text-gray-700">Contraseña</label>
               <input
                 id="password"
                 name="password"
                 type="password"
                 autoComplete="current-password"
                 required
-                className="input-field w-full"
-                placeholder="Contraseña"
-                value={password}
+                className="input-field appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-indigo-500"                value={password}
                 onChange={(e) => setPassword(e.target.value)} />
             </div>
             <div>
               <button
                 type="submit"
-                className="btn-primary w-full"
+                className="w-full py-2 px-4 border border-transparent text-white rounded-md bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
               >
                 Iniciar sesión
               </button>

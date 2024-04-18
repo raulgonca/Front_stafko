@@ -9,7 +9,7 @@ const App = () => {
   return (
     <Router>
       <Header />
-      <div className="mt-16">
+      <div className="spacer">
         <Routes>
           <Route path="/" element={<Registro />} /> {/* Ruta por defecto */}
           <Route path="/login" element={<Login/>} />

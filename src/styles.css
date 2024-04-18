@@ -3,24 +3,51 @@
 
 /* Estilos generales */
 body {
-  @apply min-h-screen overflow-hidden; /* Altura fija y deshabilitar el scroll */
   background-color: #577ac2; /* Color de fondo */
+  margin: 0;
+  padding: 0;
 }
 
 /* Estilos específicos para el navbar */
-navbar {
-  @apply bg-base-100 shadow-lg fixed top-1 left-0 right-0;
+.navbar {
+  background-color: #ffffff; /* Color de fondo */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Sombra */
+  position: fixed; /* Fija la barra de navegación en la parte superior */
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 999; /* Asegura que la barra de navegación esté por encima de otros elementos */
 }
 
-avatar img {
-  @apply w-10 h-10 rounded-full; /* Ajusta el tamaño de la imagen aquí */
+.avatar img {
+  width: 40px; /* Ajusta el tamaño de la imagen del avatar aquí */
+  height: 40px;
+  border-radius: 50%; /* Borde redondeado para la imagen del avatar */
 }
 
-/* Asegura que el contenido esté centrado y tenga márgenes laterales */
+/* Ajusta el espacio entre la barra de navegación y el contenido */
+.main-content {
+  margin-top: 64px; /* Ajusta el valor según la altura de tu barra de navegación */
+}
+
+/* Ajusta el margen lateral y la anchura máxima del contenido */
 .container {
-  @apply mx-auto px-4; /* Margen lateral */
-  max-width: calc(100% - 2rem); /* Ancho máximo */
+  margin-left: auto;
+  margin-right: auto;
+  max-width: 1200px; /* Ancho máximo del contenido */
 }
 
+/* Asegura que el contenido esté centrado verticalmente */
+.center-content {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: calc(100vh - 64px); /* Toma la altura total de la ventana del navegador y resta la altura de la barra de navegación */
+}
+
+/* Agrega un margen superior para separar el contenido principal de la barra de navegación */
+.spacer {
+  margin-top: 64px; /* Ajusta el valor según la altura de tu barra de navegación */
+}
 
 

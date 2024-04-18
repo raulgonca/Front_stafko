@@ -19,10 +19,7 @@ const ProyectoEdit = ({ proyectoInicial, onSubmit, onProjectUpdate }) => {
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setProyecto((prevProyecto) => ({
-      ...prevProyecto,
-      [name]: value
-    }));
+    setProyecto((prevProyecto) => ({ ...prevProyecto, [ name ]: value }));
   };
 
   const handleSubmit = async (e) => {

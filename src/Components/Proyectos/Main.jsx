@@ -1,9 +1,8 @@
 import React, { useState, useEffect } from "react";
 import Swal from 'sweetalert2';
-import { FaPlus, FaTimes, FaEdit, FaTrash } from 'react-icons/fa';
+import { FaEdit, FaPlus, FaTimes, FaTrash } from 'react-icons/fa';
 import ProyectoForm from "./ProyectoForm";
 import ProyectoEdit from "./ProyectoEdit";
-
 
 const Main = () => {
   const [proyectos, setProyectos] = useState([]);
@@ -38,7 +37,7 @@ const Main = () => {
     setProyectoEditar(null);
     setMostrarFormulario(true);
   };
-  
+
   const handleEditarProyecto = (proyecto) => {
     setProyectoEditar(proyecto);
     setMostrarFormulario(true);
@@ -83,19 +82,18 @@ const Main = () => {
       }
     }
   };
-  
+
   const handleActualizarProyectos = () => {
     getAllProject();
   };
-  
+
   const handleCloseFormulario = () => {
     setMostrarFormulario(false);
   };
-  
- 
+
   const ProyectoCard = ({ proyecto }) => {
     return (
-      <div className="flex flex-col justify-between bg-white shadow-lg rounded-lg p-6 mb-6 w-64">
+      <div className="flex flex-col justify-between bg-white shadow-lg rounded-lg p-6 mb-6">
         <div>
           <h3 className="text-lg font-semibold text-gray-800">{proyecto.nameproject}</h3>
           <p className="text-gray-600 mt-2">{proyecto.description}</p>
@@ -119,22 +117,22 @@ const Main = () => {
   };
 
   return (
-    <>
+    <div className="container mx-auto px-4">
       {mostrarFormulario && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
-          <div className="bg-gray-100 w-96 p-4 rounded-lg shadow-lg relative z-50">
+          <div className="bg-white w-96 p-6 rounded-lg shadow-lg relative z-50">
             <button
               onClick={handleCloseFormulario}
               className="absolute top-2 right-2 text-gray-500 hover:text-gray-700 focus:outline-none"
-              >
+            >
               <FaTimes />
             </button>
             <div className="form-container">
               {proyectoEditar ? (
                 <ProyectoEdit
-                proyectoInicial={proyectoEditar}
-                onSubmit={handleCloseFormulario}
-                onProjectUpdate={handleActualizarProyectos}
+                  proyectoInicial={proyectoEditar}
+                  onSubmit={handleCloseFormulario}
+                  onProjectUpdate={handleActualizarProyectos}
                 />
               ) : (
                 <ProyectoForm
@@ -147,29 +145,28 @@ const Main = () => {
         </div>
       )}
 
-      <div className="max-w-4xl mx-auto p-6 mt-8"> {/* Cambiado a mt-8 */}
-        <header className="flex justify-between items-center mb-8">
-          <h2 className="text-3xl font-bold text-gray-800">Projects</h2>
+      <div className="max-w-screen-xl mx-auto p-6">
+        <header className="flex flex-col justify-center items-center mb-8">
+          <h2 className="text-4xl md:text-5xl font-bold text-white mb-2">Get Started with Your Projects</h2>
+          <p className="text-lg text-gray-200">Manage and Create Your Projects with Ease</p>
           <button
             onClick={handleCrearProyecto}
-            className="flex items-center px-4 py-2 bg-blue-600 text-white font-semibold rounded-lg shadow-md transition duration-300 hover:bg-blue-700 hover:scale-105 focus:outline-none"
+            className="flex items-center px-6 py-3 mt-4 bg-blue-600 text-white font-semibold rounded-lg shadow-lg transition duration-300 hover:bg-blue-700 hover:scale-105 focus:outline-none"
           >
             <FaPlus className="mr-2" /> New Project
           </button>
         </header>
 
-        <div className="grid grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
           {proyectos.map((proyecto) => (
             <ProyectoCard
               key={proyecto.id}
               proyecto={proyecto}
-              onEditar={handleEditarProyecto}
-              onEliminar={handleEliminarProyecto}
             />
           ))}
         </div>
       </div>
-    </>
+    </div>
   );
 };
 
