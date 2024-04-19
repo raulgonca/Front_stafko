@@ -3,15 +3,19 @@
 
 /* Estilos generales */
 body {
-  background-color: #577ac2; /* Color de fondo */
+  background-color: #6e7cf5; /* Color de fondo suave */
   margin: 0;
   padding: 0;
+  background-image: "./Image/fondoKOI.svg";
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
 }
 
 /* Estilos específicos para el navbar */
 .navbar {
-  background-color: #ffffff; /* Color de fondo */
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Sombra */
+  background-color: #dddddc; /* Color de fondo */
+       box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Sombra */
   position: fixed; /* Fija la barra de navegación en la parte superior */
   top: 0;
   left: 0;
