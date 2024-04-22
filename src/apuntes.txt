@@ -1,0 +1,4 @@
+URL de imagenes para usar en el codigo.
+
+https://cdn.icon-icons.com/icons2/1508/PNG/512/systemusers_104569.png
+https://raw.githubusercontent.com/raulgonca/Front_stafko/main/src/Image/Logito.svg
