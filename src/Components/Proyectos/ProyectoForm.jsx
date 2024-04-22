@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import Swal from 'sweetalert2';
-import "./ProyectoForm.css";
 
 const ProyectoForm = ({ onSubmit, proyectoEditar }) => {
   const [proyecto, setProyecto] = useState({
@@ -65,55 +64,61 @@ const ProyectoForm = ({ onSubmit, proyectoEditar }) => {
   };
 
   return (
-    <div className="proyecto-form-container">
-      <h2>{proyecto.id ? "Editar Proyecto" : "Crear Nuevo Proyecto"}</h2>
+    <div className="proyecto-form-container p-4 max-w-xl mx-auto">
+      <h2 className="text-lg font-bold mb-4">{proyecto.id ? "Editar Proyecto" : "Crear Nuevo Proyecto"}</h2>
       <form onSubmit={handleSubmit}>
-        <div className="form-group">
-          <label htmlFor="nameproject">Nombre del Proyecto:</label>
+        <div className="mb-4">
+          <label htmlFor="nameproject" className="block text-sm font-medium text-gray-700">Nombre del Proyecto:</label>
           <input
             type="text"
             id="nameproject"
             name="nameproject"
             value={proyecto.nameproject}
             onChange={handleChange}
+            className="mt-1 p-2 block w-full border border-gray-300 rounded-md focus:outline-none focus:border-blue-500"
             placeholder="Ingrese el nombre del proyecto aquí"
             required
           />
         </div>
-        <div className="form-group">
-          <label htmlFor="description">Descripción:</label>
+        <div className="mb-4">
+          <label htmlFor="description" className="block text-sm font-medium text-gray-700">Descripción:</label>
           <textarea
             id="description"
             name="description"
             value={proyecto.description}
             onChange={handleChange}
+            className="mt-1 p-2 block w-full border border-gray-300 rounded-md focus:outline-none focus:border-blue-500"
             placeholder="Descripción del proyecto"
             required
           />
         </div>
-        <div className="form-group">
-          <label htmlFor="fechaInicio">Fecha de Inicio:</label>
+        <div className="mb-4">
+          <label htmlFor="fechaInicio" className="block text-sm font-medium text-gray-700">Fecha de Inicio:</label>
           <input
             type="date"
             id="fechaInicio"
             name="fechaInicio"
             value={proyecto.fechaInicio}
             onChange={handleChange}
+            className="mt-1 p-2 block w-full border border-gray-300 rounded-md focus:outline-none focus:border-blue-500"
             required
           />
         </div>
-        <div className="form-group">
-          <label htmlFor="fechaFinalizacion">Fecha de Finalización:</label>
+        <div className="mb-4">
+          <label htmlFor="fechaFinalizacion" className="block text-sm font-medium text-gray-700">Fecha de Finalización:</label>
           <input
             type="date"
             id="fechaFinalizacion"
             name="fechaFinalizacion"
             value={proyecto.fechaFinalizacion}
             onChange={handleChange}
+            className="mt-1 p-2 block w-full border border-gray-300 rounded-md focus:outline-none focus:border-blue-500"
             required
           />
         </div>
-        <button type="submit">{proyecto.id ? "Guardar Cambios" : "Crear Proyecto"}</button>
+        <button type="submit" className="w-full bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded">
+          {proyecto.id ? "Guardar Cambios" : "Crear Proyecto"}
+        </button>
       </form>
     </div>
   );

@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import Swal from 'sweetalert2';
-import "./ProyectoEdit.css";
 
 const ProyectoEdit = ({ proyectoInicial, onSubmit, onProjectUpdate }) => {
   const [proyecto, setProyecto] = useState({
@@ -19,7 +18,7 @@ const ProyectoEdit = ({ proyectoInicial, onSubmit, onProjectUpdate }) => {
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setProyecto((prevProyecto) => ({ ...prevProyecto, [ name ]: value }));
+    setProyecto((prevProyecto) => ({ ...prevProyecto, [name]: value }));
   };
 
   const handleSubmit = async (e) => {
@@ -63,34 +62,36 @@ const ProyectoEdit = ({ proyectoInicial, onSubmit, onProjectUpdate }) => {
   };
 
   return (
-    <div className="proyecto-edit-container">
-      <h2>Editar Proyecto</h2>
+    <div className="proyecto-edit-container p-4 max-w-xl mx-auto">
+      <h2 className="text-lg font-bold mb-4">Editar Proyecto</h2>
       <form onSubmit={handleSubmit}>
-        <div className="form-group">
-          <label htmlFor="nameproject">Nombre del Proyecto:</label>
+        <div className="mb-4">
+          <label htmlFor="nameproject" className="block text-sm font-medium text-gray-700">Nombre del Proyecto:</label>
           <input
             type="text"
             id="nameproject"
             name="nameproject"
             value={proyecto.nameproject}
             onChange={handleChange}
+            className="mt-1 p-2 block w-full border border-gray-300 rounded-md focus:outline-none focus:border-blue-500"
             placeholder="Ingrese el nombre del proyecto aquí"
             required
           />
         </div>
-        <div className="form-group">
-          <label htmlFor="description">Descripción:</label>
+        <div className="mb-4">
+          <label htmlFor="description" className="block text-sm font-medium text-gray-700">Descripción:</label>
           <textarea
             id="description"
             name="description"
             value={proyecto.description}
             onChange={handleChange}
+            className="mt-1 p-2 block w-full border border-gray-300 rounded-md focus:outline-none focus:border-blue-500"
             placeholder="Descripción del proyecto"
             required
           />
         </div>
-        <div className="form-group">
-          <label htmlFor="fechaInicio">Fecha de Inicio:</label>
+        <div className="mb-4">
+          <label htmlFor="fechaInicio" className="block text-sm font-medium text-gray-700">Fecha de Inicio:</label>
           <input
             type="date"
             id="fechaInicio"
@@ -98,20 +99,24 @@ const ProyectoEdit = ({ proyectoInicial, onSubmit, onProjectUpdate }) => {
             value={proyecto.fechaInicio}
             onChange={handleChange}
             disabled
+            className="mt-1 p-2 block w-full border border-gray-300 rounded-md focus:outline-none focus:border-blue-500"
           />
         </div>
-        <div className="form-group">
-          <label htmlFor="fechaFinalizacion">Fecha de Finalización:</label>
+        <div className="mb-4">
+          <label htmlFor="fechaFinalizacion" className="block text-sm font-medium text-gray-700">Fecha de Finalización:</label>
           <input
             type="date"
             id="fechaFinalizacion"
             name="fechaFinalizacion"
             value={proyecto.fechaFinalizacion}
             onChange={handleChange}
+            className="mt-1 p-2 block w-full border border-gray-300 rounded-md focus:outline-none focus:border-blue-500"
             required
           />
         </div>
-        <button type="submit">Guardar Cambios</button>
+        <button type="submit" className="w-full bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded">
+          Guardar Cambios
+        </button>
       </form>
     </div>
   );

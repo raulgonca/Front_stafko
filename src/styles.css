@@ -6,10 +6,10 @@ body {
   background-color: #6e7cf5; /* Color de fondo suave */
   margin: 0;
   padding: 0;
-  background-image: "https://raw.githubusercontent.com/raulgonca/Front_stafko/main/src/Image/fondoKOI.svg";
+  /* background-image: "https://raw.githubusercontent.com/raulgonca/Front_stafko/main/src/Image/fondoKOI.svg";
   background-position: center;
   background-repeat: no-repeat;
-  background-size: cover;
+  background-size: cover; */  
 }
 
 /* Estilos específicos para el navbar */
