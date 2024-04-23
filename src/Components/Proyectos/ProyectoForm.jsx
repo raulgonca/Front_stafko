@@ -34,7 +34,7 @@ const ProyectoForm = ({ onSubmit, proyectoEditar }) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (proyecto.description.length > 100) {
+    if (proyecto.description.length >= 100) {
       Swal.fire({
         title: 'Error',
         text: 'La descripción debe tener como máximo 100 caracteres.',
@@ -125,3 +125,4 @@ const ProyectoForm = ({ onSubmit, proyectoEditar }) => {
 };
 
 export default ProyectoForm;
+

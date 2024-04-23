@@ -13,14 +13,13 @@ function Header({ username, handleCancel, handleSearchChange }) {
         </div>
         {/* Search */}
         <div className="relative">
-          <label htmlFor="search" className="sr-only">Search</label>
-          <input
-            id="search"
-            className="block w-64 bg-gray-900 focus:outline-none text-gray-100 placeholder-gray-400 rounded-md py-2 pl-10 pr-3 sm:text-sm"
-            style={{ backgroundColor: 'rgba(0, 0, 0, 0.3)' }}
-            placeholder="Search"
-            type="text"
-            onChange={handleSearchChange}
+          <label htmlFor="search" className="sr-only"></label>
+            <input
+              id="search"
+              className="block w-64 bg-gray-900 focus:outline-none text-base-100 placeholder-gray-400 rounded-md py-2 pl-10 pr-3 sm:text-sm"
+              style={{ backgroundColor: 'rgba(0, 0, 0, 0.3)' }}
+              type="text"
+              onChange={handleSearchChange}
           />
           <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
             <svg

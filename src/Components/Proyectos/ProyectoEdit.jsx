@@ -23,6 +23,15 @@ const ProyectoEdit = ({ proyectoInicial, onSubmit, onProjectUpdate }) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    if (proyecto.description.length >= 100) {
+      Swal.fire({
+        title: 'Error',
+        text: 'La descripción debe tener como máximo 100 caracteres.',
+        icon: 'error',
+        confirmButtonText: 'Aceptar'
+      });
+      return;
+    }
     try {
       const response = await fetch(`http://localhost:3000/projects/${proyecto.id}`, {
         method: "PUT",
