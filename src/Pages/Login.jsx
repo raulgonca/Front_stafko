@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Swal from 'sweetalert2';
 
+
 const Login = () => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
@@ -12,7 +13,7 @@ const Login = () => {
     e.preventDefault();
   
     try {
-      const response = await fetch('http://localhost:3000/users/login', {
+      const response = await fetch(`http://localhost:3000/users/login`, { 
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
@@ -40,6 +41,7 @@ const Login = () => {
       });
     }
   };
+  
 
   return (
     <div className="min-h-screen flex items-center justify-center ">
