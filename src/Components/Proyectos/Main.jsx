@@ -15,7 +15,7 @@ const Main = () => {
 
   const getAllProject = async () => {
     try {
-      const response = await fetch("http://localhost:3000/projects/");
+      const response = await fetch(`${process.env.REACT_APP_API_URL}/projects`);
       if (response.ok) {
         const data = await response.json();
         setProyectos(data);
@@ -58,7 +58,7 @@ const Main = () => {
     
     if (confirmacion.isConfirmed) {
       try {
-        const response = await fetch(`http://localhost:3000/projects/${proyectoId}`, {
+        const response = await fetch(`${process.env.REACT_APP_API_URL}/projects/${proyectoId}`, {
           method: "DELETE"
         });
         if (response.ok) {

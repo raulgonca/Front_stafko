@@ -49,7 +49,7 @@ function Registro() {
     try {
       const newUser = { username, password, email };
       
-      const response = await fetch('http://localhost:3000/users/', {
+      const response = await fetch(`${process.env.REACT_APP_BACK_URL}/users/`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

@@ -44,7 +44,7 @@ const ProyectoForm = ({ onSubmit, proyectoEditar }) => {
       return;
     }
     try {
-      const response = await fetch("http://localhost:3000/projects/", {
+      const response = await fetch(`${process.env.REACT_APP_BACK_URL}/projects/`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
