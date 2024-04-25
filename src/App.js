@@ -3,6 +3,7 @@ import Registro from './Components/Registro/Registro';
 import Main from './Components/Proyectos/Main';
 import Login from './Pages/Login';
 import Header from './Container/Header';
+//clearimport Footer from './Container/Footer.jsx';
 import './styles.css'
 
 const App = () => {
@@ -17,6 +18,7 @@ const App = () => {
           <Route path="/register" element={<Registro/>} />
         </Routes>
       </div>
+      {/*<Footer />*/}
     </Router>
   );
 }
