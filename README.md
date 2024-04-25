@@ -16,7 +16,7 @@ Stafko-Gestor de proyectos
 
 ## Screenshots
 
-### Register:
+### Registro:
 <img src="/Screenshot/Registro.png">
 
 ### Login:
@@ -43,6 +43,6 @@ Stafko-Gestor de proyectos
 
 ## Contacto
 
-- Si tienes preguntas o sugerencias, puedes contactarme en [tuemail@example.com](raulgo2003@gmail.com).
-- También puedes encontrar más información en mi perfil de GitHub: [tuusuario](https://github.com/raulgonca).
+- Si tienes preguntas o sugerencias, puedes contactarme en [Gmail](mailto:raulgo2003@gmail.com).
+- También puedes encontrar más información en mi perfil de GitHub: [Raulgonca](https://github.com/raulgonca).
 
