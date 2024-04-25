@@ -94,37 +94,39 @@ const Main = () => {
 
   const ProyectoCard = ({ proyecto }) => {
     return (
-      <div className="flex flex-col justify-between bg-white shadow-lg rounded-lg p-6 mb-6">
-        <div>
-          <h3 className="text-lg font-semibold text-gray-800">{proyecto.nameproject}</h3>
-          <p className="text-gray-600 mt-2">{proyecto.description}</p>
-        </div>
-        <div className="flex justify-between mt-4">
-          <button
-            onClick={() => handleEditarProyecto(proyecto)}
-            className="flex items-center px-4 py-2 bg-blue-500 text-white font-semibold rounded-lg shadow-md transition duration-300 hover:bg-blue-600 focus:outline-none"
-          >
-            <FaEdit className="mr-1" /> Edit
-          </button>
-          <button
-            onClick={() => handleEliminarProyecto(proyecto.id)}
-            className="flex items-center px-4 py-2 bg-red-500 text-white font-semibold rounded-lg shadow-md transition duration-300 hover:bg-red-600 focus:outline-none"
-          >
-            <FaTrash className="mr-1" /> Delete
-          </button>
+      <div className="bg-white rounded-lg shadow-lg overflow-hidden transition duration-300 hover:shadow-xl">
+        <div className="p-6 flex flex-col justify-between h-full">
+          <div>
+            <h3 className="text-xl font-semibold text-gray-800 mb-2">{proyecto.nameproject}</h3>
+            <p className="text-gray-600">{proyecto.description}</p>
+          </div>
+          <div className="mt-4 bg-gray-100 py-2 px-4 rounded-lg flex justify-between">
+            <button
+              onClick={() => handleEditarProyecto(proyecto)}
+              className="text-blue-500 hover:text-blue-700 focus:outline-none transition duration-300"
+            >
+              <FaEdit className="inline-block mr-1" /> Editar
+            </button>
+            <button
+              onClick={() => handleEliminarProyecto(proyecto.id)}
+              className="text-red-500 hover:text-red-700 focus:outline-none transition duration-300"
+            >
+              <FaTrash className="inline-block mr-1" /> Eliminar
+            </button>
+          </div>
         </div>
       </div>
     );
   };
 
   return (
-    <div className="container mx-auto px-4">
+    <div className="container mx-auto px-4 py-8">
       {mostrarFormulario && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
-          <div className="bg-white w-96 p-6 rounded-lg shadow-lg relative z-50">
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50 transition duration-300">
+          <div className="bg-white w-full max-w-lg p-8 rounded-lg shadow-lg relative z-50">
             <button
               onClick={handleCloseFormulario}
-              className="absolute top-2 right-2 text-gray-500 hover:text-gray-700 focus:outline-none"
+              className="absolute top-0 right-0 mt-4 mr-4 text-gray-600 hover:text-gray-800 focus:outline-none"
             >
               <FaTimes />
             </button>
@@ -146,26 +148,26 @@ const Main = () => {
         </div>
       )}
 
-      <div className="max-w-screen-xl mx-auto p-6">
-        <header className="flex flex-col justify-center items-center mb-8">
-          <h2 className="text-4xl md:text-5xl font-bold text-white mb-2">Get Started with Your Projects</h2>
-          <p className="text-lg text-gray-200">Manage and Create Your Projects with Ease</p>
+      <header className="text-center mb-8">
+        <h1 className="text-3xl md:text-4xl font-bold text-gray-800 mb-2">¡Comienza con tus Proyectos!</h1>
+        <p className="text-lg text-gray-600">Gestiona y Crea tus Proyectos con Facilidad</p>
+        <div className="flex justify-center">
           <button
             onClick={handleCrearProyecto}
-            className="flex items-center px-6 py-3 mt-4 bg-blue-600 text-white font-semibold rounded-lg shadow-lg transition duration-300 hover:bg-blue-700 hover:scale-105 focus:outline-none"
+            className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded-full mt-4 focus:outline-none flex items-center transition duration-300"
           >
-            <FaPlus className="mr-2" /> New Project
+          <FaPlus className="mr-2" /> Nuevo Proyecto
           </button>
-        </header>
-
-        <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-          {proyectos.map((proyecto) => (
-            <ProyectoCard
-              key={proyecto.id}
-              proyecto={proyecto}
-            />
-          ))}
         </div>
+      </header>
+
+      <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+        {proyectos.map((proyecto) => (
+          <ProyectoCard
+            key={proyecto.id}
+            proyecto={proyecto}
+          />
+        ))}
       </div>
     </div>
   );

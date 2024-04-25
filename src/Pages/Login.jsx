@@ -32,7 +32,7 @@ const Login = () => {
       if (response.ok) {
         console.log('Inicio de sesión exitoso');
         // Redirige al usuario a la página principal después del inicio de sesión
-        navigate('/main/:username');
+        navigate(`/main/${username}`);
       } else {
         // Lanza un error si la respuesta no es exitosa
         throw new Error('Credenciales incorrectas');
