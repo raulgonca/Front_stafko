@@ -8,7 +8,7 @@ function Header({ username, handleCancel, handleSearchChange }) {
         {/* Logo */}
         <div className="flex items-center">
           <Link to="/login" className="mr-4">
-            <img className="h-10 w-auto" src="https://raw.githubusercontent.com/raulgonca/Front_stafko/main/src/Image/Logito.svg" alt="Logo" />
+            <img className="h-10 w-auto" src="/src/Image/Logito.png" alt="Logo" />
           </Link>
         </div>
         {/* Search */}

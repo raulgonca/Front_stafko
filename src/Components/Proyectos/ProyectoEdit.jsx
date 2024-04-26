@@ -33,7 +33,7 @@ const ProyectoEdit = ({ proyectoInicial, onSubmit, onProjectUpdate }) => {
       return;
     }
     try {
-      const response = await fetch(`${process.env.REACT_APP_BACK_URL}/projects/${proyecto.id}`, {
+      const response = await fetch(`${process.env.REACT_APP_API_URL}/projects/${proyecto.id}`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",

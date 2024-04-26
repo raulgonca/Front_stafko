@@ -3,19 +3,19 @@
 
 /* Estilos generales */
 body {
-  background-color: #aab0e6; /* Color de fondo suave */
+  background-color: #ffb977; /* Color de fondo suave */
   margin: 0;
   padding: 0;
-  /* background-image: "https://raw.githubusercontent.com/raulgonca/Front_stafko/main/src/Image/fondoKOI.svg";
+  /*background-image: "https://raw.githubusercontent.com/raulgonca/Front_stafko/main/src/Image/fondoKOI.svg";*/
   background-position: center;
   background-repeat: no-repeat;
-  background-size: cover; */  
+  background-size: cover; 
 }
 
 /* Estilos específicos para el navbar */
 .navbar {
   background-color: #dddddc; /* Color de fondo */
-       box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Sombra */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Sombra */
   position: fixed; /* Fija la barra de navegación en la parte superior */
   top: 0;
   left: 0;
@@ -54,4 +54,21 @@ body {
   margin-top: 64px; /* Ajusta el valor según la altura de tu barra de navegación */
 }
 
+/* Estilo para el footer */
+footer {
+  background-color: #dddddc; /* Color de fondo */
+  box-shadow: 0 -2px 4px rgba(0, 0, 0, 0.1); /* Sombra debajo del footer */
+  position: fixed; /* Fijar en la parte inferior */
+  bottom: 0; /* Pegado al fondo */
+  left: 0;
+  right: 0;
+  width: 100%; /* Ocupa todo el ancho */
+  z-index: 999; /* Asegura que esté por encima de otros elementos */
+  padding: 8px; /* Espaciado interno */
+  text-align: center;
+}
 
+/* Ajuste del espacio al final del contenido principal */
+.main-content {
+  margin-bottom: 80px; /* Ajusta el valor según la altura del footer + espacio adicional */
+}
