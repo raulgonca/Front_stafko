@@ -57,15 +57,19 @@ body {
 /* Estilo para el footer */
 footer {
   background-color: #dddddc; /* Color de fondo */
-  box-shadow: 0 -2px 4px rgba(0, 0, 0, 0.1); /* Sombra debajo del footer */
   position: fixed; /* Fijar en la parte inferior */
   bottom: 0; /* Pegado al fondo */
   left: 0;
   right: 0;
   width: 100%; /* Ocupa todo el ancho */
   z-index: 999; /* Asegura que esté por encima de otros elementos */
-  padding: 8px; /* Espaciado interno */
+  padding: 5px; /* Espaciado interno */
   text-align: center;
+  display: flex; /* Utiliza flexbox para los elementos internos */
+  justify-content: center; /* Centra los elementos horizontalmente */
+  align-items: center; /* Centra los elementos verticalmente */
+  
+  
 }
 
 /* Ajuste del espacio al final del contenido principal */

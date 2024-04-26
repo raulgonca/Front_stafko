@@ -8,7 +8,8 @@ function Footer() {
 
   return (
     <footer>
-      <p>{ copy } { fullName } - { currentYear }</p>
+        <p>{ copy } { currentYear } - { fullName } </p> 
+        <p className="ml-3">Proyecto Personal de Gestión de Proyectos</p>
     </footer>
   );
 }
