@@ -56,7 +56,7 @@ const Login = () => {
         {/* Logo de la empresa */}
         <div className="w-1/3 pr-4 flex justify-center items-center">
           <a href="/login">
-            <img className="h-36 w-36 rounded-full" src="../Image/Logito.png" alt="Logo" />
+            <img className="h-36 w-36 rounded-full" src="../Image/logito.svg" alt="Logo" />
           </a>
         </div>
         {/* Formulario de inicio de sesión */}
