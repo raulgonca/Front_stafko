@@ -19,7 +19,7 @@ const Login = () => {
 
     try {
       // Envía la solicitud al servidor para iniciar sesión
-      const response = await fetch(`${process.env.REACT_APP_API_URL}/users/login`, {
+      const response = await fetch(`${process.env.REACT_APP_API_URL}/auth/login`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
@@ -50,17 +50,19 @@ const Login = () => {
   };
 
   // Renderiza el formulario de inicio de sesión
-  return (
-    <div className="min-h-screen flex items-center justify-center">
-      <div className="max-w-lg w-full bg-white p-8 rounded-lg shadow-lg flex">
-        {/* Logo de la empresa */}
-        <div className="w-1/3 pr-4 flex justify-center items-center">
-          <a href="/login">
-            <img className="h-36 w-36 rounded-full" src="https://raw.githubusercontent.com/raulgonca/Front_stafko/main/src/Image/logito.svg" alt="Logo" />
-          </a>
-        </div>
-        {/* Formulario de inicio de sesión */}
-        <div className="w-2/3 pl-4">
+// Renderiza el formulario de inicio de sesión
+return (
+  <div className="min-h-screen flex items-center justify-center">
+    <div className="max-w-lg w-full bg-white p-8 rounded-lg shadow-lg flex">
+      {/* Logo de la empresa */}
+      <div className="w-1/3 pr-4 flex justify-center items-center">
+        <a href="/login">
+          <img className="h-36 w-36 rounded-full" src="https://raw.githubusercontent.com/raulgonca/Front_stafko/main/src/Image/logito.svg" alt="Logo" />
+        </a>
+      </div>
+      {/* Formulario de inicio de sesión */}
+      <div className="w-2/3 pl-4 flex justify-center"> {/* Añade 'flex justify-center' aquí */}
+        <div className="w-full"> {/* Utiliza 'w-full' para que el contenido sea responsive */}
           <h2 className="text-3xl font-extrabold text-gray-900 mb-4">Login</h2>
           <form className="space-y-4" onSubmit={handleSubmit}>
             {/* Campo de nombre de usuario */}
@@ -91,12 +93,15 @@ const Login = () => {
             </div>
             {/* Botón de inicio de sesión */}
             <div>
-              <button
-                type="submit"
-                className="w-full py-2 px-4 border border-transparent text-white rounded-md bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-              >
-                Iniciar sesión
-              </button>
+            <button
+              type="submit"
+              className="w-full py-2 px-4 border border-transparent text-white rounded-md"
+              style={{ backgroundColor: '#fd9c71', outline: 'none', ring: '2', ringOffset: '2', ringColor: 'indigo-500' }}
+            >
+              Iniciar sesión
+            </button>
+
+
             </div>
           </form>
           {/* Mensaje de error */}
@@ -106,8 +111,8 @@ const Login = () => {
         </div>
       </div>
     </div>
-  );
-};
+  </div>
+);
+}
 
-// Exporta el componente de inicio de sesión
 export default Login;

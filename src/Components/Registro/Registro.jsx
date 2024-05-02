@@ -49,7 +49,7 @@ function Registro() {
     try {
       const newUser = { username, password, email };
       
-      const response = await fetch(`${process.env.REACT_APP_API_URL}/users/`, {
+      const response = await fetch(`${process.env.REACT_APP_API_URL}/auth/register`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -77,8 +77,8 @@ function Registro() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8 ">
-      <div className="max-w-md w-full bg-white p-8 rounded-lg shadow-lg">
+    <div className="min-h-screen flex items-center justify-center ">
+      <div className="max-w-3xl w-full bg-white p-8 rounded-lg shadow-lg">
         <h2 className="text-3xl font-semibold text-center text-gray-900 mb-6">Registro</h2>
         {errorMessage && <p className="text-red-500 text-center mb-4">{errorMessage}</p>}
         <form onSubmit={handleSubmit}>
@@ -93,7 +93,8 @@ function Registro() {
               className={`input-field appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-indigo-500 ${usernameError && 'border-red-500'}`}
               placeholder="Nombre de usuario"
               value={username}
-              onChange={(e) => setUsername(e.target.value)} />
+              onChange={(e) => setUsername(e.target.value)}
+            />
             {usernameError && <p className="text-red-500 text-xs mt-1">{usernameError}</p>}
           </div>
           <div className="mb-4">
@@ -107,7 +108,8 @@ function Registro() {
               className={`input-field appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-indigo-500 ${passwordError && 'border-red-500'}`}
               placeholder="Contraseña"
               value={password}
-              onChange={(e) => setPassword(e.target.value)} />
+              onChange={(e) => setPassword(e.target.value)}
+            />
             {passwordError && <p className="text-red-500 text-xs mt-1">{passwordError}</p>}
           </div>
           <div className="mb-6">
@@ -121,14 +123,17 @@ function Registro() {
               className={`input-field appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-indigo-500 ${emailError && 'border-red-500'}`}
               placeholder="Correo electrónico"
               value={email}
-              onChange={(e) => setEmail(e.target.value)} />
+              onChange={(e) => setEmail(e.target.value)}
+            />
             {emailError && <p className="text-red-500 text-xs mt-1">{emailError}</p>}
           </div>
-
+  
           <button
             type="submit"
             className="w-full py-2 px-4 border border-transparent text-white rounded-md bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-          > Registrarse
+            style={{ backgroundColor: '#fd9c71', outline: 'none', ring: '2', ringOffset: '2', ringColor: 'indigo-500' }}
+          >
+            Registrarse
           </button>
         </form>
       </div>

@@ -5,6 +5,8 @@ import Login from './Pages/Login';
 import Header from './Container/Header';
 import Footer from './Container/Footer.jsx';
 import './styles.css'
+import Prueba from '../src/Components/Proyectos/New-main.jsx';
+
 
 const App = () => {
   return (
@@ -17,12 +19,11 @@ const App = () => {
             <Route path="/login" element={<Login />} />
             <Route path="/main/:username" element={<Main />} />
             <Route path="/register" element={<Registro />} />
+            <Route path="/prueba" element={<Prueba />} />
           </Routes>
         </div>
       </div>
-      <footer>
-        <Footer />
-      </footer>
+      <Footer />
     </Router>
   );
 }
