@@ -1,64 +1,54 @@
 import React, { useState, useEffect } from "react";
-import Swal from 'sweetalert2';
-import SeleccionarColaboradoresModal from "./Colaboradores";
+import { FaTimes } from "react-icons/fa";
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
+import Swal from "sweetalert2";
 
-const ProyectoForm = ({ onSubmit, proyectoEditar }) => {
-  const [proyecto, setProyecto] = useState({
-    id: null,
+const ProjectForm = ({ proyectoEditar, onClose, onProjectUpdate }) => {
+  const [formData, setFormData] = useState({
     nameproject: "",
     description: "",
-    fechaInicio: "",
-    fechaFinalizacion: "",
-    colaboradores: []
+    startDate: null,
+    endDate: null
   });
-
-  const [usuarios, setUsuarios] = useState([]);
-  const [mostrarModal, setMostrarModal] = useState(false);
 
   useEffect(() => {
     if (proyectoEditar) {
-      setProyecto(proyectoEditar);
-    } else {
-      setProyecto({
-        id: null,
-        nameproject: "",
-        description: "",
-        fechaInicio: "",
-        fechaFinalizacion: "",
-        colaboradores: []
+      setFormData({
+        nameproject: proyectoEditar.nameproject || "",
+        description: proyectoEditar.description || "",
+        startDate: proyectoEditar.startDate ? new Date(proyectoEditar.startDate) : null,
+        endDate: proyectoEditar.endDate ? new Date(proyectoEditar.endDate) : null
       });
     }
-    cargarUsuarios(); // Cargar usuarios al montar el componente
   }, [proyectoEditar]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setProyecto({
-      ...proyecto,
+    setFormData((prevData) => ({
+      ...prevData,
       [name]: value
-    });
+    }));
   };
 
-  const handleOpenModal = () => {
-    setMostrarModal(true);
+  const handleStartDateChange = (date) => {
+    setFormData((prevData) => ({
+      ...prevData,
+      startDate: date
+    }));
   };
 
-  const handleCloseModal = () => {
-    setMostrarModal(false);
-  };
-
-  const handleColaboradoresSeleccionados = (colaboradoresSeleccionados) => {
-    setProyecto({
-      ...proyecto,
-      colaboradores: colaboradoresSeleccionados
-    });
-    handleCloseModal(); // Cerrar el modal después de seleccionar colaboradores
+  const handleEndDateChange = (date) => {
+    setFormData((prevData) => ({
+      ...prevData,
+      endDate: date
+    }));
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    if (proyecto.description.length >= 100) {
+    if (formData.description.length > 100) {
       Swal.fire({
         title: 'Error',
         text: 'La descripción debe tener como máximo 100 caracteres.',
@@ -68,56 +58,40 @@ const ProyectoForm = ({ onSubmit, proyectoEditar }) => {
       return;
     }
 
+    const proyectoEnviar = {
+      ...formData,
+      startDate: formData.startDate ? formData.startDate.toISOString() : null,
+      endDate: formData.endDate ? formData.endDate.toISOString() : null
+    };
+
     try {
-      const proyectoEnviar = { ...proyecto, colaboradores: proyecto.colaboradores.map(colaborador => colaborador.id) };
-      
-      const url = proyecto.id ? `${process.env.REACT_APP_API_URL}/projects/${proyecto.id}` : `${process.env.REACT_APP_API_URL}/projects/`;
-      const method = proyecto.id ? "PUT" : "POST";
+      const url = proyectoEditar ? `${process.env.REACT_APP_API_URL}/projects/${proyectoEditar.id}` : `${process.env.REACT_APP_API_URL}/projects`;
+      const method = proyectoEditar ? "PUT" : "POST";
 
       const response = await fetch(url, {
         method: method,
         headers: {
-          "Content-Type": "application/json",
+          "Content-Type": "application/json"
         },
-        body: JSON.stringify(proyectoEnviar),
+        body: JSON.stringify(proyectoEnviar)
       });
 
       if (response.ok) {
-        const mensaje = `Proyecto ${proyecto.id ? 'editado' : 'creado'} correctamente.`;
+        const mensaje = `Proyecto ${proyectoEditar ? 'editado' : 'creado'} correctamente.`;
         Swal.fire({
           title: 'Éxito',
           text: mensaje,
           icon: 'success',
           confirmButtonText: 'Aceptar'
         });
-        onSubmit();
+        onProjectUpdate();
+        onClose(); // Cerrar el formulario después de guardar correctamente
       } else {
-        throw new Error(`Error al ${proyecto.id ? 'editar' : 'crear'} el proyecto: ${response.statusText}`);
+        throw new Error(`Error al ${proyectoEditar ? 'editar' : 'crear'} el proyecto: ${response.statusText}`);
       }
     } catch (error) {
       console.error("Error al comunicarse con el servidor:", error);
-      const errorMessage = `Ocurrió un error al ${proyecto.id ? 'editar' : 'crear'} el proyecto.`;
-      Swal.fire({
-        title: 'Error',
-        text: errorMessage,
-        icon: 'error',
-        confirmButtonText: 'Aceptar'
-      });
-    }
-  };
-
-  const cargarUsuarios = async () => {
-    try {
-      const response = await fetch(`${process.env.REACT_APP_API_URL}/users`);
-      if (response.ok) {
-        const data = await response.json();
-        setUsuarios(data); 
-      } else {
-        throw new Error(`Error al cargar usuarios: ${response.statusText}`);
-      }
-    } catch (error) {
-      console.error("Error al cargar usuarios:", error);
-      const errorMessage = 'Ocurrió un error al cargar los usuarios.';
+      const errorMessage = `Ocurrió un error al ${proyectoEditar ? 'editar' : 'crear'} el proyecto.`;
       Swal.fire({
         title: 'Error',
         text: errorMessage,
@@ -128,88 +102,90 @@ const ProyectoForm = ({ onSubmit, proyectoEditar }) => {
   };
 
   return (
-    <div className="proyecto-form-container p-4 max-w-xl mx-auto">
-      <h2 className="text-lg font-bold mb-4">{proyecto.id ? "Editar Proyecto" : "Crear Nuevo Proyecto"}</h2>
-      <form onSubmit={handleSubmit}>
-        <div className="mb-4">
-          <label htmlFor="nameproject" className="block text-sm font-medium text-gray-700">Nombre del Proyecto:</label>
-          <input
-            type="text"
-            id="nameproject"
-            name="nameproject"
-            value={proyecto.nameproject}
-            onChange={handleChange}
-            className="mt-1 p-2 block w-full border border-gray-300 rounded-md focus:outline-none focus:border-blue-500"
-            placeholder="Ingrese el nombre del proyecto aquí"
-            required
-          />
-        </div>
-        <div className="mb-4">
-          <label htmlFor="description" className="block text-sm font-medium text-gray-700">Descripción:</label>
-          <textarea
-            id="description"
-            name="description"
-            value={proyecto.description}
-            onChange={handleChange}
-            className="mt-1 p-2 block w-full border border-gray-300 rounded-md focus:outline-none focus:border-blue-500"
-            placeholder="Descripción del proyecto"
-            required
-          />
-        </div>
-        <div className="mb-4">
-          <label htmlFor="fechaInicio" className="block text-sm font-medium text-gray-700">Fecha de Inicio:</label>
-          <input
-            type="date"
-            id="fechaInicio"
-            name="fechaInicio"
-            value={proyecto.fechaInicio}
-            onChange={handleChange}
-            className="mt-1 p-2 block w-full border border-gray-300 rounded-md focus:outline-none focus:border-blue-500"
-            required
-          />
-        </div>
-        <div className="mb-4">
-          <label htmlFor="fechaFinalizacion" className="block text-sm font-medium text-gray-700">Fecha de Finalización:</label>
-          <input
-            type="date"
-            id="fechaFinalizacion"
-            name="fechaFinalizacion"
-            value={proyecto.fechaFinalizacion}
-            onChange={handleChange}
-            className="mt-1 p-2 block w-full border border-gray-300 rounded-md focus:outline-none focus:border-blue-500"
-            required
-          />
-        </div>
-
-        {/* Botón para abrir el modal de selección de colaboradores */}
-        <button
-          type="button"
-          onClick={handleOpenModal}
-          className="mb-4 bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded"
-        >
-          Seleccionar Colaboradores
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
+      <div className="bg-white max-w-md p-8 rounded-lg shadow-lg">
+        <button onClick={onClose} className="absolute top-0 right-0 mt-4 mr-4 text-gray-600 hover:text-gray-800 focus:outline-none">
+          <FaTimes />
         </button>
-
-        {/* Renderizado condicional del modal */}
-        {mostrarModal && (
-          <div className="modal-overlay">
-            <div className="modal">
-              <SeleccionarColaboradoresModal
-                usuarios={usuarios}
-                onClose={handleCloseModal}
-                onColaboradoresSeleccionados={handleColaboradoresSeleccionados}
-              />
-            </div>
+        <h2 className="text-2xl font-bold text-gray-800 mb-4">{proyectoEditar ? "Editar Proyecto" : "Nuevo Proyecto"}</h2>
+        <form onSubmit={handleSubmit}>
+          <div className="mb-4">
+            <label className="block text-gray-700 font-bold mb-2" htmlFor="nameproject">
+              Nombre del Proyecto
+            </label>
+            <input
+              type="text"
+              id="nameproject"
+              name="nameproject"
+              value={formData.nameproject}
+              onChange={handleChange}
+              className="w-full px-3 py-2 border rounded-lg focus:outline-none focus:border-blue-500"
+              required
+            />
           </div>
-        )}
-
-        {/* Botón de submit */}
-        <button type="submit" className="w-full bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded">
-          {proyecto.id ? "Guardar Cambios" : "Crear Proyecto"}
-        </button>
-      </form>
+          <div className="mb-4">
+            <label className="block text-gray-700 font-bold mb-2" htmlFor="description">
+              Descripción
+            </label>
+            <textarea
+              id="description"
+              name="description"
+              value={formData.description}
+              onChange={handleChange}
+              className="w-full px-3 py-2 border rounded-lg focus:outline-none focus:border-blue-500"
+              rows="4"
+              required
+            ></textarea>
+          </div>
+          <div className="mb-4">
+            <label className="block text-gray-700 font-bold mb-2" htmlFor="startDate">
+              Fecha de Inicio
+            </label>
+            <DatePicker
+              id="startDate"
+              name="startDate"
+              selected={formData.startDate}
+              onChange={handleStartDateChange}
+              className="w-full px-3 py-2 border rounded-lg focus:outline-none focus:border-blue-500"
+              dateFormat="dd/MM/yyyy"
+              isClearable
+              placeholderText="Seleccionar fecha de inicio"
+            />
+          </div>
+          <div className="mb-6">
+            <label className="block text-gray-700 font-bold mb-2" htmlFor="endDate">
+              Fecha de Finalización
+            </label>
+            <DatePicker
+              id="endDate"
+              name="endDate"
+              selected={formData.endDate}
+              onChange={handleEndDateChange}
+              className="w-full px-3 py-2 border rounded-lg focus:outline-none focus:border-blue-500"
+              dateFormat="dd/MM/yyyy"
+              isClearable
+              placeholderText="Seleccionar fecha de finalización"
+            />
+          </div>
+          <div className="flex justify-end">
+            <button
+              type="button"
+              onClick={onClose} // Cerrar el formulario al hacer clic en Cancelar
+              className="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded mr-2 focus:outline-none"
+            >
+              Cancelar
+            </button>
+            <button
+              type="submit"
+              className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded focus:outline-none"
+            >
+              {proyectoEditar ? "Guardar Cambios" : "Crear Proyecto"}
+            </button>
+          </div>
+        </form>
+      </div>
     </div>
   );
 };
 
-export default ProyectoForm;
+export default ProjectForm;

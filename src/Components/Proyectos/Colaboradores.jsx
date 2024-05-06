@@ -4,7 +4,7 @@ const SeleccionarColaboradoresModal = ({ usuarios, onClose, onColaboradoresSelec
   const handleColaboradoresSeleccionados = (e) => {
     const selectedColaboradores = Array.from(e.target.selectedOptions, (option) => option.value);
     onColaboradoresSeleccionados(selectedColaboradores);
-    onClose(); // Cerrar el modal después de seleccionar
+    onClose(); 
   };
 
   return (
