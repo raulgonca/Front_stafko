@@ -4,8 +4,8 @@ import Main from './Components/Proyectos/Main';
 import Login from './Pages/Login';
 import Header from './Container/Header';
 import Footer from './Container/Footer.jsx';
+import Dashboard from '../src/Components/Proyectos/Dashboard.jsx';
 import './styles.css'
-import Prueba from '../src/Components/Proyectos/New-main.jsx';
 
 
 const App = () => {
@@ -19,7 +19,7 @@ const App = () => {
             <Route path="/login" element={<Login />} />
             <Route path="/main/:username" element={<Main />} />
             <Route path="/register" element={<Registro />} />
-            <Route path="/prueba" element={<Prueba />} />
+            <Route path="/Dashboard" element={<Dashboard />} />
           </Routes>
         </div>
       </div>

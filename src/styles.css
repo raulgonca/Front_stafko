@@ -7,11 +7,7 @@ body {
   width: max-content;
   background-color: #ffb977; /* Color de fondo suave */
   padding: 0;
-  /*background-image: "https://raw.githubusercontent.com/raulgonca/Front_stafko/main/src/Image/fondoKOI.svg";*/
-  background-position: center;
-  background-repeat: no-repeat;
-  background-size: cover; 
-}
+  }
 
 /* Estilos específicos para el navbar */
 .navbar {

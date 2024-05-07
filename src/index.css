@@ -1,23 +1,21 @@
 /* index.css */
 body {
-  margin: 0;
-  padding: 0;
-  font-family: Arial, sans-serif;
   background-image: url("/src/Image/fondoKOI.jpeg");
-  background-size: cover; /* Ajusta la imagen de fondo para cubrir toda la ventana */
-  height: 100vh; /* Hace que el body ocupe el 100% de la altura del viewport */
-  width: 100vw; /* Hace que el body ocupe el 100% del ancho del viewport */
-  display: flex; /* Convierte el body en un contenedor flex para centrar su contenido */
-  justify-content: center; /* Centra el contenido horizontalmente */
-  align-items: center; /* Centra el contenido verticalmente */
+  background-position: center;
+  background-repeat:space;
+  background-size: cover; 
+  height:max-content;
+  width: max-content;
 }
 
 /* Estilos para el contenedor principal (#root) */
-#root {
-  display: flex; /* Puedes aplicar flex aquí si es necesario */
-  justify-content: center; /* Centra el contenido de #root horizontalmente */
-  align-items: center; /* Centra el contenido de #root verticalmente */
-  height: 100%; /* Hace que #root ocupe el 100% de la altura del body */
-  margin: 0;
-  padding: 0;
-}
+/*root {
+}*/
+
+  /*display: flex; /* Puedes aplicar flex aquí si es necesario */
+  /*justify-content: center; /* Centra el contenido de #root horizontalmente */
+  /* align-items: center;  Centra el contenido de #root verticalmente */
+  /* height: 100%; /* Hace que #root ocupe el 100% de la altura del body */
+  /* margin-top: 2px; */
+  /* padding: 0; */ 
+

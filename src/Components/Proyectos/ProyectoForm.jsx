@@ -2,23 +2,31 @@ import React, { useState, useEffect } from "react";
 import { FaTimes } from "react-icons/fa";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
+import { useParams } from "react-router-dom";
 import Swal from "sweetalert2";
+import Colaboradores from "./Colaboradores"; // Importa el componente SearchComponent aquí
 
 const ProjectForm = ({ proyectoEditar, onClose, onProjectUpdate }) => {
+
+  const { username } = useParams();
+
   const [formData, setFormData] = useState({
     nameproject: "",
     description: "",
-    startDate: null,
-    endDate: null
+    fechaInicio: null,
+    fechaFinalizacion: null,
+    owner : username,
   });
+
+  const [showCollaboratorsModal, setShowCollaboratorsModal] = useState(false); // Estado para controlar la visibilidad del modal de colaboradores
 
   useEffect(() => {
     if (proyectoEditar) {
       setFormData({
         nameproject: proyectoEditar.nameproject || "",
         description: proyectoEditar.description || "",
-        startDate: proyectoEditar.startDate ? new Date(proyectoEditar.startDate) : null,
-        endDate: proyectoEditar.endDate ? new Date(proyectoEditar.endDate) : null
+        fechaInicio: proyectoEditar.fechaInicio ? new Date(proyectoEditar.fechaInicio) : null,
+        fechaFinalizacion: proyectoEditar.fechaFinalizacion ? new Date(proyectoEditar.fechaFinalizacion) : null,
       });
     }
   }, [proyectoEditar]);
@@ -31,17 +39,17 @@ const ProjectForm = ({ proyectoEditar, onClose, onProjectUpdate }) => {
     }));
   };
 
-  const handleStartDateChange = (date) => {
+  const handlefechainicioChange = (date) => {
     setFormData((prevData) => ({
       ...prevData,
-      startDate: date
+      fechaInicio: date
     }));
   };
 
-  const handleEndDateChange = (date) => {
+  const handlefechafinalizacionChange = (date) => {
     setFormData((prevData) => ({
       ...prevData,
-      endDate: date
+      fechaFinalizacion: date
     }));
   };
 
@@ -60,8 +68,8 @@ const ProjectForm = ({ proyectoEditar, onClose, onProjectUpdate }) => {
 
     const proyectoEnviar = {
       ...formData,
-      startDate: formData.startDate ? formData.startDate.toISOString() : null,
-      endDate: formData.endDate ? formData.endDate.toISOString() : null
+      fechaInicio: formData.fechaInicio ? formData.fechaInicio.toISOString() : null,
+      fechaFinalizacion: formData.fechaFinalizacion ? formData.fechaFinalizacion.toISOString() : null
     };
 
     try {
@@ -103,11 +111,26 @@ const ProjectForm = ({ proyectoEditar, onClose, onProjectUpdate }) => {
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
+      {/* Modal de Colaboradores */}
+      {showCollaboratorsModal && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
+          <div className="bg-white max-w-md p-8 rounded-lg shadow-lg">
+            <button onClick={() => setShowCollaboratorsModal(false)} className="absolute top-0 right-0 mt-4 mr-4 text-gray-600 hover:text-gray-800 focus:outline-none">
+              <FaTimes />
+            </button>
+            <h2 className="text-2xl font-bold text-gray-800 mb-4">Colaboradores</h2>
+            <Colaboradores />
+          </div>
+        </div>
+      )}
+
+      {/* Contenido del formulario */}
       <div className="bg-white max-w-md p-8 rounded-lg shadow-lg">
         <button onClick={onClose} className="absolute top-0 right-0 mt-4 mr-4 text-gray-600 hover:text-gray-800 focus:outline-none">
           <FaTimes />
         </button>
         <h2 className="text-2xl font-bold text-gray-800 mb-4">{proyectoEditar ? "Editar Proyecto" : "Nuevo Proyecto"}</h2>
+        
         <form onSubmit={handleSubmit}>
           <div className="mb-4">
             <label className="block text-gray-700 font-bold mb-2" htmlFor="nameproject">
@@ -138,14 +161,14 @@ const ProjectForm = ({ proyectoEditar, onClose, onProjectUpdate }) => {
             ></textarea>
           </div>
           <div className="mb-4">
-            <label className="block text-gray-700 font-bold mb-2" htmlFor="startDate">
+            <label className="block text-gray-700 font-bold mb-2" htmlFor="fechainicio">
               Fecha de Inicio
             </label>
             <DatePicker
-              id="startDate"
-              name="startDate"
-              selected={formData.startDate}
-              onChange={handleStartDateChange}
+              id="fechainicio"
+              name="fechainicio"
+              selected={formData.fechaInicio}
+              onChange={handlefechainicioChange}
               className="w-full px-3 py-2 border rounded-lg focus:outline-none focus:border-blue-500"
               dateFormat="dd/MM/yyyy"
               isClearable
@@ -153,20 +176,30 @@ const ProjectForm = ({ proyectoEditar, onClose, onProjectUpdate }) => {
             />
           </div>
           <div className="mb-6">
-            <label className="block text-gray-700 font-bold mb-2" htmlFor="endDate">
+            <label className="block text-gray-700 font-bold mb-2" htmlFor="fechaFinalizacion">
               Fecha de Finalización
             </label>
             <DatePicker
-              id="endDate"
-              name="endDate"
-              selected={formData.endDate}
-              onChange={handleEndDateChange}
+              id="fechafinalizacion"
+              name="fechafinalizacion"
+              selected={formData.fechaFinalizacion}
+              onChange={handlefechafinalizacionChange}
               className="w-full px-3 py-2 border rounded-lg focus:outline-none focus:border-blue-500"
               dateFormat="dd/MM/yyyy"
               isClearable
               placeholderText="Seleccionar fecha de finalización"
             />
           </div>
+
+          {/* Botón para abrir el modal de Colaboradores */}
+          <button
+            type="button"
+            onClick={() => setShowCollaboratorsModal(true)}
+            className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded focus:outline-none mb-4"
+          >
+            Ver Colaboradores
+          </button>
+
           <div className="flex justify-end">
             <button
               type="button"
