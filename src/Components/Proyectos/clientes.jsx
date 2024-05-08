@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from 'react';
-import api from './api';
+//import api from './api';
 
-function ClientesTable() {
+function Clientes() {
   const [clientes, setClientes] = useState([]);
   const [searchQuery, setSearchQuery] = useState('');
 
   useEffect(() => {
     const fetchClientes = async () => {
-      const response = await api.get('/clientes');
+      const response = await fetch(`${process.env.REACT_APP_API_URL}/clientes`);
       setClientes(response.data);
     };
 
@@ -15,7 +15,7 @@ function ClientesTable() {
   }, []);
 
   const handleSearch = async () => {
-    const response = await api.get(`/clientes/search?nombre=${searchQuery}`);
+    const response = await fetch(`${process.env.REACT_APP_API_URL}/clientes/search?nombre=${searchQuery}`);
     setClientes(response.data);
   };
 
@@ -54,4 +54,4 @@ function ClientesTable() {
   );
 }
 
-export default ClientesTable;
+export default Clientes;

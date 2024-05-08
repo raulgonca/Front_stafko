@@ -115,25 +115,32 @@ const ProjectForm = ({ proyectoEditar, onClose, onProjectUpdate }) => {
       {showCollaboratorsModal && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
           <div className="bg-white max-w-md p-8 rounded-lg shadow-lg">
-            <button onClick={() => setShowCollaboratorsModal(false)} className="absolute top-0 right-0 mt-4 mr-4 text-gray-600 hover:text-gray-800 focus:outline-none">
+            <button
+              onClick={() => setShowCollaboratorsModal(false)}
+              className="absolute top-0 right-0 mt-4 mr-4 text-gray-600 hover:text-gray-800 focus:outline-none"
+            >
               <FaTimes />
             </button>
             <h2 className="text-2xl font-bold text-gray-800 mb-4">Colaboradores</h2>
+            {/* Aquí debes incluir el componente de Colaboradores */}
             <Colaboradores />
           </div>
         </div>
       )}
 
       {/* Contenido del formulario */}
-      <div className="bg-white max-w-md p-8 rounded-lg shadow-lg">
-        <button onClick={onClose} className="absolute top-0 right-0 mt-4 mr-4 text-gray-600 hover:text-gray-800 focus:outline-none">
+      <div className="bg-white max-w-4xl mx-auto p-8 rounded-lg shadow-lg">
+        <button
+          onClick={onClose}
+          className="absolute top-0 right-0 mt-4 mr-4 text-gray-600 hover:text-gray-800 focus:outline-none"
+        >
           <FaTimes />
         </button>
-        <h2 className="text-2xl font-bold text-gray-800 mb-4">{proyectoEditar ? "Editar Proyecto" : "Nuevo Proyecto"}</h2>
-        
+        <h2 className="text-2xl font-bold text-gray-800 mb-4">{proyectoEditar ? 'Editar Proyecto' : 'Nuevo Proyecto'}</h2>
+
         <form onSubmit={handleSubmit}>
           <div className="mb-4">
-            <label className="block text-gray-700 font-bold mb-2" htmlFor="nameproject">
+            <label htmlFor="nameproject" className="block text-gray-700 font-bold mb-2">
               Nombre del Proyecto
             </label>
             <input
@@ -147,7 +154,7 @@ const ProjectForm = ({ proyectoEditar, onClose, onProjectUpdate }) => {
             />
           </div>
           <div className="mb-4">
-            <label className="block text-gray-700 font-bold mb-2" htmlFor="description">
+            <label htmlFor="description" className="block text-gray-700 font-bold mb-2">
               Descripción
             </label>
             <textarea
@@ -161,7 +168,7 @@ const ProjectForm = ({ proyectoEditar, onClose, onProjectUpdate }) => {
             ></textarea>
           </div>
           <div className="mb-4">
-            <label className="block text-gray-700 font-bold mb-2" htmlFor="fechainicio">
+            <label htmlFor="fechainicio" className="block text-gray-700 font-bold mb-2">
               Fecha de Inicio
             </label>
             <DatePicker
@@ -176,7 +183,7 @@ const ProjectForm = ({ proyectoEditar, onClose, onProjectUpdate }) => {
             />
           </div>
           <div className="mb-6">
-            <label className="block text-gray-700 font-bold mb-2" htmlFor="fechaFinalizacion">
+            <label htmlFor="fechafinalizacion" className="block text-gray-700 font-bold mb-2">
               Fecha de Finalización
             </label>
             <DatePicker
@@ -212,7 +219,7 @@ const ProjectForm = ({ proyectoEditar, onClose, onProjectUpdate }) => {
               type="submit"
               className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded focus:outline-none"
             >
-              {proyectoEditar ? "Guardar Cambios" : "Crear Proyecto"}
+              {proyectoEditar ? 'Guardar Cambios' : 'Crear Proyecto'}
             </button>
           </div>
         </form>

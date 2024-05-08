@@ -14,7 +14,7 @@ const Main = () => {
   // Efecto de efecto secundario para cargar los proyectos del usuario cuando cambia el 'username'
   useEffect(() => {
     getUserProjects();
-  }, [username]);
+  }, [ username ]);
 
   // Función para obtener los proyectos del usuario desde la API
   const getUserProjects = async () => {
