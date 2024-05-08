@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 
 function Header({ username, handleCancel, handleSearchChange }) {
   return (
-    <nav className="navbar bg-base-100 shadow-lg fixed top-0 left-0 right-0 z-50 bg-gray-100">
+    <nav className="navbar bg-base-100 shadow-lg fixed top-0 left-0 right-0 z-50 bg-white-100">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between h-16">
         {/* Logo */}
         <div className="flex items-center">

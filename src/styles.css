@@ -11,7 +11,7 @@ body {
 
 /* Estilos específicos para el navbar */
 .navbar {
-  background-color: lightgray; /* Color de fondo */
+  background-color: whitesmoke; /* Color de fondo */
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Sombra */
   position: fixed; /* Fija la barra de navegación en la parte superior */
   top: 0;
@@ -53,7 +53,7 @@ body {
 
 /* Estilo para el footer */
 Footer {
-  background-color: lightgray; /* Color de fondo */
+  background-color: whitesmoke; /* Color de fondo */
   position: fixed; /* Fijar en la parte inferior */
   bottom: 0; /* Pegado al fondo */
   left: 0;

@@ -6,6 +6,7 @@ body {
   background-size: cover; 
   height:max-content;
   width: max-content;
+  margin:auto;
 }
 
 /* Estilos para el contenedor principal (#root) */

@@ -5,10 +5,10 @@ import Swal from 'sweetalert2';
 function Registro() {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
-  const [email, setEmail] = useState('');
+  const [gmail, setGmail] = useState('');
   const [usernameError, setUsernameError] = useState('');
   const [passwordError, setPasswordError] = useState('');
-  const [emailError, setEmailError] = useState('');
+  const [gmailError, setGmailError] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
   const navigate = useNavigate();
 
@@ -29,11 +29,11 @@ function Registro() {
       setPasswordError('');
     }
 
-    if (!email.trim()) {
-      setEmailError('Por favor ingresa un correo electrónico.');
+    if (!gmail.trim()) {
+      setGmailError('Por favor ingresa un correo electrónico.');
       valid = false;
     } else {
-      setEmailError('');
+      setGmailError('');
     }
 
     return valid;
@@ -47,7 +47,7 @@ function Registro() {
     }
 
     try {
-      const newUser = { username, password, email };
+      const newUser = { username, password, gmail };
       
       const response = await fetch(`${process.env.REACT_APP_API_URL}/auth/register`, {
         method: 'POST',
@@ -120,12 +120,12 @@ function Registro() {
               type="email"
               autoComplete="email"
               required
-              className={`input-field appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-indigo-500 ${emailError && 'border-red-500'}`}
+              className={`input-field appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-indigo-500 ${gmailError && 'border-red-500'}`}
               placeholder="Correo electrónico"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
+              value={gmail}
+              onChange={(e) => setGmail(e.target.value)}
             />
-            {emailError && <p className="text-red-500 text-xs mt-1">{emailError}</p>}
+            {gmailError && <p className="text-red-500 text-xs mt-1">{gmailError}</p>}
           </div>
   
           <button
