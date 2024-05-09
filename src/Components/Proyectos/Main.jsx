@@ -1,80 +1,59 @@
-import React, { useState, useEffect } from "react";
-import ProjectList from "./ProjectList";
-import ProyectoForm from "./ProyectoForm";
-import ConfirmDialog from "./ConfirmDialog";
-import { useParams } from "react-router-dom";
+import React, { useState, useEffect } from 'react';
+import ProjectList from './ProjectList';
+import ProyectoForm from './ProyectoForm';
+import { useParams } from 'react-router-dom';
+import Swal from 'sweetalert2';
 
 const Main = () => {
-  const [proyectos, setProyectos] = useState([]); // Estado para almacenar la lista de proyectos
-  const [proyectoEditar, setProyectoEditar] = useState(null); // Estado para el proyecto en edición
-  const [confirmacionEliminar, setConfirmacionEliminar] = useState(null); // Estado para confirmar eliminación
-  const [mostrarFormulario, setMostrarFormulario] = useState(false); // Estado para mostrar/ocultar el formulario
-  const { username } = useParams(); // Obtiene el parámetro de la URL (username)
+  const [proyectos, setProyectos] = useState([]);
+  const [proyectoEditar, setProyectoEditar] = useState(null);
+  const [mostrarFormulario, setMostrarFormulario] = useState(false);
+  const [proyectoSeleccionado, setProyectoSeleccionado] = useState(null);
+  const { username } = useParams();
 
-  // Efecto de efecto secundario para cargar los proyectos del usuario cuando cambia el 'username'
   useEffect(() => {
     getUserProjects();
-  }, [ username ]);
+  }, [username]);
 
-  // Función para obtener los proyectos del usuario desde la API
   const getUserProjects = async () => {
     try {
       const response = await fetch(`${process.env.REACT_APP_API_URL}/projects/user-projects/${username}`);
       if (response.ok) {
         const data = await response.json();
-        setProyectos(data); // Actualiza el estado con la lista de proyectos
+        setProyectos(data);
       } else {
-        throw new Error("Error al obtener los proyectos: " + response.statusText);
+        throw new Error('Error al obtener los proyectos: ' + response.statusText);
       }
     } catch (error) {
-      console.error("Error al comunicarse con el servidor:", error);
-      // Mostrar alerta o mensaje de error al usuario
-    }
-  };
-
-  // Función para manejar la creación de un nuevo proyecto
-  const handleCrearProyecto = () => {
-    setProyectoEditar(null); // Establece proyectoEditar a null para indicar una nueva creación
-    setMostrarFormulario(true); // Muestra el formulario de proyecto
-  };
-
-  // Función para manejar la edición de un proyecto existente
-  const handleEditarProyecto = (proyecto) => {
-    setProyectoEditar(proyecto); // Establece proyectoEditar con el proyecto a editar
-    setMostrarFormulario(true); // Muestra el formulario de proyecto
-  };
-
-  // Función para manejar la eliminación de un proyecto
-  const handleEliminarProyecto = (proyectoId) => {
-    setConfirmacionEliminar(proyectoId); // Establece confirmacionEliminar con el ID del proyecto a eliminar
-  };
-
-  // Función para confirmar la eliminación de un proyecto
-  const handleConfirmarEliminar = async () => {
-    try {
-      const response = await fetch(`${process.env.REACT_APP_API_URL}/projects/${confirmacionEliminar}`, {
-        method: "DELETE"
+      console.error('Error al comunicarse con el servidor:', error);
+      Swal.fire({
+        title: 'Error',
+        text: 'Hubo un problema al obtener los proyectos. Por favor, intenta nuevamente más tarde.',
+        icon: 'error',
+        confirmButtonText: 'Aceptar'
       });
-      if (response.ok) {
-        setConfirmacionEliminar(null); // Reinicia confirmacionEliminar
-        getUserProjects(); // Vuelve a cargar la lista de proyectos después de la eliminación
-      } else {
-        throw new Error("Error al eliminar el proyecto: " + response.statusText);
-      }
-    } catch (error) {
-      console.error("Error al comunicarse con el servidor:", error);
-      // Mostrar alerta o mensaje de error al usuario
     }
   };
 
-  // Función para cerrar el diálogo de confirmación
-  const handleCloseConfirmDialog = () => {
-    setConfirmacionEliminar(null); // Reinicia confirmacionEliminar
+  const handleCrearProyecto = () => {
+    setProyectoEditar(null);
+    setMostrarFormulario(true);
   };
 
-  // Función para cerrar el formulario de proyecto
-  const handleCloseFormulario = () => {
-    setMostrarFormulario(false); // Oculta el formulario de proyecto
+  const handleVerDetalles = (proyecto) => {
+    setProyectoSeleccionado(proyecto); // Actualiza el estado del proyecto seleccionado
+    const modal = document.getElementById('projectDetails');
+    if (modal) {
+      modal.style.display = 'block';
+    }
+  };
+
+  const handleCloseModal = () => {
+    setProyectoSeleccionado(null); // Reinicia el estado del proyecto seleccionado
+    const modal = document.getElementById('projectDetails');
+    if (modal) {
+      modal.style.display = 'none';
+    }
   };
 
   return (
@@ -88,27 +67,31 @@ const Main = () => {
           Nuevo Proyecto
         </button>
       </div>
-      {/* Renderiza la lista de proyectos */}
-      <ProjectList
-        proyectos={proyectos}
-        onEditarProyecto={handleEditarProyecto}
-        onEliminarProyecto={handleEliminarProyecto}
-      />
-      {/* Renderiza el formulario de proyecto si mostrarFormulario es true */}
+      <ProjectList proyectos={proyectos} onVerDetalles={handleVerDetalles} />
+      {/* Modal de Detalles del Proyecto */}
+      {proyectoSeleccionado && (
+        <div id="projectDetailsModal" className="modal" style={{ display: 'none' }}>
+          <div className="modal-dialog">
+            <div className="modal-content">
+              <div className="modal-header">
+                <h5 className="modal-title">{proyectoSeleccionado.nameproject}</h5>
+                <button type="button" className="close" onClick={handleCloseModal}>
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div className="modal-body">
+                <p>{proyectoSeleccionado.description}</p>
+                {/* Agrega más detalles del proyecto aquí si es necesario */}
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
       {mostrarFormulario && (
         <ProyectoForm
           proyectoEditar={proyectoEditar}
-          onClose={handleCloseFormulario}
+          onClose={() => setMostrarFormulario(false)}
           onProjectUpdate={getUserProjects}
-        />
-      )}
-      {/* Renderiza el diálogo de confirmación si confirmacionEliminar no es null */}
-      {confirmacionEliminar !== null && (
-        <ConfirmDialog
-          titulo="¿Estás seguro?"
-          mensaje="Esta acción eliminará el proyecto permanentemente."
-          onConfirmar={handleConfirmarEliminar}
-          onClose={handleCloseConfirmDialog}
         />
       )}
     </div>
