@@ -1,9 +1,8 @@
 /* index.css */
 body {
-  background-image: url("/src/Image/fondoKOI.jpeg");
-  background-position: center;
-  background-repeat:space;
-  background-size: cover; 
+  background-image: url("/src/Image/fondoKOI.jpg");
+  background-repeat: no-repeat;
+  background-size: cover;
   height:max-content;
   width: max-content;
   margin:auto;
