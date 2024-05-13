@@ -3,28 +3,34 @@ import Swal from 'sweetalert2';
 
 const Clockify = () => {
     const [timerActive, setTimerActive] = useState(false);
+    const [description, setDescription] = useState('');
 
-    const handlesStartedTimer = async () => {
+    const handleStartTimer = async () => {
         try {
             if (!timerActive) {
                 const startTime = new Date().toISOString();
 
                 // Realizar la solicitud para iniciar el temporizador
-                const response = await fetch(`${process.env.REACT_APP_CLOCKIFY}/${process.env.REACT_APP_API_KEY}/time-entries`, {
+                const response = await fetch(`${process.env.REACT_APP_CLOCKIFY}/time-entries`, {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
-                        'X-Api-Key': process.env.REACT_APP_API_KEY
+                        'X-Api-Key': 'ZTU4MjEyOWItYTQ2Mi00MTNiLWFmOWUtNzQ3M2ExOTQ1M2Nk'
                     },
                     body: JSON.stringify({
                         start: startTime,
-                        description: 'Trabajo en curso'
+                        description: description || 'Trabajo en curso' // Usar la descripción ingresada o predeterminada
                     })
                 });
 
                 if (response.ok) {
                     // Temporizador iniciado exitosamente
                     setTimerActive(true);
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Temporizador Iniciado',
+                        text: 'El temporizador ha sido iniciado correctamente'
+                    });
                 } else {
                     throw new Error('Error al iniciar el temporizador');
                 }
@@ -33,9 +39,20 @@ const Clockify = () => {
             console.error('Error al iniciar el temporizador:', error.message);
             Swal.fire({
                 icon: 'error',
-                title: 'Error al inicio de temporizador',
-                text: ('Error al iniciar el temporizador')
-              });         }
+                title: 'Error al iniciar temporizador',
+                text: 'Hubo un problema al iniciar el temporizador'
+            });
+        }
+    };
+
+    const handleStopTimer = () => {
+        // Aquí puedes implementar la lógica para detener el temporizador
+        setTimerActive(false);
+        Swal.fire({
+            icon: 'info',
+            title: 'Temporizador Detenido',
+            text: 'El temporizador ha sido detenido'
+        });
     };
 
     return (
@@ -47,23 +64,26 @@ const Clockify = () => {
                         type="text"
                         placeholder="Descripción del temporizador"
                         className="w-full bg-gray-200 text-gray-800 px-4 py-2 rounded"
+                        value={description}
+                        onChange={(e) => setDescription(e.target.value)}
                     />
                 </div>
                 <div className="flex justify-between mb-4">
                     <button
                         className={`bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded ${timerActive ? 'opacity-50 cursor-not-allowed' : ''}`}
-                        onClick={handlesStartedTimer}
+                        onClick={handleStartTimer}
                         disabled={timerActive}
                     >
-                        {timerActive ? 'Temporizador Iniciado' : 'Iniciar'}
+                        {timerActive ? ' Iniciado' : 'Iniciar'}
                     </button>
-                    <button className="bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded">
-                        Detener 
+                    <button
+                        className="bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded"
+                        onClick={handleStopTimer}
+                        disabled={!timerActive}
+                    >
+                        Detener
                     </button>
                 </div>
-                {timerActive && (
-                    <p className="text-green-500 font-bold">Temporizador iniciado correctamente</p>
-                )}
             </div>
         </div>
     );
