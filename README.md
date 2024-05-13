@@ -17,13 +17,13 @@ Stafko-Gestor de proyectos
 ## Screenshots
 
 ### Registro:
-<img src="/Screenshot/Registro.png">
+<img src="/Screenshot/Register.png">
 
 ### Login:
 <img src="/Screenshot/Login.png">
 
 ### Main-Proyectos:
-<img src="/Screenshot/MainProyectos.png">
+<img src="/Screenshot/Main.png">
 
 ### Crear-Proyecto:
 <img src="/Screenshot/CrearProyecto.png">
@@ -31,6 +31,8 @@ Stafko-Gestor de proyectos
 ### Editar-Proyecto:
 <img src="/Screenshot/EditarProyecto.png">
 
+### Añadir-Colaboradores
+<img src="/Screenshot/AñadirColab.png>
 
 ## Contribución
 
