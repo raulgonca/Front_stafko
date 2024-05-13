@@ -31,8 +31,8 @@ Stafko-Gestor de proyectos
 ### Editar-Proyecto:
 <img src="/Screenshot/EditarProyecto.png">
 
-### Añadir-Colaboradores
-<img src="/Screenshot/AñadirColab.png>
+### Añadir-Colaboradores:
+<img src="/Screenshot/Colaboradores.png">
 
 ## Contribución
 
