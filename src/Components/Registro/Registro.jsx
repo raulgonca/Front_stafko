@@ -49,7 +49,7 @@ function Registro() {
     try {
       const newUser = { username, password, gmail };
       
-      const response = await fetch(`${process.env.REACT_APP_API_URL}/auth/register`, {
+      const response = await fetch(`${process.env.REACT_APP_API_DIRECTUS}/Users`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -69,7 +69,7 @@ function Registro() {
           navigate('/login');
         });
       } else {
-        throw new Error(data.message);
+        throw new Error(data.errors ? data.errors[0].message : 'Error desconocido');
       }
     } catch (error) {
       setErrorMessage(error.message);

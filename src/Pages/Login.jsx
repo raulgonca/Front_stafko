@@ -19,8 +19,8 @@ const Login = () => {
 
     try {
       // Envía la solicitud al servidor para iniciar sesión
-      const response = await fetch(`${process.env.REACT_APP_API_URL}/auth/login`, {
-        method: 'POST',
+      const response = await fetch(`${process.env.REACT_APP_API_DIRECTUS}/Users`, {
+        method: 'GET',
         headers: {
           'Content-Type': 'application/json'
         },
