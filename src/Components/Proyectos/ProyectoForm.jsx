@@ -9,26 +9,28 @@ import Colaboradores from "./Colaboradores"; // Importa el componente Colaborado
 const ProjectForm = ({ proyectoEditar, onClose, onProjectUpdate }) => {
   const { username } = useParams();
 
-  const [formData, setFormData] = useState({
+  const [ formData, setFormData ] = useState({
     nameproject: "",
     description: "",
     fechaInicio: null,
     fechaFinalizacion: null,
     owner: username,
+    collaborators: [],
   });
 
-  const [selectedCollaborators, setSelectedCollaborators] = useState([]);
-  const [showCollaboratorsModal, setShowCollaboratorsModal] = useState(false);
+  const [ selectedCollaborators, setSelectedCollaborators ] = useState([]);
+  const [ showCollaboratorsModal, setShowCollaboratorsModal ] = useState( false );
 
   useEffect(() => {
     if (proyectoEditar) {
-      const { nameproject, description, fechaInicio, fechaFinalizacion } = proyectoEditar;
+      const { nameproject, description, fechaInicio, fechaFinalizacion, collaborators} = proyectoEditar;
       setFormData({
         nameproject: nameproject || "",
         description: description || "",
         fechaInicio: fechaInicio ? new Date(fechaInicio) : null,
         fechaFinalizacion: fechaFinalizacion ? new Date(fechaFinalizacion) : null,
         owner: username,
+        collaborators: collaborators,
       });
     }
   }, [proyectoEditar, username]);

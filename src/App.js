@@ -5,7 +5,7 @@ import Login from './Pages/Login';
 import Header from './Container/Header';
 import Footer from './Container/Footer.jsx';
 import Clockify from '../src/Components/Proyectos/Clockify.jsx';
-import Clientes from '../src/Components/Proyectos/clientes.jsx';
+import Clientes from './Components/Proyectos/Clientes.jsx';
 import './styles.css'
 
 

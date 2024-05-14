@@ -1,8 +1,13 @@
 /** @type {import('tailwindcss').Config} */
-// tailwind.config.js
 module.exports = {
-  purge: [],
-  darkMode: false, // o 'media' o 'class'
+  purge: ['./src/**/*.{js,jsx,ts,tsx}', './public/index.html'],
+  theme: {
+    extend: {
+      colors: {
+        'custom-orange': '#fd9a70',
+      },
+    },
+  },
   variants: {
     extend: {},
   },
@@ -10,12 +15,6 @@ module.exports = {
     require('daisyui'),
   ],
   corePlugins: {
-    // Agrega los core plugins que necesitas, por ejemplo:
     preflight: false, // deshabilita preflight si no lo necesitas
   },
-  theme: {
-    extend: {
-      // Agrega tus estilos personalizados aquí
-    },
-  },
-}
+};

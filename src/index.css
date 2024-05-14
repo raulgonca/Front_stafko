@@ -1,4 +1,6 @@
 /* index.css */
+@tailwind utilities;
+
 body {
   background-image: url("/src/Image/fondoKOI.jpg");
   background-repeat: no-repeat;
@@ -7,6 +9,9 @@ body {
   width: max-content;
   margin:auto;
 }
+
+
+
 
 /* Estilos para el contenedor principal (#root) */
 /*root {

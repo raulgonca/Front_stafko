@@ -1,3 +1,4 @@
+// ProjectList.js
 import React from 'react';
 
 const ProjectList = ({ proyectos, onVerDetalles }) => {
@@ -8,7 +9,7 @@ const ProjectList = ({ proyectos, onVerDetalles }) => {
           <h3 className="text-xl font-semibold mb-2">{proyecto.nameproject}</h3>
           <p className="text-gray-800 mb-4">{proyecto.description}</p>
           <button
-            className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded focus:outline-none"
+            className="bg-custom-orange text-white font-bold py-2 px-4 rounded focus:outline-none border-5 border-gray-300"
             onClick={() => onVerDetalles(proyecto)}
           >
             Ver Detalles

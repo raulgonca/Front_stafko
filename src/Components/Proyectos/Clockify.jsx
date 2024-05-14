@@ -4,6 +4,7 @@ import Swal from 'sweetalert2';
 const Clockify = () => {
     const [timerActive, setTimerActive] = useState(false);
     const [description, setDescription] = useState('');
+    const [timeEntryId, setTimeEntryId] = useState(null);
 
     const handleStartTimer = async () => {
         try {
@@ -24,8 +25,10 @@ const Clockify = () => {
                 });
 
                 if (response.ok) {
+                    const data = await response.json();
                     // Temporizador iniciado exitosamente
                     setTimerActive(true);
+                    setTimeEntryId(data.id); // Guardar el ID de la entrada de tiempo
                     Swal.fire({
                         icon: 'success',
                         title: 'Temporizador Iniciado',
@@ -45,14 +48,44 @@ const Clockify = () => {
         }
     };
 
-    const handleStopTimer = () => {
-        // Aquí puedes implementar la lógica para detener el temporizador
-        setTimerActive(false);
-        Swal.fire({
-            icon: 'info',
-            title: 'Temporizador Detenido',
-            text: 'El temporizador ha sido detenido'
-        });
+    const handleStopTimer = async () => {
+        try {
+            if (timerActive && timeEntryId) {
+                const endTime = new Date().toISOString();
+
+                // Realizar la solicitud para detener el temporizador
+                const response = await fetch(`${process.env.REACT_APP_CLOCKIFY}/time-entries`, {
+                    method: 'PATCH',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-Api-Key': 'ZTU4MjEyOWItYTQ2Mi00MTNiLWFmOWUtNzQ3M2ExOTQ1M2Nk'
+                    },
+                    body: JSON.stringify({
+                        end: endTime
+                    })
+                });
+
+                if (response.ok) {
+                    // Temporizador detenido exitosamente
+                    setTimerActive(false);
+                    setTimeEntryId(null);
+                    Swal.fire({
+                        icon: 'info',
+                        title: 'Temporizador Detenido',
+                        text: 'El temporizador ha sido detenido'
+                    });
+                } else {
+                    throw new Error('Error al detener el temporizador');
+                }
+            }
+        } catch (error) {
+            console.error('Error al detener el temporizador:', error.message);
+            Swal.fire({
+                icon: 'error',
+                title: 'Error al detener temporizador',
+                text: 'Hubo un problema al detener el temporizador'
+            });
+        }
     };
 
     return (
