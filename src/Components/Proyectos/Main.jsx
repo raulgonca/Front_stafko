@@ -17,10 +17,10 @@ const Main = () => {
 
   const getUserProjects = async () => {
     try {
-      const response = await fetch(`${process.env.REACT_APP_API_URL}/projects/user-projects/${username}`);
+      const response = await fetch(`${process.env.REACT_APP_API_DIRECTUS}/Projects?filter[owner][_eq]=${username}`);
       if (response.ok) {
         const data = await response.json();
-        setProyectos(data);
+        setProyectos(data.data); // Ajuste para la estructura de respuesta de Directus
       } else {
         throw new Error('Error al obtener los proyectos: ' + response.statusText);
       }

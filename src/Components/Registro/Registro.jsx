@@ -90,7 +90,7 @@ function Registro() {
               type="text"
               autoComplete="username"
               required
-              className={`input-field appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-indigo-500 ${usernameError && 'border-red-500'}`}
+              className={`input-field appearance-none block w-full  text-gray-700 border rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-custom-orange ${usernameError && 'border-red-500'}`}
               placeholder="Nombre de usuario"
               value={username}
               onChange={(e) => setUsername(e.target.value)}
@@ -105,7 +105,7 @@ function Registro() {
               type="password"
               autoComplete="new-password"
               required
-              className={`input-field appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-indigo-500 ${passwordError && 'border-red-500'}`}
+              className={`input-field appearance-none block w-full text-gray-700 border rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-custom-orange ${passwordError && 'border-red-500'}`}
               placeholder="Contraseña"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
@@ -120,7 +120,7 @@ function Registro() {
               type="email"
               autoComplete="email"
               required
-              className={`input-field appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-indigo-500 ${gmailError && 'border-red-500'}`}
+              className={`input-field appearance-none block w-full  text-gray-700 border rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-custom-orange ${gmailError && 'border-red-500'}`}
               placeholder="Correo electrónico"
               value={gmail}
               onChange={(e) => setGmail(e.target.value)}

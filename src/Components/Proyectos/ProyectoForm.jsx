@@ -4,12 +4,12 @@ import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { useParams } from "react-router-dom";
 import Swal from "sweetalert2";
-import Colaboradores from "./Colaboradores"; // Importa el componente Colaboradores aquí
+import Colaboradores from "./Colaboradores";
 
 const ProjectForm = ({ proyectoEditar, onClose, onProjectUpdate }) => {
   const { username } = useParams();
 
-  const [ formData, setFormData ] = useState({
+  const [formData, setFormData] = useState({
     nameproject: "",
     description: "",
     fechaInicio: null,
@@ -18,20 +18,21 @@ const ProjectForm = ({ proyectoEditar, onClose, onProjectUpdate }) => {
     collaborators: [],
   });
 
-  const [ selectedCollaborators, setSelectedCollaborators ] = useState([]);
-  const [ showCollaboratorsModal, setShowCollaboratorsModal ] = useState( false );
+  const [selectedCollaborators, setSelectedCollaborators] = useState([]);
+  const [showCollaboratorsModal, setShowCollaboratorsModal] = useState(false);
 
   useEffect(() => {
     if (proyectoEditar) {
-      const { nameproject, description, fechaInicio, fechaFinalizacion, collaborators} = proyectoEditar;
+      const { nameproject, description, fechaInicio, fechaFinalizacion, collaborators } = proyectoEditar;
       setFormData({
         nameproject: nameproject || "",
         description: description || "",
         fechaInicio: fechaInicio ? new Date(fechaInicio) : null,
         fechaFinalizacion: fechaFinalizacion ? new Date(fechaFinalizacion) : null,
         owner: username,
-        collaborators: collaborators,
+        collaborators: collaborators || [],
       });
+      setSelectedCollaborators(collaborators || []);
     }
   }, [proyectoEditar, username]);
 
@@ -108,30 +109,18 @@ const ProjectForm = ({ proyectoEditar, onClose, onProjectUpdate }) => {
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
-      {showCollaboratorsModal && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
-          <div className="bg-white max-w-3xl p-8 rounded-lg shadow-lg">
-            <button
-              onClick={() => {
-                setShowCollaboratorsModal(false);
-                setSelectedCollaborators(/* Obtener la lista de colaboradores seleccionados */);
-              }}
-              className="absolute top-0 right-0 mt-4 mr-4 text-gray-600 hover:text-gray-800 focus:outline-none"
-            >
-              <FaTimes />
-            </button>
-            <h2 className="text-2xl font-bold text-gray-800 mb-4">Colaboradores</h2>
-            <ul>
-              {selectedCollaborators.map((collaborator) => (
-                <li key={collaborator.id}>{collaborator.username}</li>
-              ))}
-            </ul>
-          </div>
-        </div>
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50" >
+    {showCollaboratorsModal && (
+        <Colaboradores
+          onClose={() => setShowCollaboratorsModal(false)}
+          onSave={(selected) => {
+            setSelectedCollaborators(selected);
+            setShowCollaboratorsModal(false);
+          }}
+        />
       )}
 
-      <div className="bg-white max-w-3xl mx-auto p-8 rounded-lg shadow-lg">
+      <div className="max-w-xl w-full bg-white rounded-lg shadow-lg p-6 relative" style={{ maxWidth: '30vw', maxHeight: '80vh' }}>
         <button
           onClick={onClose}
           className="absolute top-0 right-0 mt-4 mr-4 text-gray-600 hover:text-gray-800 focus:outline-none"
@@ -141,66 +130,65 @@ const ProjectForm = ({ proyectoEditar, onClose, onProjectUpdate }) => {
         <h2 className="text-2xl font-bold text-gray-800 mb-4">{proyectoEditar ? "Editar Proyecto" : "Nuevo Proyecto"}</h2>
 
         <form onSubmit={handleSubmit}>
-          {/* Resto del formulario */}
-            <div className="mb-4">
-              <label htmlFor="nameproject" className="block text-gray-700 font-bold mb-2">
-                Nombre del Proyecto
-              </label>
-              <input
-                type="text"
-                id="nameproject"
-                name="nameproject"
-                value={formData.nameproject}
-                onChange={handleChange}
-                className="w-full px-3 py-2 border rounded-lg focus:outline-none focus:border-blue-500"
-                required
-              />
-            </div>
-            <div className="mb-4">
-              <label htmlFor="description" className="block text-gray-700 font-bold mb-2">
-                Descripción
-              </label>
-              <textarea
-                id="description"
-                name="description"
-                value={formData.description}
-                onChange={handleChange}
-                className="w-full px-3 py-2 border rounded-lg focus:outline-none focus:border-blue-500"
-                rows="4"
-                required
-              ></textarea>
-            </div>
-            <div className="mb-4">
-              <label htmlFor="fechainicio" className="block text-gray-700 font-bold mb-2">
-                Fecha de Inicio
-              </label>
-              <DatePicker
-                id="fechainicio"
-                name="fechainicio"
-                selected={formData.fechaInicio}
-                onChange={(date) => handleDateChange(date, "fechaInicio")}
-                className="w-full px-3 py-2 border rounded-lg focus:outline-none focus:border-blue-500"
-                dateFormat="dd/MM/yyyy"
-                required
-                placeholderText="Seleccionar fecha de inicio"
-              />
-            </div>
-            <div className="mb-6">
-              <label htmlFor="fechafinalizacion" className="block text-gray-700 font-bold mb-2">
-                Fecha de Finalización
-              </label>
-              <DatePicker
-                id="fechafinalizacion"
-                name="fechafinalizacion"
-                selected={formData.fechaFinalizacion}
-                onChange={(date) => handleDateChange(date, "fechaFinalizacion")}
-                className="w-full px-3 py-2 border rounded-lg focus:outline-none focus:border-blue-500"
-                dateFormat="dd/MM/yyyy"
-                required
-                placeholderText="Seleccionar fecha de finalización"
-              />
-            </div>
-          {/* Botón para abrir el modal de Colaboradores */}
+          <div className="mb-4">
+            <label htmlFor="nameproject" className="block text-gray-700 font-bold mb-2">
+              Nombre del Proyecto
+            </label>
+            <input
+              type="text"
+              id="nameproject"
+              name="nameproject"
+              value={formData.nameproject}
+              onChange={handleChange}
+              className="w-full px-3 py-2 border rounded-lg focus:outline-none focus:border-custom-orange"
+              required
+            />
+          </div>
+          <div className="mb-4">
+            <label htmlFor="description" className="block text-gray-700 font-bold mb-2">
+              Descripción
+            </label>
+            <textarea
+              id="description"
+              name="description"
+              value={formData.description}
+              onChange={handleChange}
+              className="w-full px-3 py-2 border rounded-lg focus:outline-none focus:border-custom-orange"
+              rows="4"
+              required
+            ></textarea>
+          </div>
+          <div className="mb-4">
+            <label htmlFor="fechainicio" className="block text-gray-700 font-bold mb-2">
+              Fecha de Inicio
+            </label>
+            <DatePicker
+              id="fechainicio"
+              name="fechainicio"
+              selected={formData.fechaInicio}
+              onChange={(date) => handleDateChange(date, "fechaInicio")}
+              className="w-full px-3 py-2 border rounded-lg focus:outline-none focus:border-custom-orange"
+              dateFormat="dd/MM/yyyy"
+              required
+              placeholderText="Seleccionar fecha de inicio"
+            />
+          </div>
+          <div className="mb-6">
+            <label htmlFor="fechafinalizacion" className="block text-gray-700 font-bold mb-2 ">
+              Fecha de Finalización
+            </label>
+            <DatePicker
+              id="fechafinalizacion"
+              name="fechafinalizacion"
+              selected={formData.fechaFinalizacion}
+              onChange={(date) => handleDateChange(date, "fechaFinalizacion")}
+              className="w-full  px-3 py-2 border rounded-lg focus:outline-none focus:border-custom-orange"
+              dateFormat="dd/MM/yyyy"
+              required
+              placeholderText="Seleccionar fecha de finalización"
+            />
+          </div>
+
           <button
             type="button"
             onClick={() => setShowCollaboratorsModal(true)}
@@ -208,7 +196,6 @@ const ProjectForm = ({ proyectoEditar, onClose, onProjectUpdate }) => {
           >
             Ver Colaboradores
           </button>
-          <Colaboradores />
 
           <div className="flex justify-end">
             <button

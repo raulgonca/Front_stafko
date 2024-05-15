@@ -3,21 +3,20 @@ import React, { useState, useEffect } from 'react';
 const Clientes = () => {
   const [clientes, setClientes] = useState([]);
   const [searchQuery, setSearchQuery] = useState('');
-  
   const [error, setError] = useState(null);
 
   useEffect(() => {
     fetchClientes(); // Llamar a la función fetchClientes al montar el componente
-  }, ); // El array de dependencias está vacío para que se ejecute solo una vez al montar
+  }, []); // El array de dependencias está vacío para que se ejecute solo una vez al montar
 
   const fetchClientes = async () => {
     try {
-      const response = await fetch(`${process.env.REACT_APP_API_URL}/clientes`);
+      const response = await fetch(`${process.env.REACT_APP_API_DIRECTUS}/Clientes`);
       if (!response.ok) {
         throw new Error('Error al obtener los clientes');
       }
       const data = await response.json();
-      setClientes(data);
+      setClientes(data.data); // Ajuste para la estructura de respuesta de Directus
       setError(null); // Reiniciamos el error si se recuperan los datos correctamente
     } catch (error) {
       console.error('Error al obtener los clientes:', error);
@@ -29,12 +28,12 @@ const Clientes = () => {
   const handleSearch = async (e) => {
     e.preventDefault(); // Evitar la recarga de la página por defecto
     try {
-      const response = await fetch(`http://localhost:3000/clientes/search?nombre=${searchQuery}`);
+      const response = await fetch(`${process.env.REACT_APP_API_DIRECTUS}/Clientes?filter[nombre][_contains]=${searchQuery}`);
       if (!response.ok) {
         throw new Error('Error al buscar clientes');
       }
       const data = await response.json();
-      setClientes(data);
+      setClientes(data.data); // Ajuste para la estructura de respuesta de Directus
       setError(null); // Reiniciamos el error si se recuperan los datos correctamente
     } catch (error) {
       console.error('Error al buscar clientes:', error);
@@ -60,30 +59,30 @@ const Clientes = () => {
           Buscar
         </button>
       </div>
-        <div className="overflow-x-auto">
-          <table className="w-full table-auto bg-white shadow-md rounded-lg">
-            <thead>
-              <tr className="bg-custom-orange text-white">
-                <th className="px-4 py-2">Nombre</th>
-                <th className="px-4 py-2">CIF</th>
-                <th className="px-4 py-2">Teléfono</th>
-                <th className="px-4 py-2">Email</th>
-                <th className="px-4 py-2">Nombre de la Empresa</th>
+      <div className="overflow-x-auto">
+        <table className="w-full table-auto bg-white shadow-md rounded-lg">
+          <thead>
+            <tr className="bg-custom-orange text-white">
+              <th className="px-4 py-2">Nombre</th>
+              <th className="px-4 py-2">CIF</th>
+              <th className="px-4 py-2">Teléfono</th>
+              <th className="px-4 py-2">Email</th>
+              <th className="px-4 py-2">Nombre de la Empresa</th>
+            </tr>
+          </thead>
+          <tbody>
+            {clientes.map((cliente) => (
+              <tr key={cliente.id} className="text-gray-800">
+                <td className="border px-4 py-2">{cliente.nombre}</td>
+                <td className="border px-4 py-2">{cliente.cif}</td>
+                <td className="border px-4 py-2">{cliente.telefono}</td>
+                <td className="border px-4 py-2">{cliente.email}</td>
+                <td className="border px-4 py-2">{cliente.nombreEmpresa}</td>
               </tr>
-            </thead>
-            <tbody>
-              {clientes.map((cliente) => (
-                <tr key={cliente.id} className="text-gray-800">
-                  <td className="border px-4 py-2">{cliente.nombre}</td>
-                  <td className="border px-4 py-2">{cliente.cif}</td>
-                  <td className="border px-4 py-2">{cliente.telefono}</td>
-                  <td className="border px-4 py-2">{cliente.email}</td>
-                  <td className="border px-4 py-2">{cliente.nombreEmpresa}</td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
+            ))}
+          </tbody>
+        </table>
+      </div>
     </div>
   );
 };
