@@ -33,7 +33,7 @@ const ProyectoEdit = ({ proyectoInicial, onSubmit, onProjectUpdate }) => {
       return;
     }
     try {
-      const response = await fetch(`${process.env.REACT_APP_API_URL}/projects/${proyecto.id}`, {
+      const response = await fetch(`${process.env.REACT_APP_API_DIRECTUS}/Projects/${proyecto.id}`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
@@ -107,7 +107,6 @@ const ProyectoEdit = ({ proyectoInicial, onSubmit, onProjectUpdate }) => {
             name="fechaInicio"
             value={proyecto.fechaInicio}
             onChange={handleChange}
-            disabled
             className="mt-1 p-2 block w-full border border-gray-300 rounded-md focus:outline-none focus:border-blue-500"
           />
         </div>
@@ -123,7 +122,7 @@ const ProyectoEdit = ({ proyectoInicial, onSubmit, onProjectUpdate }) => {
             required
           />
         </div>
-        <button type="submit" className="w-full bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded">
+        <button type="submit" className="w-full bg-custom-orange text-white font-bold py-2 px-4 rounded">
           Guardar Cambios
         </button>
       </form>

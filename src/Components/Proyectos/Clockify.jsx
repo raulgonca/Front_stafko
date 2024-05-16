@@ -90,7 +90,7 @@ const Clockify = () => {
 
     return (
         <div className="container mx-auto px-4 py-8">
-            <div className="max-w-xl mx-auto bg-white rounded-lg shadow-lg p-6">
+            <div className="max-w-xl mx-auto rounded-lg  p-6">
                 <h2 className="text-2xl font-bold text-gray-800 mb-4">Clockify Timer</h2>
                 <div className="mb-4">
                     <input
