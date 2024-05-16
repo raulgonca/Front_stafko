@@ -103,14 +103,14 @@ const Clockify = () => {
                 </div>
                 <div className="flex justify-between mb-4">
                     <button
-                        className={`bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded ${timerActive ? 'opacity-50 cursor-not-allowed' : ''}`}
+                        className={`bg-custom-purple  text-white font-bold py-2 px-4 rounded ${timerActive ? 'opacity-50 cursor-not-allowed' : ''}`}
                         onClick={handleStartTimer}
                         disabled={timerActive}
                     >
                         {timerActive ? ' Iniciado' : 'Iniciar'}
                     </button>
                     <button
-                        className="bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded"
+                        className="bg-custom-bluecito text-white font-bold py-2 px-4 rounded"
                         onClick={handleStopTimer}
                         disabled={!timerActive}
                     >

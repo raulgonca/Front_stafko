@@ -75,50 +75,51 @@ const ProyectoEdit = ({ proyectoInicial, onSubmit, onProjectUpdate }) => {
       <h2 className="text-lg font-bold mb-4">Editar Proyecto</h2>
       <form onSubmit={handleSubmit}>
         <div className="mb-4">
-          <label htmlFor="nameproject" className="block text-sm font-medium text-gray-700">Nombre del Proyecto:</label>
+          <label htmlFor="nameproject" className="block text-sm font-medium text-gray-700">Nombre del Proyecto :</label>
           <input
-            type="text"
+            type="text" 
             id="nameproject"
             name="nameproject"
             value={proyecto.nameproject}
             onChange={handleChange}
-            className="mt-1 p-2 block w-full border border-gray-300 rounded-md focus:outline-none focus:border-blue-500"
+            className="mt-1 p-2 block w-full border border-gray-300 rounded-md focus:outline-none focus:border-custom-orange"
             placeholder="Ingrese el nombre del proyecto aquí"
             required
           />
         </div>
         <div className="mb-4">
-          <label htmlFor="description" className="block text-sm font-medium text-gray-700">Descripción:</label>
+          <label htmlFor="description" className="block text-sm font-medium text-gray-700">Descripción : </label>
           <textarea
             id="description"
             name="description"
             value={proyecto.description}
             onChange={handleChange}
-            className="mt-1 p-2 block w-full border border-gray-300 rounded-md focus:outline-none focus:border-blue-500"
+            className="mt-1 p-2 block w-full border border-gray-300 rounded-md focus:outline-none focus:border-custom-orange"
             placeholder="Descripción del proyecto"
             required
           />
         </div>
         <div className="mb-4">
-          <label htmlFor="fechaInicio" className="block text-sm font-medium text-gray-700">Fecha de Inicio:</label>
+          <label htmlFor="fechaInicio" className="block text-sm font-medium text-gray-700">Fecha de Inicio :</label>
           <input
             type="date"
             id="fechaInicio"
             name="fechaInicio"
             value={proyecto.fechaInicio}
             onChange={handleChange}
-            className="mt-1 p-2 block w-full border border-gray-300 rounded-md focus:outline-none focus:border-blue-500"
+            className="mt-1 p-2 block w-full border border-gray-300 rounded-md focus:outline-none focus:border-custom-orange"
+            required
           />
         </div>
         <div className="mb-4">
-          <label htmlFor="fechaFinalizacion" className="block text-sm font-medium text-gray-700">Fecha de Finalización:</label>
+          <label htmlFor="fechaFinalizacion" className="block text-sm font-medium text-gray-700">Fecha de Finalización :</label>
           <input
             type="date"
             id="fechaFinalizacion"
             name="fechaFinalizacion"
             value={proyecto.fechaFinalizacion}
             onChange={handleChange}
-            className="mt-1 p-2 block w-full border border-gray-300 rounded-md focus:outline-none focus:border-blue-500"
+            className="mt-1 p-2 block w-full border border-gray-300 rounded-md focus:outline-none focus:border-custom-orange"
             required
           />
         </div>

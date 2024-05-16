@@ -5,6 +5,8 @@ module.exports = {
     extend: {
       colors: {
         'custom-orange': '#fd9a70',
+        'custom-purple': '#655a7c',
+        'custom-bluecito': '#00916e',
       },
     },
   },

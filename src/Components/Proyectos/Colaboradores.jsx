@@ -9,43 +9,41 @@ const Colaboradores = ({ onClose, onSave }) => {
   const [showModal, setShowModal] = useState(true);
 
   useEffect(() => {
-    getAllUsers();
-    fetchCollaborators(projectId);
-  }, [projectId]);
-
-  const getAllUsers = async () => {
-    try {
-      const response = await fetch(`${process.env.REACT_APP_API_DIRECTUS}/Users`, {
-        method : 'GET',
-        headers: {
-          'Authorization': `Bearer kLe310-xPP66p0IbJ6iyt7ww5Cvb97WX`
+    const fetchData = async () => {
+      try {
+        const usersResponse = await fetch(`${process.env.REACT_APP_API_DIRECTUS}/Users`, {
+          headers: {
+            'Authorization': `Bearer kLe310-xPP66p0IbJ6iyt7ww5Cvb97WX`
+          }
+        });
+        if (!usersResponse.ok) {
+          throw new Error('Error al obtener los usuarios: ' + usersResponse.statusText);
         }
-      });
-      if (response.ok) {
-        const data = await response.json();
-        console.log(data);
-      } else {
-        throw new Error('Error al obtener los usuarios: ' + response.statusText);
-      }
-    } catch (error) {
-      console.error('Error al obtener los usuarios:', error);
-    }
-  };
+        const usersData = await usersResponse.json();
+        console.log('Users:', usersData);
+        setAllUsers(usersData);
 
-//Arreglar (Directus)
-  const fetchCollaborators = async (projectId) => {
-    try {
-      const response = await fetch(`${process.env.REACT_APP_API_DIRECTUS}/Projects/collaborators/${projectId}`);
-      if (response.ok) {
-        const data = await response.json();
-        setSelectedCollaborators(data);
-      } else {
-        throw new Error('Error al obtener los colaboradores del proyecto');
+        const collaboratorsResponse = await fetch(`${process.env.REACT_APP_API_DIRECTUS}/Projects?filter[collaborators][_eq]=${projectId}`, {
+          headers: {
+            'Authorization': `Bearer YOUR_ACCESS_TOKEN`, // Asegúrate de reemplazar con tu token real
+            'Content-Type': 'application/json'
+          }
+        });
+        if (!collaboratorsResponse.ok) {
+          throw new Error('Error al obtener los colaboradores del proyecto: ' + collaboratorsResponse.statusText);
+        }
+        const collaboratorsData = await collaboratorsResponse.json();
+        console.log('Collaborators:', collaboratorsData);
+        setSelectedCollaborators(collaboratorsData);
+      } catch (error) {
+        console.error(error);
       }
-    } catch (error) {
-      console.error('Error al obtener los colaboradores del proyecto:', error);
+    };
+
+    if (projectId) {
+      fetchData();
     }
-  };
+  }, [projectId]);
 
   const handleUserSelect = (user) => {
     const updatedUsers = [...selectedUsers, user];

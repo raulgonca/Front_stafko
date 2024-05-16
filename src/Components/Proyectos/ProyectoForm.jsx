@@ -72,7 +72,7 @@ const ProjectForm = ({ proyectoEditar, onClose, onProjectUpdate }) => {
     };
 
     try {
-      const url = proyectoEditar ? `${process.env.REACT_APP_API_URL}/projects/${proyectoEditar.id}` : `${process.env.REACT_APP_API_URL}/projects`;
+      const url = proyectoEditar ? `${process.env.REACT_APP_API_DIRECTUS}/Projects/${proyectoEditar.id}` : `${process.env.REACT_APP_API_DIRECTUS}/Projects`;
       const method = proyectoEditar ? "PUT" : "POST";
 
       const response = await fetch(url, {
@@ -169,8 +169,8 @@ const ProjectForm = ({ proyectoEditar, onClose, onProjectUpdate }) => {
               onChange={(date) => handleDateChange(date, "fechaInicio")}
               className="w-full px-3 py-2 border rounded-lg focus:outline-none focus:border-custom-orange"
               dateFormat="dd/MM/yyyy"
-              required
               placeholderText="Seleccionar fecha de inicio"
+              required
             />
           </div>
           <div className="mb-6">
@@ -184,18 +184,10 @@ const ProjectForm = ({ proyectoEditar, onClose, onProjectUpdate }) => {
               onChange={(date) => handleDateChange(date, "fechaFinalizacion")}
               className="w-full  px-3 py-2 border rounded-lg focus:outline-none focus:border-custom-orange"
               dateFormat="dd/MM/yyyy"
-              required
               placeholderText="Seleccionar fecha de finalización"
+              required
             />
           </div>
-
-          <button
-            type="button"
-            onClick={() => setShowCollaboratorsModal(true)}
-            className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded focus:outline-none mb-4"
-          >
-            Ver Colaboradores
-          </button>
 
           <div className="flex justify-end">
             <button
@@ -207,7 +199,7 @@ const ProjectForm = ({ proyectoEditar, onClose, onProjectUpdate }) => {
             </button>
             <button
               type="submit"
-              className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded focus:outline-none"
+              className="bg-custom-orange text-white font-bold py-2 px-4 rounded focus:outline-none"
             >
               {proyectoEditar ? "Guardar Cambios" : "Crear Proyecto"}
             </button>

@@ -26,10 +26,10 @@ Stafko-Gestor de proyectos
 <img src="/Screenshot/Main.png">
 
 ### Crear-Proyecto:
-<img src="/Screenshot/CrearProyecto.png">
+<img src="/Screenshot/CreateProject.png">
 
 ### Editar-Proyecto:
-<img src="/Screenshot/EditarProyecto.png">
+<img src="/Screenshot/ProjectEdit.png">
 
 ### Añadir-Colaboradores:
 <img src="/Screenshot/Colaboradores.png">

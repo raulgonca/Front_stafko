@@ -28,7 +28,7 @@ const ProyectoDetails = ({ proyecto, onSubmit }) => {
           <div className="w-full">
             <button
               onClick={openColaboradoresModal}
-              className="w-full bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded mb-6"
+              className="w-full bg-custom-purple text-white font-bold py-2 px-4 rounded mb-6 mt-5"
             >
               Gestionar Colaboradores
             </button>
@@ -57,13 +57,13 @@ const ProyectoDetails = ({ proyecto, onSubmit }) => {
           <div className="w-full">
             <button
               onClick={openClientesModal}
-              className="w-full bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded mb-6"
+              className="w-full bg-custom-bluecito text-white font-bold py-2 px-4 rounded mb-6"
             >
               Gestionar Clientes
             </button>
             {isClientesModalOpen && (
-              <div className="fixed inset-0 z-50 flex items-center justify-center bg-gray-800 bg-opacity-75">
-                <div className="max-w-xl w-full bg-white rounded-lg shadow-lg p-8 relative">
+              <div className="fixed inset-0 z-50 flex items-center justify-center bg-gray-800 bg-opacity-75"  >
+                <div className="max-w-xl w-full bg-white rounded-lg shadow-lg p-8 relative" style={{ maxWidth: '60vw', maxHeight: '80vh' }}>
                   <button
                     className="absolute top-4 right-4 text-gray-600 hover:text-gray-800"
                     onClick={closeClientesModal}
