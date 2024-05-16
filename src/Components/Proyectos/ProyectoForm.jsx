@@ -27,7 +27,7 @@ const ProjectForm = ({ proyectoEditar, onClose, onProjectUpdate }) => {
       setFormData({
         nameproject: nameproject || "",
         description: description || "",
-        fechaInicio: fechaInicio ? new Date(fechaInicio) : null,
+        fechaInicio: fechaInicio ? new Date(fechaInicio) : Date.now(),
         fechaFinalizacion: fechaFinalizacion ? new Date(fechaFinalizacion) : null,
         owner: username,
         collaborators: collaborators || [],
@@ -72,7 +72,7 @@ const ProjectForm = ({ proyectoEditar, onClose, onProjectUpdate }) => {
     };
 
     try {
-      const url = proyectoEditar ? `${process.env.REACT_APP_API_DIRECTUS}/Projects/${proyectoEditar.id}` : `${process.env.REACT_APP_API_DIRECTUS}/Projects`;
+      const url = proyectoEditar ? `${process.env.REACT_APP_API_DIRECTUS}/Projects/` : `${process.env.REACT_APP_API_DIRECTUS}/Projects`;
       const method = proyectoEditar ? "PUT" : "POST";
 
       const response = await fetch(url, {

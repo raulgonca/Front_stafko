@@ -2,48 +2,55 @@ import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 
 const Colaboradores = ({ onClose, onSave }) => {
-  const [selectedUsers, setSelectedUsers] = useState([]);
-  const [allUsers, setAllUsers] = useState([]);
-  const [selectedCollaborators, setSelectedCollaborators] = useState([]);
+  const [ selectedUsers, setSelectedUsers ] = useState([]);
+  const [ allUsers, setAllUsers ] = useState([]);
+  const [ selectedCollaborators, setSelectedCollaborators ] = useState([]);
   const { projectId } = useParams();
-  const [showModal, setShowModal] = useState(true);
+  const [ showModal, setShowModal ] = useState(true);
 
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const usersResponse = await fetch(`${process.env.REACT_APP_API_DIRECTUS}/Users`, {
-          headers: {
-            'Authorization': `Bearer kLe310-xPP66p0IbJ6iyt7ww5Cvb97WX`
-          }
-        });
-        if (!usersResponse.ok) {
-          throw new Error('Error al obtener los usuarios: ' + usersResponse.statusText);
-        }
-        const usersData = await usersResponse.json();
-        console.log('Users:', usersData);
-        setAllUsers(usersData);
-
-        const collaboratorsResponse = await fetch(`${process.env.REACT_APP_API_DIRECTUS}/Projects?filter[collaborators][_eq]=${projectId}`, {
-          headers: {
-            'Authorization': `Bearer YOUR_ACCESS_TOKEN`, // Asegúrate de reemplazar con tu token real
-            'Content-Type': 'application/json'
-          }
-        });
-        if (!collaboratorsResponse.ok) {
-          throw new Error('Error al obtener los colaboradores del proyecto: ' + collaboratorsResponse.statusText);
-        }
-        const collaboratorsData = await collaboratorsResponse.json();
-        console.log('Collaborators:', collaboratorsData);
-        setSelectedCollaborators(collaboratorsData);
-      } catch (error) {
-        console.error(error);
-      }
-    };
-
-    if (projectId) {
-      fetchData();
-    }
+    getAllUsers();
+    fetchCollaborators(projectId);
   }, [projectId]);
+
+  const getAllUsers = async () => {
+    try {
+      const response = await fetch(`${process.env.REACT_APP_API_DIRECTUS}/Users`, {
+        method : 'GET',
+        headers: {
+          'Authorization': `Bearer kLe310-xPP66p0IbJ6iyt7ww5Cvb97WX`
+        }
+      });
+      if (response.ok) {
+        const data = await response.json();
+        console.log(data);
+      } else {
+        throw new Error('Error al obtener los usuarios: ' + response.statusText);
+      }
+    } catch (error) {
+      console.error('Error al obtener los usuarios:', error);
+    }
+  };
+
+//Arreglar (Directus)
+  const fetchCollaborators = async (projectId) => {
+    try {
+      const response = await fetch(`${process.env.REACT_APP_API_DIRECTUS}/Projects/:collaborators/${projectId}`,{
+        method : 'Get',
+        headers: {
+          'Authorization': `Bearer kLe310-xPP66p0IbJ6iyt7ww5Cvb97WX`,
+        }}
+      );
+      if (response.ok) {
+        const data = await response.json();
+        setSelectedCollaborators(data);
+      } else {
+        throw new Error('Error al obtener los colaboradores del proyecto');
+      }
+    } catch (error) {
+      console.error('Error al obtener los colaboradores del proyecto:', error);
+    }
+  };
 
   const handleUserSelect = (user) => {
     const updatedUsers = [...selectedUsers, user];
@@ -93,14 +100,14 @@ const Colaboradores = ({ onClose, onSave }) => {
 
             <div className="flex flex-row">
               <div className="w-1/2 pr-4 overflow-y-auto" style={{ maxHeight: '60vh' }}>
-                <h3 className="text-lg font-semibold mb-4">Usuarios Disponibles:</h3>
+                <h3 className="text-lg font-semibold mb-4 text-center mt-3">Usuarios Disponibles:</h3>
                 {allUsers.length > 0 ? (
                   <ul className="divide-y divide-gray-200">
                     {allUsers.map((user) => (
                       <li key={user.id} className="flex items-center justify-between py-2">
                         <div className="flex items-center space-x-4">
                           <img
-                            src="https://via.placeholder.com/50"
+                            src="https://cdn-icons-png.freepik.com/512/64/64572.png"
                             alt="User Avatar"
                             className="w-10 h-10 rounded-full"
                           />
@@ -118,13 +125,13 @@ const Colaboradores = ({ onClose, onSave }) => {
                 ) : (
                   <>
                     <br />
-                    <p className="text-gray-500 text-center">No hay usuarios disponibles para añadir como colaboradores.</p>
+                    <p className="text-gray-400 text-center">No hay usuarios disponibles para añadir como colaboradores.</p>
                   </>
                 )}
               </div>
 
               <div className="w-1/2 pl-4 overflow-y-auto" style={{ maxHeight: '60vh' }}>
-                <h3 className="text-lg font-semibold mb-4">Colaboradores Seleccionados:</h3>
+                <h3 className="text-lg font-semibold mb-4 text-center mt-3">Colaboradores Seleccionados:</h3>
                 {selectedCollaborators.length > 0 ? (
                   <ul className="divide-y divide-gray-200">
                     {selectedCollaborators.map((collaborator) => (
@@ -149,7 +156,7 @@ const Colaboradores = ({ onClose, onSave }) => {
                 ) : (
                   <>
                     <br />
-                    <p className="text-gray-500 text-center">No hay colaboradores asociados al proyecto.</p>
+                    <p className="text-gray-400 text-center">No hay colaboradores asociados al proyecto.</p>
                   </>
                 )}
               </div>

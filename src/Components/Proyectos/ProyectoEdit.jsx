@@ -7,7 +7,8 @@ const ProyectoEdit = ({ proyectoInicial, onSubmit, onProjectUpdate }) => {
     nameproject: "",
     description: "",
     fechaInicio: "",
-    fechaFinalizacion: ""
+    fechaFinalizacion: "",
+    collaborators: []
   });
 
   useEffect(() => {
@@ -33,10 +34,12 @@ const ProyectoEdit = ({ proyectoInicial, onSubmit, onProjectUpdate }) => {
       return;
     }
     try {
-      const response = await fetch(`${process.env.REACT_APP_API_DIRECTUS}/Projects/${proyecto.id}`, {
+      const response = await fetch(`${process.env.REACT_APP_API_DIRECTUS}/Projects`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
+          "Token" : 'Bearer kLe310-xPP66p0IbJ6iyt7ww5Cvb97WX'
+
         },
         body: JSON.stringify(proyecto),
       });

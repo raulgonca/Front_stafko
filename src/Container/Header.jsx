@@ -9,7 +9,7 @@ function Header({ handleCancel, handleSearchChange }) {
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between h-16">
         {/* Logo */}
         <div className="flex items-center">
-          <Link to="/" className="mr-4">
+          <Link to="/login" className="mr-4">
             <img className="h-10 w-auto" src="https://raw.githubusercontent.com/raulgonca/Front_stafko/main/src/Image/logito.svg" alt="Logo" />
           </Link>
         </div>

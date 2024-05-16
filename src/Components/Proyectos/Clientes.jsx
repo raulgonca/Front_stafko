@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
 
 const Clientes = () => {
-  const [clientes, setClientes] = useState([]);
-  const [searchQuery, setSearchQuery] = useState('');
-  const [error, setError] = useState(null);
+  const [ clientes, setClientes ] = useState([]);
+  const [ searchQuery, setSearchQuery ] = useState("");
+  const [ error, setError ] = useState(null);
 
   useEffect(() => {
     fetchClientes(); // Llamar a la función fetchClientes al montar el componente

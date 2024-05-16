@@ -14,6 +14,8 @@ const ProyectoDetails = ({ proyecto, onSubmit }) => {
   const openClientesModal = () => setClientesModalOpen(true);
   const closeClientesModal = () => setClientesModalOpen(false);
 
+  console.log(proyecto);
+
   return (
     <div className="container mx-auto px-8 py-8">
       <div className="flex flex-col md:flex-row">
@@ -63,7 +65,7 @@ const ProyectoDetails = ({ proyecto, onSubmit }) => {
             </button>
             {isClientesModalOpen && (
               <div className="fixed inset-0 z-50 flex items-center justify-center bg-gray-800 bg-opacity-75"  >
-                <div className="max-w-xl w-full bg-white rounded-lg shadow-lg p-8 relative" style={{ maxWidth: '60vw', maxHeight: '80vh' }}>
+                <div className="max-w-xl w-full bg-white rounded-lg shadow-lg p-8 relative" style={{ maxWidth: ' 70vw' }}>
                   <button
                     className="absolute top-4 right-4 text-gray-600 hover:text-gray-800"
                     onClick={closeClientesModal}
