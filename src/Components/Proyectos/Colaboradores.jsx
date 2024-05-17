@@ -2,11 +2,11 @@ import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 
 const Colaboradores = ({ onClose, onSave }) => {
-  const [ selectedUsers, setSelectedUsers ] = useState([]);
-  const [ allUsers, setAllUsers ] = useState([]);
-  const [ selectedCollaborators, setSelectedCollaborators ] = useState([]);
+  const [selectedUsers, setSelectedUsers] = useState([]);
+  const [allUsers, setAllUsers] = useState([]);
+  const [selectedCollaborators, setSelectedCollaborators] = useState([]);
   const { projectId } = useParams();
-  const [ showModal, setShowModal ] = useState(true);
+  const [showModal, setShowModal] = useState(true);
 
   useEffect(() => {
     getAllUsers();
@@ -16,14 +16,14 @@ const Colaboradores = ({ onClose, onSave }) => {
   const getAllUsers = async () => {
     try {
       const response = await fetch(`${process.env.REACT_APP_API_DIRECTUS}/Users`, {
-        method : 'GET',
+        method: 'GET',
         headers: {
           'Authorization': `Bearer kLe310-xPP66p0IbJ6iyt7ww5Cvb97WX`
         }
       });
       if (response.ok) {
         const data = await response.json();
-        console.log(data);
+        setAllUsers(data.data); // Assuming the API response has a `data` field
       } else {
         throw new Error('Error al obtener los usuarios: ' + response.statusText);
       }
@@ -32,36 +32,34 @@ const Colaboradores = ({ onClose, onSave }) => {
     }
   };
 
-//Arreglar (Directus)
   const fetchCollaborators = async (projectId) => {
     try {
-      const response = await fetch(`${process.env.REACT_APP_API_DIRECTUS}/Projects/:collaborators/${projectId}`,{
-        method : 'Get',
+      const response = await fetch(`${process.env.REACT_APP_API_DIRECTUS}/Projects/${projectId}`, {
+        method: 'GET',
         headers: {
           'Authorization': `Bearer kLe310-xPP66p0IbJ6iyt7ww5Cvb97WX`,
-        }}
-      );
+        }
+      });
       if (response.ok) {
         const data = await response.json();
-        setSelectedCollaborators(data);
+        setSelectedCollaborators(data.data.collaborators);
+        console.log(data.Colaboradores) // Assuming `collaborators` is a field in the project data
       } else {
-        throw new Error('Error al obtener los colaboradores del proyecto');
+        throw new Error('Error al obtener los colaboradores del proyecto: ' + response.statusText);
       }
     } catch (error) {
-      console.error('Error al obtener los colaboradores del proyecto:', error);
+      console.error('Este proyecto no tienes colaboradores asignados: ', error);
     }
   };
 
   const handleUserSelect = (user) => {
-    const updatedUsers = [...selectedUsers, user];
-    setSelectedUsers(updatedUsers);
+    setSelectedUsers([...selectedUsers, user]);
     setAllUsers(allUsers.filter((u) => u.id !== user.id));
     setSelectedCollaborators([...selectedCollaborators, user]);
   };
 
   const handleRemoveUser = (user) => {
-    const updatedUsers = selectedUsers.filter((u) => u.id !== user.id);
-    setSelectedUsers(updatedUsers);
+    setSelectedUsers(selectedUsers.filter((u) => u.id !== user.id));
     setAllUsers([...allUsers, user]);
     setSelectedCollaborators(selectedCollaborators.filter((c) => c.id !== user.id));
   };
@@ -137,8 +135,8 @@ const Colaboradores = ({ onClose, onSave }) => {
                     {selectedCollaborators.map((collaborator) => (
                       <li key={collaborator.id} className="flex items-center justify-between py-2">
                         <div className="flex items-center space-x-4">
-                          <img
-                            src="https://via.placeholder.com/50"
+                        <img
+                            src="https://cdn-icons-png.freepik.com/512/64/64572.png"
                             alt="User Avatar"
                             className="w-10 h-10 rounded-full"
                           />

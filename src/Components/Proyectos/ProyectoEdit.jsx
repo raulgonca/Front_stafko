@@ -34,12 +34,11 @@ const ProyectoEdit = ({ proyectoInicial, onSubmit, onProjectUpdate }) => {
       return;
     }
     try {
-      const response = await fetch(`${process.env.REACT_APP_API_DIRECTUS}/Projects`, {
-        method: "PUT",
+      const response = await fetch(`${process.env.REACT_APP_API_DIRECTUS}/Projects/${proyecto.id}`, {
+        method: "PATCH",
         headers: {
           "Content-Type": "application/json",
-          "Token" : 'Bearer kLe310-xPP66p0IbJ6iyt7ww5Cvb97WX'
-
+          "Authorization": 'Bearer kLe310-xPP66p0IbJ6iyt7ww5Cvb97WX'
         },
         body: JSON.stringify(proyecto),
       });
@@ -126,9 +125,7 @@ const ProyectoEdit = ({ proyectoInicial, onSubmit, onProjectUpdate }) => {
             required
           />
         </div>
-        <button type="submit" className="w-full bg-custom-orange text-white font-bold py-2 px-4 rounded">
-          Guardar Cambios
-        </button>
+        
       </form>
     </div>
   );

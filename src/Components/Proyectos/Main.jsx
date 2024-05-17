@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import ProjectList from './ProjectList';
-import ProyectoForm from './ProyectoForm';
 import { useParams } from 'react-router-dom';
+import ProyectoForm from './ProyectoForm';
+import ProjectList from './ProjectList';
 import Swal from 'sweetalert2';
 
 const Main = () => {

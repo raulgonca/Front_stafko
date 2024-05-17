@@ -1,5 +1,5 @@
-import React from 'react';
 import { Link, useParams } from 'react-router-dom';
+import React from 'react';
 
 function Header({ handleCancel, handleSearchChange }) {
   const { username } = useParams(); // Extrae el parámetro username de la URL

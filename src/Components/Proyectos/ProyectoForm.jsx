@@ -1,12 +1,11 @@
-import React, { useState, useEffect } from "react";
+import "react-datepicker/dist/react-datepicker.css";
+import React, { useState } from "react";
+import { useParams } from "react-router-dom";
 import { FaTimes } from "react-icons/fa";
 import DatePicker from "react-datepicker";
-import "react-datepicker/dist/react-datepicker.css";
-import { useParams } from "react-router-dom";
 import Swal from "sweetalert2";
-import Colaboradores from "./Colaboradores";
 
-const ProjectForm = ({ proyectoEditar, onClose, onProjectUpdate }) => {
+const ProjectForm = ({ onClose, onProjectUpdate }) => {
   const { username } = useParams();
 
   const [formData, setFormData] = useState({
@@ -15,26 +14,7 @@ const ProjectForm = ({ proyectoEditar, onClose, onProjectUpdate }) => {
     fechaInicio: null,
     fechaFinalizacion: null,
     owner: username,
-    collaborators: [],
   });
-
-  const [selectedCollaborators, setSelectedCollaborators] = useState([]);
-  const [showCollaboratorsModal, setShowCollaboratorsModal] = useState(false);
-
-  useEffect(() => {
-    if (proyectoEditar) {
-      const { nameproject, description, fechaInicio, fechaFinalizacion, collaborators } = proyectoEditar;
-      setFormData({
-        nameproject: nameproject || "",
-        description: description || "",
-        fechaInicio: fechaInicio ? new Date(fechaInicio) : Date.now(),
-        fechaFinalizacion: fechaFinalizacion ? new Date(fechaFinalizacion) : null,
-        owner: username,
-        collaborators: collaborators || [],
-      });
-      setSelectedCollaborators(collaborators || []);
-    }
-  }, [proyectoEditar, username]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -68,15 +48,11 @@ const ProjectForm = ({ proyectoEditar, onClose, onProjectUpdate }) => {
       ...formData,
       fechaInicio: formData.fechaInicio ? formData.fechaInicio.toISOString() : null,
       fechaFinalizacion: formData.fechaFinalizacion ? formData.fechaFinalizacion.toISOString() : null,
-      collaborators: selectedCollaborators.map((collaborator) => collaborator.id),
     };
 
     try {
-      const url = proyectoEditar ? `${process.env.REACT_APP_API_DIRECTUS}/Projects/` : `${process.env.REACT_APP_API_DIRECTUS}/Projects`;
-      const method = proyectoEditar ? "PUT" : "POST";
-
-      const response = await fetch(url, {
-        method: method,
+      const response = await fetch(`${process.env.REACT_APP_API_DIRECTUS}/Projects`, {
+        method: 'Post',
         headers: {
           "Content-Type": "application/json",
         },
@@ -84,24 +60,22 @@ const ProjectForm = ({ proyectoEditar, onClose, onProjectUpdate }) => {
       });
 
       if (response.ok) {
-        const message = `Proyecto ${proyectoEditar ? "editado" : "creado"} correctamente.`;
         Swal.fire({
           title: "Éxito",
-          text: message,
+          text: "Proyecto creado correctamente.",
           icon: "success",
           confirmButtonText: "Aceptar",
         });
         onProjectUpdate();
         onClose();
       } else {
-        throw new Error(`Error al ${proyectoEditar ? "editar" : "crear"} el proyecto: ${response.statusText}`);
+        throw new Error("Error al crear el proyecto: " + response.statusText);
       }
     } catch (error) {
       console.error("Error al comunicarse con el servidor:", error);
-      const errorMessage = `Ocurrió un error al ${proyectoEditar ? "editar" : "crear"} el proyecto.`;
       Swal.fire({
         title: "Error",
-        text: errorMessage,
+        text: "Ocurrió un error al crear el proyecto.",
         icon: "error",
         confirmButtonText: "Aceptar",
       });
@@ -110,16 +84,6 @@ const ProjectForm = ({ proyectoEditar, onClose, onProjectUpdate }) => {
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50" >
-    {showCollaboratorsModal && (
-        <Colaboradores
-          onClose={() => setShowCollaboratorsModal(false)}
-          onSave={(selected) => {
-            setSelectedCollaborators(selected);
-            setShowCollaboratorsModal(false);
-          }}
-        />
-      )}
-
       <div className="max-w-xl w-full bg-white rounded-lg shadow-lg p-6 relative" style={{ maxWidth: '30vw', maxHeight: '80vh' }}>
         <button
           onClick={onClose}
@@ -127,7 +91,7 @@ const ProjectForm = ({ proyectoEditar, onClose, onProjectUpdate }) => {
         >
           <FaTimes />
         </button>
-        <h2 className="text-2xl font-bold text-gray-800 mb-4">{proyectoEditar ? "Editar Proyecto" : "Nuevo Proyecto"}</h2>
+        <h2 className="text-2xl font-bold text-gray-800 mb-4">Nuevo Proyecto</h2>
 
         <form onSubmit={handleSubmit}>
           <div className="mb-4">
@@ -162,31 +126,35 @@ const ProjectForm = ({ proyectoEditar, onClose, onProjectUpdate }) => {
             <label htmlFor="fechainicio" className="block text-gray-700 font-bold mb-2">
               Fecha de Inicio
             </label>
-            <DatePicker
-              id="fechainicio"
-              name="fechainicio"
-              selected={formData.fechaInicio}
-              onChange={(date) => handleDateChange(date, "fechaInicio")}
-              className="w-full px-3 py-2 border rounded-lg focus:outline-none focus:border-custom-orange"
-              dateFormat="dd/MM/yyyy"
-              placeholderText="Seleccionar fecha de inicio"
-              required
-            />
+            <div className="w-full mx-auto">
+              <DatePicker
+                id="fechainicio"
+                name="fechainicio"
+                selected={formData.fechaInicio}
+                onChange={(date) => handleDateChange(date, "fechaInicio")}
+                className="w-full px-3 py-2 border rounded-lg focus:outline-none focus:border-custom-orange"
+                dateFormat="dd/MM/yyyy"
+                placeholderText="Seleccionar fecha de inicio"
+                required
+              />
+            </div>
           </div>
           <div className="mb-6">
             <label htmlFor="fechafinalizacion" className="block text-gray-700 font-bold mb-2 ">
               Fecha de Finalización
             </label>
-            <DatePicker
-              id="fechafinalizacion"
-              name="fechafinalizacion"
-              selected={formData.fechaFinalizacion}
-              onChange={(date) => handleDateChange(date, "fechaFinalizacion")}
-              className="w-full  px-3 py-2 border rounded-lg focus:outline-none focus:border-custom-orange"
-              dateFormat="dd/MM/yyyy"
-              placeholderText="Seleccionar fecha de finalización"
-              required
-            />
+            <div className="w-full mx-auto ">
+              <DatePicker
+                id="fechafinalizacion"
+                name="fechafinalizacion"
+                selected={formData.fechaFinalizacion}
+                onChange={(date) => handleDateChange(date, "fechaFinalizacion")}
+                className="w-full  px-3 py-2 border rounded-lg focus:outline-none focus:border-custom-orange"
+                dateFormat="dd/MM/yyyy"
+                placeholderText="Seleccionar fecha de finalización"
+                required
+              />
+            </div>
           </div>
 
           <div className="flex justify-end">
@@ -201,7 +169,7 @@ const ProjectForm = ({ proyectoEditar, onClose, onProjectUpdate }) => {
               type="submit"
               className="bg-custom-orange text-white font-bold py-2 px-4 rounded focus:outline-none"
             >
-              {proyectoEditar ? "Guardar Cambios" : "Crear Proyecto"}
+              Crear Proyecto
             </button>
           </div>
         </form>

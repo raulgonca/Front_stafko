@@ -1,5 +1,5 @@
-import React from "react";
 import { FaEdit, FaTrash } from "react-icons/fa";
+import React from "react";
 
 
 const ProjectCard = ({ proyecto , handleEditarProyecto, handleEliminarProyecto }) => {
