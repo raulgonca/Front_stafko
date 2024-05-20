@@ -1,14 +1,14 @@
+import React, { useState } from 'react';
 import Colaboradores from './Colaboradores';
 import ProyectoEdit from './ProyectoEdit';
-import React, { useState } from 'react';
 import Clientes from './Clientes';
 import Clockify from './Clockify';
 
-const ProyectoDetails = ({ proyecto, onSubmit }) => {
+const ProyectoDetails = ({ proyecto, onSubmit, onClose }) => {
   const [isColaboradoresModalOpen, setColaboradoresModalOpen] = useState(false);
   const [isClientesModalOpen, setClientesModalOpen] = useState(false);
-  const [colaboradores, setColaboradores] = useState(proyecto.colaboradores || []); // Estado para la lista de colaboradores
-  const [clientes, setClientes] = useState(proyecto.clientes || []); // Estado para la lista de clientes
+  const [colaboradores, setColaboradores] = useState(proyecto.colaboradores || []);
+  const [clienteAsignado, setClienteAsignado] = useState(proyecto.clienteNombre || "");
   const [proyectoActualizado, setProyectoActualizado] = useState(proyecto);
 
   const openColaboradoresModal = () => setColaboradoresModalOpen(true);
@@ -21,16 +21,17 @@ const ProyectoDetails = ({ proyecto, onSubmit }) => {
     setColaboradores(nuevosColaboradores);
     setProyectoActualizado((prevProyecto) => ({
       ...prevProyecto,
-      collaborators: nuevosColaboradores,
+      colaboradores: nuevosColaboradores,
     }));
     closeColaboradoresModal();
   };
 
-  const handleSaveClientes = (nuevosClientes) => {
-    setClientes(nuevosClientes);
+  const handleSaveCliente = (nuevoCliente) => {
+    const nombreCliente = nuevoCliente.nombre;
+    setClienteAsignado(nombreCliente);
     setProyectoActualizado((prevProyecto) => ({
       ...prevProyecto,
-      clientes: nuevosClientes,
+      clienteNombre: nombreCliente,
     }));
     closeClientesModal();
   };
@@ -43,7 +44,12 @@ const ProyectoDetails = ({ proyecto, onSubmit }) => {
   };
 
   const handleSaveChanges = async () => {
-    console.log("Datos a enviar:", proyectoActualizado); // Mostrar todos los cambios realizados
+    const proyectoParaGuardar = {
+      ...proyectoActualizado,
+      clienteNombre: clienteAsignado,
+    };
+
+    console.log("Datos a enviar:", proyectoParaGuardar);
 
     try {
       const response = await fetch(`${process.env.REACT_APP_API_DIRECTUS}/Projects/${proyectoActualizado.id}`, {
@@ -52,12 +58,11 @@ const ProyectoDetails = ({ proyecto, onSubmit }) => {
           "Content-Type": "application/json",
           "Authorization": 'Bearer kLe310-xPP66p0IbJ6iyt7ww5Cvb97WX'
         },
-        body: JSON.stringify(proyectoActualizado),
+        body: JSON.stringify(proyectoParaGuardar),
       });
       if (response.ok) {
         console.log("Proyecto actualizado correctamente");
-        onSubmit(proyectoActualizado);
-        // Reiniciar el formulario después de guardar los cambios
+        onSubmit(proyectoParaGuardar);
         setProyectoActualizado(proyecto);
       } else {
         console.error("Error al actualizar el proyecto:", response.statusText);
@@ -69,18 +74,42 @@ const ProyectoDetails = ({ proyecto, onSubmit }) => {
     }
   };
 
+  const handleDeleteProject = async (e) => {
+    e.preventDefault();
+    try {
+      const response = await fetch(`${process.env.REACT_APP_API_DIRECTUS}/Projects/${proyectoActualizado.id}`, {
+        method: "DELETE",
+        headers: {
+          "Authorization": 'Bearer kLe310-xPP66p0IbJ6iyt7ww5Cvb97WX'
+        },
+      });
+      if (response.ok) {
+        console.log("Proyecto eliminado correctamente");
+        onSubmit(null);
+        onClose(); 
+       } else {
+        console.error("Error al eliminar el proyecto:", response.statusText);
+        throw new Error('Hubo un error al eliminar el proyecto.');
+      }
+    } catch (error) {
+      console.error("Error al comunicarse con el servidor:", error);
+      throw new Error('Hubo un error al eliminar el proyecto.');
+    }
+  };
+
   return (
-    <div className="container mx-auto px-8 py-8  rounded-lg ">
-      <div className="flex flex-col md:flex-row">
-        <div className="w-full md:w-1/3 mb-8 md:mb-0 md:pr-8">
+    <div className="container mx-auto px-8 py-8 rounded-lg">
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+        <div className="col-span-1">
           <ProyectoEdit
             proyectoInicial={proyectoActualizado}
             onSubmit={handleProjectUpdate}
             onProjectUpdate={handleProjectUpdate}
           />
         </div>
-        <div className="w-full md:w-2/3 pl-0 md:pl-8 flex flex-col space-y-6">
-          <div className="w-full">
+        <div className="col-span-2 space-y-6">
+          <div className="bg-gray-100 p-4 rounded-lg shadow-sm">
+            <h2 className="text-lg font-bold mb-4">Colaboradores</h2>
             <button
               onClick={openColaboradoresModal}
               className="w-full bg-purple-600 hover:bg-purple-700 text-white font-bold py-2 px-4 rounded mb-6 mt-5 transition duration-300"
@@ -108,9 +137,6 @@ const ProyectoDetails = ({ proyecto, onSubmit }) => {
                 </div>
               </div>
             )}
-          </div>
-          <div className="w-full bg-gray-100 p-4 rounded-lg mb-6 shadow-sm">
-            <h2 className="text-lg font-bold mb-4">Colaboradores</h2>
             {colaboradores.length > 0 ? (
               <ul>
                 {colaboradores.map((colaborador, index) => (
@@ -123,7 +149,8 @@ const ProyectoDetails = ({ proyecto, onSubmit }) => {
               <p>No hay colaboradores añadidos.</p>
             )}
           </div>
-          <div className="w-full">
+          <div className="bg-gray-100 p-4 rounded-lg shadow-sm">
+            <h2 className="text-lg font-bold mb-4">Cliente</h2>
             <button
               onClick={openClientesModal}
               className="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mb-6 transition duration-300"
@@ -132,7 +159,7 @@ const ProyectoDetails = ({ proyecto, onSubmit }) => {
             </button>
             {isClientesModalOpen && (
               <div className="fixed inset-0 z-50 flex items-center justify-center bg-gray-800 bg-opacity-75">
-                <div className="max-w-xl w-full bg-white rounded-lg shadow-lg p-8 relative" style={{ maxWidth: '70vw' }}>
+                <div className="max-w-xl w-full bg-white rounded-lg shadow-lg p-8 relative" style={{                  maxWidth: '70vw' }}>
                   <button
                     className="absolute top-4 right-4 text-gray-600 hover:text-gray-800"
                     onClick={closeClientesModal}
@@ -147,26 +174,42 @@ const ProyectoDetails = ({ proyecto, onSubmit }) => {
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
                     </svg>
                   </button>
-                  <Clientes onClose={closeClientesModal} onSave={handleSaveClientes} />
+                  <Clientes 
+                    onClienteSeleccionado={handleSaveCliente} 
+                    onClose={closeClientesModal} 
+                    clientesSeleccionados={[clienteAsignado]} // Pasar clientes ya seleccionados
+                  />
                 </div>
               </div>
             )}
+            {clienteAsignado ? (
+              <p>{clienteAsignado}</p>
+            ) : (
+              <p>No hay cliente asignado.</p>
+            )}
           </div>
-          <div className="w-full">
+          <div>
             <Clockify />
           </div>
-          <div className="w-full">
-            <button
-              onClick={handleSaveChanges}
-              className="w-full bg-orange-600 hover:bg-orange-700 text-white font-bold py-2 px-4 rounded mt-6 transition duration-300"
-            >
-              Guardar Todos los Cambios
-            </button>
-          </div>
         </div>
+      </div>
+      <div className="flex justify-center space-x-4 mt-6">
+        <button
+          onClick={handleSaveChanges}
+          className="bg-orange-600 hover:bg-orange-700 text-white font-bold py-2 px-4 rounded transition duration-300"
+        >
+          Guardar Todos los Cambios
+        </button>
+        <button
+          onClick={handleDeleteProject}
+          className="bg-red-600 hover:bg-red-700 text-white font-bold py-2 px-4 rounded transition duration-300"
+        >
+          Eliminar Proyecto
+        </button>
       </div>
     </div>
   );
 };
 
 export default ProyectoDetails;
+

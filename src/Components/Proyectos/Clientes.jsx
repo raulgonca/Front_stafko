@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from 'react';
 
-const Clientes = () => {
-  const [ clientes, setClientes ] = useState([]);
-  const [ searchQuery, setSearchQuery ] = useState("");
-  const [ error, setError ] = useState(null);
+const Clientes = ({ onClienteSeleccionado, clientesSeleccionados }) => {
+  const [clientes, setClientes] = useState([]);
+  const [searchQuery, setSearchQuery] = useState("");
+  const [error, setError] = useState(null);
 
   useEffect(() => {
-    fetchClientes(); // Llamar a la función fetchClientes al montar el componente
-  }, []); // El array de dependencias está vacío para que se ejecute solo una vez al montar
+    fetchClientes(); 
+  }, []);
 
   const fetchClientes = async () => {
     try {
@@ -16,7 +16,10 @@ const Clientes = () => {
         throw new Error('Error al obtener los clientes');
       }
       const data = await response.json();
-      setClientes(data.data); // Ajuste para la estructura de respuesta de Directus
+      const clientesFiltrados = data.data.filter(
+        (cliente) => !clientesSeleccionados.includes(cliente.nombre)
+      );
+      setClientes(clientesFiltrados); // Ajuste para la estructura de respuesta de Directus
       setError(null); // Reiniciamos el error si se recuperan los datos correctamente
     } catch (error) {
       console.error('Error al obtener los clientes:', error);
@@ -33,7 +36,10 @@ const Clientes = () => {
         throw new Error('Error al buscar clientes');
       }
       const data = await response.json();
-      setClientes(data.data); // Ajuste para la estructura de respuesta de Directus
+      const clientesFiltrados = data.data.filter(
+        (cliente) => !clientesSeleccionados.includes(cliente.nombre)
+      );
+      setClientes(clientesFiltrados); // Ajuste para la estructura de respuesta de Directus
       setError(null); // Reiniciamos el error si se recuperan los datos correctamente
     } catch (error) {
       console.error('Error al buscar clientes:', error);
@@ -43,7 +49,7 @@ const Clientes = () => {
   };
 
   return (
-    <div className="container mx-auto px-4 py-8">
+    <div className="container mx-auto px-4 py-8" style={{ maxWidth: '70vw' }}>
       <div className="flex items-center mb-4">
         <input
           type="text"
@@ -68,6 +74,7 @@ const Clientes = () => {
               <th className="px-4 py-2">Teléfono</th>
               <th className="px-4 py-2">Email</th>
               <th className="px-4 py-2">Nombre de la Empresa</th>
+              <th className="px-4 py-2">Acciones</th>
             </tr>
           </thead>
           <tbody>
@@ -78,6 +85,14 @@ const Clientes = () => {
                 <td className="border px-4 py-2">{cliente.telefono}</td>
                 <td className="border px-4 py-2">{cliente.email}</td>
                 <td className="border px-4 py-2">{cliente.nombreEmpresa}</td>
+                <td className="border px-4 py-2">
+                  <button
+                    onClick={() => onClienteSeleccionado(cliente)}
+                    className="px-4 py-2 bg-custom-purple text-white rounded-lg "
+                  >
+                    Añadir
+                  </button>
+                </td>
               </tr>
             ))}
           </tbody>

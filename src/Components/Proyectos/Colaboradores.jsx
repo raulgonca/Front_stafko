@@ -23,7 +23,9 @@ const Colaboradores = ({ onClose, onSave }) => {
       });
       if (response.ok) {
         const data = await response.json();
-        setAllUsers(data.data); // Assuming the API response has a `data` field
+        // Filtrar los usuarios disponibles excluyendo aquellos que ya son colaboradores
+        const filteredUsers = data.data.filter(user => !selectedCollaborators.find(collaborator => collaborator.username === user.username));
+        setAllUsers(filteredUsers);
       } else {
         throw new Error('Error al obtener los usuarios: ' + response.statusText);
       }
@@ -31,6 +33,7 @@ const Colaboradores = ({ onClose, onSave }) => {
       console.error('Error al obtener los usuarios:', error);
     }
   };
+  
 
   const fetchCollaborators = async (projectId) => {
     try {
