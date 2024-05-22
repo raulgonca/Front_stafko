@@ -5,8 +5,8 @@ body {
   background-image: url("/src/Image/fondoKOI.jpg");
   background-repeat: no-repeat;
   background-size: cover;
-  height:max-content;
-  width: max-content;
+  width:max-content;
+  height: 100vh;
   margin:auto;
 }
 

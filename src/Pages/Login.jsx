@@ -23,7 +23,7 @@ const Login = () => {
 
       if (response.ok && data.data.length > 0) {
         const user = data.data[0];
-        //console.log('User data:', user);
+        console.log('User data:', user);
 
         // Assuming user.password is the hashed password retrieved from Directus
         const storedHashedPassword = user.password;
@@ -51,6 +51,7 @@ const Login = () => {
       });
     }
   };
+
 
   return (
     <div className="min-h-screen flex items-center justify-center">
@@ -84,7 +85,7 @@ const Login = () => {
                   type="password"
                   autoComplete="current-password"
                   required
-                  className="input-field appearance-none block w-full  text-gray-700 border rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-custom-orange"
+                  className="input-field appearance-none block w-full text-gray-700 border rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-custom-orange"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)} />
               </div>
