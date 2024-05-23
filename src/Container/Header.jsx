@@ -1,7 +1,7 @@
 import { Link, useParams } from 'react-router-dom';
 import React from 'react';
 
-function Header({ handleCancel, handleSearchChange }) {
+function Header({ handleCancel }) {
   const { username } = useParams(); // Extrae el parámetro username de la URL
 
   return (
@@ -13,40 +13,10 @@ function Header({ handleCancel, handleSearchChange }) {
             <img className="h-10 w-auto" src="https://raw.githubusercontent.com/raulgonca/Front_stafko/main/src/Image/logito.svg" alt="Logo" />
           </Link>
         </div>
-        
-        {/* Search */}
-        <div className="relative">
-          <label htmlFor="search" className="sr-only">Buscar</label>
-          <input
-            id="search"
-            className="block w-64 bg-gray-100 text-gray-900 placeholder-gray-400 rounded-md py-2 pl-10 pr-3 sm:text-sm focus:outline-none focus:bg-white focus:ring-2 focus:ring-blue-500"
-            type="text"
-            placeholder="Buscar..."
-            onChange={handleSearchChange}
-          />
-          <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-            <svg
-              className="w-4 h-4 text-gray-500"
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth="2"
-                d="M15.5 15.5L19 19m-3.5-6.5a5 5 0 1 1-10 0 5 5 0 0 1 10 0z"
-              />
-            </svg>
-          </div>
-        </div>
 
-        {/* Profile and Logout */}
-        <div className="flex items-center">
-          {/* Username */}
+        {/* Username and Logout Button */}
+        <div className="flex items-center ml-auto">
           <div className="text-sm font-medium text-gray-900 mr-4">{username}</div>
-          {/* Logout Button */}
           <Link to="/login">
             <button
               onClick={handleCancel}

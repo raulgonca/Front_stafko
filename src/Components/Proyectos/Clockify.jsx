@@ -96,7 +96,7 @@ const Clockify = () => {
                     <input
                         type="text"
                         placeholder="Descripción del temporizador"
-                        className="w-full bg-gray-200 text-gray-800 px-4 py-2 rounded"
+                        className="w-full px-3 py-2 border rounded-lg focus:outline-none focus:border-custom-orange"
                         value={description}
                         onChange={(e) => setDescription(e.target.value)}
                     />

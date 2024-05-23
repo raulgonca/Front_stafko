@@ -5,10 +5,11 @@ import ProjectList from './ProjectList';
 import Swal from 'sweetalert2';
 
 const Main = () => {
-  const [proyectos, setProyectos] = useState([]);
-  const [proyectoEditar, setProyectoEditar] = useState(null);
-  const [mostrarFormulario, setMostrarFormulario] = useState(false);
-  const [proyectoSeleccionado, setProyectoSeleccionado] = useState(null);
+  const [ proyectos, setProyectos ] = useState([]);
+  const [ proyectoEditar, setProyectoEditar ] = useState(null);
+  const [ mostrarFormulario, setMostrarFormulario ] = useState(false);
+  const [ proyectoSeleccionado, setProyectoSeleccionado ] = useState(null);
+  const [ error , setError ] = useState(null);
   const { username } = useParams();
 
   useEffect(() => {
@@ -17,7 +18,7 @@ const Main = () => {
 
   const getUserProjects = async () => {
     try {
-      const response = await fetch(`${process.env.REACT_APP_API_DIRECTUS}/Projects/${username}`);
+      const response = await fetch(`${process.env.REACT_APP_API_DIRECTUS}/Projects?filter[owner][_eq]=${username}`);
       if (response.ok) {
         const data = await response.json();
         setProyectos(data.data); // Ajuste para la estructura de respuesta de Directus
@@ -55,6 +56,26 @@ const Main = () => {
       modal.style.display = 'none';
     }
   };
+
+//  const handleSearch = async (e) => {
+//    e.preventDefault(); // Evitar la recarga de la página por defecto
+//    try {
+//      const response = await fetch(`${process.env.REACT_APP_API_DIRECTUS}/Projects?filter[nombre][_contains]=${searchQuery}`);
+//      if (!response.ok) {
+//        throw new Error('Error al buscar proyectos');
+//      }
+//      const data = await response.json();
+//      const proyectosFiltrados = data.data.filter(
+//        (proyecto) => !proyectoSeleccionado.includes(proyectos.projectname)
+//      );
+//      setProyectos(proyectosFiltrados); // Ajuste para la estructura de respuesta de Directus
+//      setError(null); // Reiniciamos el error si se recuperan los datos correctamente
+//    } catch (error) {
+//      console.error('Error al buscar proyectos:', error);
+//      setError('Error al buscar proyectos');
+//      setProyectos([]); // Aseguramos que proyectos sea un array vacío en caso de error
+//    }
+//  };
 
   return (
     <div className="container mx-auto p-8 mt-2">

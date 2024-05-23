@@ -13,14 +13,15 @@ body {
 
 
 
-/* Estilos para el contenedor principal (#root) */
-/*root {
-}*/
+/* Estilos para el contenedor principal (#root) 
+root {
 
-  /*display: flex; /* Puedes aplicar flex aquí si es necesario */
-  /*justify-content: center; /* Centra el contenido de #root horizontalmente */
-  /* align-items: center;  Centra el contenido de #root verticalmente */
-  /* height: 100%; /* Hace que #root ocupe el 100% de la altura del body */
-  /* margin-top: 2px; */
-  /* padding: 0; */ 
+  display: flex; /* Puedes aplicar flex aquí si es necesario
+  ustify-content: center; /* Centra el contenido de #root horizontalmente
+  align-items: center;  Centra el contenido de #root verticalmente
+  height: 100%; /* Hace que #root ocupe el 100% de la altura del body
+  margin-top: 2px;
+  padding: 0; 
+}
+*/ 
 
