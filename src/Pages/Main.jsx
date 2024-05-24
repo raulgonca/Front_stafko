@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
-import ProyectoForm from './ProyectoForm';
-import ProjectList from './ProjectList';
+import ProyectoForm from '../Components/Proyectos/ProyectoForm';
+import ProjectList from '../Components/Proyectos/ProjectList';
 import Swal from 'sweetalert2';
 
 const Main = () => {
@@ -9,7 +9,6 @@ const Main = () => {
   const [ proyectoEditar, setProyectoEditar ] = useState(null);
   const [ mostrarFormulario, setMostrarFormulario ] = useState(false);
   const [ proyectoSeleccionado, setProyectoSeleccionado ] = useState(null);
-  const [ error , setError ] = useState(null);
   const { username } = useParams();
 
   useEffect(() => {

@@ -1,11 +1,11 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import Registro from './Components/Registro/Registro';
-import Main from './Components/Proyectos/Main';
+import Registro from './Pages/Registro';
+import Main from './Pages/Main';
 import Login from './Pages/Login';
 import Header from './Container/Header';
 import Footer from './Container/Footer.jsx';
-import Clockify from '../src/Components/Proyectos/Clockify.jsx';
-import Clientes from './Components/Proyectos/Clientes.jsx';
+import Clockify from './Components/Clockify/Clockify.jsx';
+import Clientes from './Components/Clientes/Clientes.jsx';
 import './styles.css'
 
 
