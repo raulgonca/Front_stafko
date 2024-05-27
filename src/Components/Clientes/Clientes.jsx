@@ -17,7 +17,7 @@ const Clientes = ({ onClienteSeleccionado, clientesSeleccionados }) => {
       }
       const data = await response.json();
       const clientesFiltrados = data.data.filter(
-        (cliente) => !clientesSeleccionados.includes(cliente.nombre)
+        (cliente) => !clientesSeleccionados.some(selected => selected.id === cliente.id)
       );
       setClientes(clientesFiltrados); // Ajuste para la estructura de respuesta de Directus
       setError(null); // Reiniciamos el error si se recuperan los datos correctamente
@@ -28,19 +28,6 @@ const Clientes = ({ onClienteSeleccionado, clientesSeleccionados }) => {
     }
   };
   
-// const getClientes = async () => {
-//   try{
-//     const response = await fetch(`${process.env.REACT_APP_API_DIRECTUS}/Projects/clientes`);
-//     if (!response.ok) {
-//       throw new Error('Error al obtener los clientes');
-//     }
-//     const data = await response.json();
-//     console.log(data);
-//   }catch(error){
-//       console.log(error)
-//   }
-// };
-
   const handleSearch = async (e) => {
     e.preventDefault(); // Evitar la recarga de la página por defecto
     try {
@@ -50,7 +37,7 @@ const Clientes = ({ onClienteSeleccionado, clientesSeleccionados }) => {
       }
       const data = await response.json();
       const clientesFiltrados = data.data.filter(
-        (cliente) => !clientesSeleccionados.includes(cliente.nombre)
+        (cliente) => !clientesSeleccionados.some(selected => selected.id === cliente.id)
       );
       setClientes(clientesFiltrados); // Ajuste para la estructura de respuesta de Directus
       setError(null); // Reiniciamos el error si se recuperan los datos correctamente

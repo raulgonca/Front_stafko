@@ -46,7 +46,7 @@ const ProyectoDetails = ({ proyecto, onSubmit, onClose }) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (proyecto.description.length >= 100) {
+    if (proyectoActualizado.description.length >= 100) {
       Swal.fire({
         title: 'Error',
         text: 'La descripción debe tener como máximo 100 caracteres.',
@@ -57,12 +57,12 @@ const ProyectoDetails = ({ proyecto, onSubmit, onClose }) => {
     }
     try {
       const proyectoParaGuardar = {
-        ...proyecto,
+        ...proyectoActualizado,
         cliente: clienteAsignado,
         collaborators: colaboradores,
       };
 
-      const response = await fetch(`${process.env.REACT_APP_API_DIRECTUS}/Projects/${proyectoActualizado.id}`, {
+      const response = await fetch(`${process.env.REACT_APP_API_DIRECTUS}/Projects/${proyectoParaGuardar.id}`, {
         method: "PATCH",
         headers: {
           "Content-Type": "application/json",
@@ -242,7 +242,6 @@ const ProyectoDetails = ({ proyecto, onSubmit, onClose }) => {
         </div>
       </div>
     );
-  };
-  
-  export default ProyectoDetails;
-  
+};
+
+export default ProyectoDetails;
