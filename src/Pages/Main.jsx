@@ -3,6 +3,7 @@ import { useParams } from 'react-router-dom';
 import ProyectoForm from '../Components/Proyectos/ProyectoForm';
 import ProjectList from '../Components/Proyectos/ProjectList';
 import Swal from 'sweetalert2';
+import Header from '../Container/Header';
 
 const Main = () => {
   const [ proyectos, setProyectos ] = useState([]);
@@ -77,12 +78,12 @@ const Main = () => {
 //  };
 
   return (
-    <div className="container mx-auto p-8 mt-2">
+    <><Header/><div className="container mx-auto p-8 mt-2">
       <h1 className="text-3xl font-bold text-gray-800 mb-4">Gestiona tus Proyectos</h1>
       <div className="mb-4">
         <button
           onClick={handleCrearProyecto}
-          className="bg-red-500 text-white font-bold py-2 px-4 rounded focus:outline-none"
+          className="bg-custom-rojo text-white font-bold py-2 px-4 rounded focus:outline-none"
         >
           Nuevo Proyecto
         </button>
@@ -111,10 +112,9 @@ const Main = () => {
         <ProyectoForm
           proyectoEditar={proyectoEditar}
           onClose={() => setMostrarFormulario(false)}
-          onProjectUpdate={getUserProjects}
-        />
+          onProjectUpdate={getUserProjects} />
       )}
-    </div>
+    </div></>
   );
 };
 

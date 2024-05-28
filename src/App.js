@@ -4,8 +4,6 @@ import Main from './Pages/Main';
 import Login from './Pages/Login';
 import Header from './Container/Header';
 import Footer from './Container/Footer.jsx';
-import Clockify from './Components/Clockify/Clockify.jsx';
-import Clientes from './Components/Clientes/Clientes.jsx';
 import './styles.css'
 
 
@@ -16,12 +14,12 @@ const App = () => {
       <div className="main-content">
         <div className="spacer">
           <Routes>
+
             <Route path="/" element={<Registro />} />
             <Route path="/login" element={<Login />} />
             <Route path="/main/:username" element={<Main />} />
             <Route path="/register" element={<Registro />} />
-            <Route path="/Clockify" element={<Clockify />} />
-            <Route path="/Clientes" element={<Clientes />} />
+
           </Routes>
         </div>
       </div>

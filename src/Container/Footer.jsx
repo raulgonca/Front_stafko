@@ -1,6 +1,5 @@
 import React from 'react'
 
-
 function Footer() {
   const copy = "©";
   const fullName = "Raúl González Caro";

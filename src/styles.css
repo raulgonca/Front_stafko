@@ -22,23 +22,19 @@ body {
   z-index: 999; /* Asegura que la barra de navegación esté por encima de otros elementos */
 }
 
-.avatar img {
-  width: 40px; /* Ajusta el tamaño de la imagen del avatar aquí */
-  height: 40px;
-  border-radius: 50%; /* Borde redondeado para la imagen del avatar */
-}
+
 
 /* Ajusta el espacio entre la barra de navegación y el contenido */
 .main-content {
   margin-top: 64px; /* Ajusta el valor según la altura de tu barra de navegación */
 }
 
-/* Ajusta el margen lateral y la anchura máxima del contenido */
+/* Ajusta el margen lateral y la anchura máxima del contenido
 .container {
   margin-left: auto;
   margin-right: auto;
-  max-width: 1200px; /* Ancho máximo del contenido */
-}
+  max-width: 1200px; /* Ancho máximo del contenido 
+} */
 
 /* Asegura que el contenido esté centrado verticalmente */
 .center-content {
@@ -55,7 +51,7 @@ body {
 
 /* Estilo para el footer */
 Footer {
-  background-color: whitesmoke; /* Color de fondo */
+  background-color: rgb(255, 255, 255); /* Color de fondo */
   position: fixed; /* Fijar en la parte inferior */
   bottom: 0; /* Pegado al fondo */
   left: 0;

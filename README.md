@@ -16,25 +16,25 @@ Stafko-Gestor de proyectos
 
 ## Screenshots
 
-### Registro:
+### Registro :
 <img src="/Screenshot/Register.png">
 
-### Login:
+### Login :
 <img src="/Screenshot/Login.png">
 
-### Main-Proyectos:
-<img src="/Screenshot/Main_Proyecto.png">
+### Main-Proyectos :
+<img src="/Screenshot/Main.png">
 
-### Crear-Proyecto:
+### Crear-Proyecto :
 <img src="/Screenshot/Crear_Proyecto.png">
 
-### Editar-Proyecto:
+### Editar-Proyecto :
 <img src="/Screenshot/Proyecto Details.png">
 
-### Añadir-Colaboradores:
+### Añadir-Colaboradores :
 <img src="/Screenshot/Modal-Colaboradores.png">
 
-### Añadir-Colaboradores:
+### Añadir-Clientes :
 <img src="/Screenshot/Modal-Clientes.png">
 
 
