@@ -2,8 +2,8 @@ import React, { useState } from 'react';
 import Colaboradores from '../Colaboradores/Colaboradores';
 import ProyectoEdit from './ProyectoEdit';
 import Clientes from '../Clientes/Clientes';
-import Clockify from '../Clockify/Clockify';
 import Swal from 'sweetalert2';
+//import Clockify from '../Clockify/Clockify';
 
 const ProyectoDetails = ({ proyecto, onSubmit, onClose }) => {
   const [isColaboradoresModalOpen, setColaboradoresModalOpen] = useState(false);
@@ -229,13 +229,13 @@ const ProyectoDetails = ({ proyecto, onSubmit, onClose }) => {
         <div className="flex justify-center space-x-8 mt-8">
           <button
             onClick={handleSubmit}
-            className="bg-orange-600 hover:bg-orange-700 text-white font-bold py-3 px-6 rounded transition duration-300"
+            className="bg-custom-orange text-white font-bold py-3 px-6 rounded transition duration-300"
           >
             Guardar Todos los Cambios
           </button>
           <button
             onClick={handleDeleteProject}
-            className="bg-red-600 hover:bg-red-700 text-white font-bold py-3 px-6 rounded transition duration-300"
+            className="bg-custom-rojo text-white font-bold py-3 px-6 rounded transition duration-300"
           >
             Eliminar Proyecto
           </button>

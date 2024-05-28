@@ -105,6 +105,7 @@ const ProjectForm = ({ onClose, onProjectUpdate }) => {
               value={formData.nameproject}
               onChange={handleChange}
               className="w-full px-3 py-2 border rounded-lg focus:outline-none focus:border-custom-orange"
+              placeholder="Nombre del proyecto"
               required
             />
           </div>
@@ -119,6 +120,7 @@ const ProjectForm = ({ onClose, onProjectUpdate }) => {
               onChange={handleChange}
               className="w-full px-3 py-2 border rounded-lg focus:outline-none focus:border-custom-orange"
               rows="4"
+              placeholder="Breve descripcion del proyecto"
               required
             ></textarea>
           </div>
