@@ -4,12 +4,13 @@ import ProyectoForm from '../Components/Proyectos/ProyectoForm';
 import ProjectList from '../Components/Proyectos/ProjectList';
 import Swal from 'sweetalert2';
 import Header from '../Container/Header';
+import { ArrowDownIcon, ArrowUpIcon } from '@heroicons/react/16/solid';
 
 const Main = () => {
-  const [ proyectos, setProyectos ] = useState([]);
-  const [ proyectoEditar, setProyectoEditar ] = useState(null);
-  const [ mostrarFormulario, setMostrarFormulario ] = useState(false);
-  const [ proyectoSeleccionado, setProyectoSeleccionado ] = useState(null);
+  const [proyectos, setProyectos] = useState([]);
+  const [proyectoEditar, setProyectoEditar] = useState(null);
+  const [mostrarFormulario, setMostrarFormulario] = useState(false);
+  const [proyectoSeleccionado, setProyectoSeleccionado] = useState(null);
   const { username } = useParams();
 
   useEffect(() => {
@@ -57,28 +58,12 @@ const Main = () => {
     }
   };
 
-//  const handleSearch = async (e) => {
-//    e.preventDefault(); // Evitar la recarga de la página por defecto
-//    try {
-//      const response = await fetch(`${process.env.REACT_APP_API_DIRECTUS}/Projects?filter[nombre][_contains]=${searchQuery}`);
-//      if (!response.ok) {
-//        throw new Error('Error al buscar proyectos');
-//      }
-//      const data = await response.json();
-//      const proyectosFiltrados = data.data.filter(
-//        (proyecto) => !proyectoSeleccionado.includes(proyectos.projectname)
-//      );
-//      setProyectos(proyectosFiltrados); // Ajuste para la estructura de respuesta de Directus
-//      setError(null); // Reiniciamos el error si se recuperan los datos correctamente
-//    } catch (error) {
-//      console.error('Error al buscar proyectos:', error);
-//      setError('Error al buscar proyectos');
-//      setProyectos([]); // Aseguramos que proyectos sea un array vacío en caso de error
-//    }
-//  };
+  const handleScrollToBottom = () => {
+    window.scrollTo(0, document.body.scrollHeight);
+  };
 
   return (
-    <><Header/><div className="container mx-auto p-8 mt-2">
+    <><Header /><div className="container mx-auto p-8 mt-2">
       <h1 className="text-3xl font-bold text-gray-800 mb-4">Gestiona tus Proyectos</h1>
       <div className="mb-4">
         <button
@@ -114,6 +99,20 @@ const Main = () => {
           onClose={() => setMostrarFormulario(false)}
           onProjectUpdate={getUserProjects} />
       )}
+      {/* Botón para desplazarse al final de la página */}
+      <button
+        onClick={handleScrollToTop}
+        className="fixed top-4 right-4 flex items-center bg-transparent border border-blue-500  py-2 px-4 rounded">
+        <ArrowUpIcon className="ml-2 h-5 w-5 transform rotate-180" />
+      </button>
+
+      {/* Botón para desplazarse al final de la página */}
+      <button
+        onClick={handleScrollToBottom}
+        className="fixed bottom-4 right-4 flex items-center bg-transparent bg-white  py-2 px-4 rounded mb-7">
+        <ArrowDownIcon className="ml-2 h-5 w-5" />
+      </button>
+
     </div></>
   );
 };

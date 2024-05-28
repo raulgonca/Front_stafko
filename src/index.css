@@ -3,8 +3,9 @@
 
 body {
   background-image: url("/src/Image/fondoKOI.jpg");
-  background-repeat: no-repeat;
   background-size: cover;
+  background-attachment: fixed; /* Fijamos el fondo en su lugar */
+  border-image-outset: 12px;
   width:max-content;
   height: 100vh;
   margin:auto;
