@@ -30,7 +30,7 @@ function Header({ handleCancel }) {
             <Link to="/login">
               <button
                 onClick={handleCancel}
-                className="px-4 py-2 text-sm font-medium text-white bg-custom-orange rounded-md hover:bg-orange-700 focus:outline-none focus:ring-2"
+                className="px-4 py-2 text-sm font-medium text-black bg-custom-orange rounded-md hover:bg-orange-700 focus:outline-none focus:ring-2"
               >
                 Cerrar sesión
               </button>

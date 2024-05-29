@@ -16,15 +16,19 @@ const ProjectList = ({ proyectos }) => {
     <div>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 p-6" style={{ maxWidth: '90vw', maxHeight: '600h' }}>
         {proyectos.map((proyecto) => (
-          <div key={proyecto.id} className="bg-gray-200 p-6 rounded-lg shadow-md">
-            <h3 className="text-xl font-semibold mb-4">{proyecto.nameproject}</h3>
-            <p className="text-gray-800 mb-6">{proyecto.description}</p>
-            <button
-              className="bg-custom-orange text-white font-bold py-2 px-4 rounded focus:outline-none border-5 border-gray-300"
-              onClick={() => handleVerDetalles(proyecto)}
-            >
-              Ver Detalles
-            </button>
+          <div key={proyecto.id} className="bg-white p-6 rounded-lg shadow-md flex flex-col justify-between">
+            <div>
+              <h3 className="text-xl font-semibold mb-4">{proyecto.nameproject}</h3>
+              <p className="text-gray-800 mb-6">{proyecto.description}</p>
+            </div>
+            <div className="mt-auto">
+              <button
+                className="bg-custom-orange text-white font-bold py-2 px-4 rounded focus:outline-none border-5 border-gray-300"
+                onClick={() => handleVerDetalles(proyecto)}
+              >
+                Ver Detalles
+              </button>
+            </div>
           </div>
         ))}
       </div>

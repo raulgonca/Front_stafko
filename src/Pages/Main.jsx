@@ -62,7 +62,7 @@ const Main = () => {
   };
 
   const handleScrollToBottom = () => {
-    window.scrollTo(0, document.body.scrollHeight);
+    window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
   };
 
   const handleScrollToTop = () => {
@@ -72,6 +72,8 @@ const Main = () => {
   const abrirModal = () => {
     setMostrarModal(true);
   };
+
+  
 
   return (
     <>
@@ -129,7 +131,7 @@ const Main = () => {
 
         <button
           onClick={abrirModal}
-          className="fixed bottom-4 left-5 flex items-center bg-custom-rojo bg-opacity-50 backdrop-blur-sm border border-black text-black font-bold py-2 px-4 rounded-full mb-8">
+          className="fixed bottom-4 left-5 flex items-center bg-custom-rojo bg-opacity-50 backdrop-blur-sm border border-black text-black font-bold py-1.5 px-2 rounded-full mb-7">
           Contactanos          
           <InboxArrowDownIcon className="h-4 w-4 ml-2" />
         </button>
@@ -137,11 +139,11 @@ const Main = () => {
         {mostrarModal && (
         <div className="fixed inset-0 flex items-center justify-center bg-gray-800 bg-opacity-75 z-50">
           <div className="relative bg-white p-4 rounded-lg shadow-lg max-w-lg mx-auto">
-            <Contacto />
+            <Contacto
+            onClose={() => setMostrarModal(false)} />
           </div>
         </div>
       )}
-
       </div>
     </>
   );

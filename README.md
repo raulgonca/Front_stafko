@@ -23,7 +23,7 @@ Stafko-Gestor de proyectos
 <img src="/Screenshot/Login.png">
 
 ### Main-Proyectos :
-<img src="/Screenshot/Main.png">
+<img src="/Screenshot/Main-New.png">
 
 ### Crear-Proyecto :
 <img src="/Screenshot/Crear_Proyecto.png">
@@ -36,6 +36,9 @@ Stafko-Gestor de proyectos
 
 ### Añadir-Clientes :
 <img src="/Screenshot/Modal-Clientes.png">
+
+### Formulario-Contacto :
+<img src="/Screenshot/Contacto.png">
 
 
 ## Contribución

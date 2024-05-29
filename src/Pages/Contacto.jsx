@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import emailjs from 'emailjs-com';
 import Swal from 'sweetalert2';
 
-const Contacto = (onClose) => {
+const Contacto = ({ onClose }) => {
   const frmContact = { userEmail: '', concernCategory: '', emailTitle: '', emailDetails: '' };
   const [contact, setContact] = useState(frmContact);
 
@@ -38,22 +38,34 @@ const Contacto = (onClose) => {
 
   return (
     <div className="fixed inset-0 flex items-center justify-center bg-gray-800 bg-opacity-75">
-      <div className="bg-white p-6 rounded-lg shadow-lg container max-w-lg text-center">
+      <div className="relative bg-white p-6 rounded-lg shadow-lg container max-w-lg text-center">
         <button
-            onClick={onClose}
-            className="absolute top-0 right-0 mt-4 mr-4 text-gray-600 hover:text-gray-800 focus:outline-none"
-          />
-            <Contacto />
-          </div>
+          onClick={onClose}
+          className="absolute top-2 right-2 text-gray-600 hover:text-gray-800 focus:outline-none"
+        >
+          <svg
+            className="h-6 w-6"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+            aria-hidden="true"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth={2}
+              d="M6 18L18 6M6 6l12 12"
+            />
+          </svg>
+        </button>
         <div className="mb-4">
           <p className="text-xl font-semibold text-gray-700">
             Contacta con nosotros a través de tu Gmail
           </p>
         </div>
-        
         <form onSubmit={handleSubmit}>
           <div className="mb-6">
-            <h3 className="text-2xl font-bold text-gray-800">Rellena este formulario para contactar con nosotros</h3>
+            <h3 className="text-base font-bold text-gray-800">Rellene este formulario con lo que nos quiera comentar</h3>
           </div>
           <div className="mb-4">
             <div className="form-group text-left">
@@ -125,9 +137,9 @@ const Contacto = (onClose) => {
               Enviar Correo 
             </button>
           </div>
-        </form>
-        <div className="pt-5 text-lg font-bold text-gray-700">Stafko - KOI Craft</div>    
+        </form>  
       </div>
+    </div>
   );
 }
 
