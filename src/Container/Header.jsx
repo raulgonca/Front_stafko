@@ -1,10 +1,9 @@
-// Header.js
-import { Link, useParams } from 'react-router-dom';
 import React from 'react';
+import { Link, useParams } from 'react-router-dom';
 
 function Header({ handleCancel }) {
-  const { username } = useParams(); // Extrae el parámetro username de la URL
-  const displayName = username ? username : 'username'; // Usando una expresión ternaria
+  const { username } = useParams();
+  const displayName = username || 'username';
 
   return (
     <nav className="bg-white shadow-lg fixed top-0 left-0 right-0 z-50">
@@ -18,20 +17,20 @@ function Header({ handleCancel }) {
           </div>
 
           {/* Username and Logout Button */}
-          <div className="flex items-center ml-auto">
+          <div className="flex items-center ml-auto space-x-4">
             {/* User Info */}
-            <div className="flex items-center mr-4">
+            <div className="flex items-center space-x-2">
               <img 
                 className="h-8 w-8 rounded-full" 
                 src={`https://ui-avatars.com/api/?name=${displayName}&background=random`} 
                 alt="User Avatar" 
               />
-              <div className="ml-2 text-sm font-medium text-gray-900">{displayName}</div>
+              <div className="text-sm font-medium text-gray-900">{displayName}</div>
             </div>
             <Link to="/login">
               <button
                 onClick={handleCancel}
-                className="px-4 py-2 text-sm font-medium text-black bg-gray-200 rounded-md hover:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-gray-300"
+                className="px-4 py-2 text-sm font-medium text-white bg-custom-orange rounded-md hover:bg-orange-700 focus:outline-none focus:ring-2"
               >
                 Cerrar sesión
               </button>
