@@ -3,14 +3,14 @@ import Colaboradores from '../Colaboradores/Colaboradores';
 import ProyectoEdit from './ProyectoEdit';
 import Clientes from '../Clientes/Clientes';
 import Swal from 'sweetalert2';
-//import Clockify from '../Clockify/Clockify';
 
 const ProyectoDetails = ({ proyecto, onSubmit, onClose }) => {
   const [isColaboradoresModalOpen, setColaboradoresModalOpen] = useState(false);
   const [isClientesModalOpen, setClientesModalOpen] = useState(false);
-  const [colaboradores, setColaboradores] = useState(proyecto.colaboradores || []);
+  const [colaboradores, setColaboradores] = useState(proyecto.colaboradores || "");
   const [clienteAsignado, setClienteAsignado] = useState(proyecto.clienteNombre || "");
-  const [proyectoActualizado, setProyectoActualizado] = useState(proyecto);
+  const [proyectoActualizado, setProyectoActualizado] = useState(proyecto.proyecto || {});
+
 
   const openColaboradoresModal = () => setColaboradoresModalOpen(true);
   const closeColaboradoresModal = () => setColaboradoresModalOpen(false);
@@ -22,7 +22,7 @@ const ProyectoDetails = ({ proyecto, onSubmit, onClose }) => {
     setColaboradores(nuevosColaboradores);
     setProyectoActualizado((prevProyecto) => ({
       ...prevProyecto,
-      collaborators: nuevosColaboradores,
+      colaboradores: nuevosColaboradores,
     }));
     closeColaboradoresModal();
   };
@@ -32,7 +32,7 @@ const ProyectoDetails = ({ proyecto, onSubmit, onClose }) => {
     setClienteAsignado(nombreCliente);
     setProyectoActualizado((prevProyecto) => ({
       ...prevProyecto,
-      cliente: nombreCliente,
+      clienteNombre: nombreCliente,
     }));
     closeClientesModal();
   };
@@ -46,7 +46,7 @@ const ProyectoDetails = ({ proyecto, onSubmit, onClose }) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (proyectoActualizado.description.length >= 100) {
+    if (!proyectoActualizado || (proyectoActualizado.description && proyectoActualizado.description.length >= 100)) {
       Swal.fire({
         title: 'Error',
         text: 'La descripción debe tener como máximo 100 caracteres.',
@@ -58,8 +58,8 @@ const ProyectoDetails = ({ proyecto, onSubmit, onClose }) => {
     try {
       const proyectoParaGuardar = {
         ...proyectoActualizado,
-        cliente: clienteAsignado,
-        collaborators: colaboradores,
+        clienteNombre: clienteAsignado,
+        colaboradores: colaboradores,
       };
 
       const response = await fetch(`${process.env.REACT_APP_API_DIRECTUS}/Projects/${proyectoParaGuardar.id}`, {
@@ -174,7 +174,7 @@ const ProyectoDetails = ({ proyecto, onSubmit, onClose }) => {
                       </li>
                     ))}
                   </ul>
-                </div>
+                  </div>
               ) : (
                 <ul>
                   {colaboradores.map((collaborator, index) => (
@@ -213,7 +213,7 @@ const ProyectoDetails = ({ proyecto, onSubmit, onClose }) => {
                     <Clientes
                       onClienteSeleccionado={handleSaveCliente}
                       onClose={closeClientesModal}
-                      clientesSeleccionados={[clienteAsignado]} // Pasar clientes ya seleccionados
+                      clientesSeleccionados={[clienteAsignado]} 
                     />
                   </div>
                 </div>
@@ -241,7 +241,7 @@ const ProyectoDetails = ({ proyecto, onSubmit, onClose }) => {
           </button>
         </div>
       </div>
-    );
+  );
 };
 
 export default ProyectoDetails;

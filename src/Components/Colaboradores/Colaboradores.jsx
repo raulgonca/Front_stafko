@@ -4,7 +4,7 @@ import { useParams } from 'react-router-dom';
 const Colaboradores = ({ onClose, onSave }) => {
   const [selectedUsers, setSelectedUsers] = useState([]);
   const [allUsers, setAllUsers] = useState([]);
-  const [selectedCollaborators, setSelectedCollaborators] = useState([]);
+  const [selectedCollaborators, setSelectedCollaborators] = useState([]); // Asegúrate de inicializar como un array vacío
   const { projectId } = useParams();
   const [showModal, setShowModal] = useState(true);
 
@@ -33,7 +33,6 @@ const Colaboradores = ({ onClose, onSave }) => {
       console.error('Error al obtener los usuarios:', error);
     }
   };
-  
 
   const fetchCollaborators = async (projectId) => {
     try {
@@ -45,8 +44,7 @@ const Colaboradores = ({ onClose, onSave }) => {
       });
       if (response.ok) {
         const data = await response.json();
-        setSelectedCollaborators(data.data.collaborators);
-        console.log(data.Colaboradores) // Assuming `collaborators` is a field in the project data
+        setSelectedCollaborators(data.data.collaborators || []); // Asegúrate de inicializar como un array vacío si no hay colaboradores
       } else {
         throw new Error('Error al obtener los colaboradores del proyecto: ' + response.statusText);
       }
@@ -166,7 +164,8 @@ const Colaboradores = ({ onClose, onSave }) => {
             <div className="flex justify-center mt-6">
               <button
                 onClick={handleSaveChanges}
-                className="bg-green-500 hover:bg-green-600 text-white py-2 px-4 rounded-full transition duration-300"
+                className="bg-green-500 hover:bg-green-600 text-white py-2 px-4 rounded-full
+                transition duration-300"
               >
                 Guardar Cambios
               </button>
