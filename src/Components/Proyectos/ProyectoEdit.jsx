@@ -1,30 +1,51 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from 'react';
+import Colaboradores from '../Colaboradores/Colaboradores';
+import ProyectoEdit from './ProyectoEdit';
+import Clientes from '../Clientes/Clientes';
 import Swal from 'sweetalert2';
 
-const ProyectoEdit = ({ proyectoInicial, onSubmit, onProjectUpdate }) => {
-  const [proyecto, setProyecto] = useState({
-    id: null,
-    nameproject: "",
-    description: "",
-    fechaInicio: "",
-    fechaFinalizacion: "",
-    collaborators: []
-  });
+const ProyectoDetails = ({ proyecto, onSubmit, onClose }) => {
+  const [isColaboradoresModalOpen, setColaboradoresModalOpen] = useState(false);
+  const [isClientesModalOpen, setClientesModalOpen] = useState(false);
+  const [colaboradores, setColaboradores] = useState(proyecto.colaboradores || []);
+  const [clienteAsignado, setClienteAsignado] = useState(proyecto.clienteNombre || "");
+  const [proyectoActualizado, setProyectoActualizado] = useState(proyecto);
 
-  useEffect(() => {
-    if (proyectoInicial) {
-      setProyecto(proyectoInicial);
-    }
-  }, [proyectoInicial]);
+  const openColaboradoresModal = () => setColaboradoresModalOpen(true);
+  const closeColaboradoresModal = () => setColaboradoresModalOpen(false);
 
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setProyecto((prevProyecto) => ({ ...prevProyecto, [name]: value }));
+  const openClientesModal = () => setClientesModalOpen(true);
+  const closeClientesModal = () => setClientesModalOpen(false);
+
+  const handleSaveColaboradores = (nuevosColaboradores) => {
+    setColaboradores(nuevosColaboradores);
+    setProyectoActualizado((prevProyecto) => ({
+      ...prevProyecto,
+      colaboradores: nuevosColaboradores,
+    }));
+    closeColaboradoresModal();
+  };
+
+  const handleSaveCliente = (nuevoCliente) => {
+    const nombreCliente = nuevoCliente.nombre;
+    setClienteAsignado(nombreCliente);
+    setProyectoActualizado((prevProyecto) => ({
+      ...prevProyecto,
+      clienteNombre: nombreCliente,
+    }));
+    closeClientesModal();
+  };
+
+  const handleProjectUpdate = (nuevoProyecto) => {
+    setProyectoActualizado((prevProyecto) => ({
+      ...prevProyecto,
+      ...nuevoProyecto,
+    }));
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (proyecto.description.length >= 100) {
+    if (proyectoActualizado.description.length > 100) {
       Swal.fire({
         title: 'Error',
         text: 'La descripción debe tener como máximo 100 caracteres.',
@@ -34,18 +55,24 @@ const ProyectoEdit = ({ proyectoInicial, onSubmit, onProjectUpdate }) => {
       return;
     }
     try {
-      const response = await fetch(`${process.env.REACT_APP_API_DIRECTUS}/Projects/${proyecto.id}`, {
+      const proyectoParaGuardar = {
+        ...proyectoActualizado,
+        clienteNombre: clienteAsignado,
+        colaboradores: colaboradores,
+      };
+
+      const response = await fetch(`${process.env.REACT_APP_API_DIRECTUS}/items/Projects/${proyectoParaGuardar.id}`, {
         method: "PATCH",
         headers: {
           "Content-Type": "application/json",
-          "Authorization": 'Bearer kLe310-xPP66p0IbJ6iyt7ww5Cvb97WX'
+          "Authorization": `Bearer ${process.env.REACT_APP_DIRECTUS_TOKEN}`
         },
-        body: JSON.stringify(proyecto),
+        body: JSON.stringify(proyectoParaGuardar),
       });
       if (response.ok) {
-        console.log("Proyecto actualizado correctamente");
-        onSubmit(proyecto);
-        onProjectUpdate();
+        const data = await response.json();
+        console.log("Proyecto actualizado correctamente", data);
+        onSubmit(proyectoParaGuardar);
         Swal.fire({
           title: 'Cambios guardados',
           text: 'Los cambios han sido guardados exitosamente.',
@@ -72,63 +99,157 @@ const ProyectoEdit = ({ proyectoInicial, onSubmit, onProjectUpdate }) => {
     }
   };
 
+  const handleDeleteProject = async (e) => {
+    e.preventDefault();
+    try {
+      const response = await fetch(`${process.env.REACT_APP_API_DIRECTUS}/items/Projects/${proyectoActualizado.id}`, {
+        method: "DELETE",
+        headers: {
+          "Authorization": `Bearer ${process.env.REACT_APP_DIRECTUS_TOKEN}`
+        },
+      });
+      if (response.ok) {
+        console.log("Proyecto eliminado correctamente");
+        onSubmit(null);
+        onClose();
+        Swal.fire({
+          title: 'Proyecto eliminado',
+          text: 'El proyecto ha sido eliminado exitosamente.',
+          icon: 'success',
+          confirmButtonText: 'Aceptar'
+        });
+      } else {
+        const data = await response.json();
+        console.error("Error al eliminar el proyecto:", data);
+        Swal.fire({
+          title: 'Error',
+          text: 'Hubo un error al eliminar el proyecto.',
+          icon: 'error',
+          confirmButtonText: 'Aceptar'
+        });
+      }
+    } catch (error) {
+      console.error("Error al comunicarse con el servidor:", error);
+      Swal.fire({
+        title: 'Error',
+        text: 'Hubo un error al eliminar el proyecto.',
+        icon: 'error',
+        confirmButtonText: 'Aceptar'
+      });
+    }
+  };
+
   return (
-    <div className="proyecto-edit-container p-4 max-w-xl mx-auto">
-      <h2 className="text-lg font-bold mb-4">Editar Proyecto</h2>
-      <form onSubmit={handleSubmit}>
-        <div className="mb-4">
-          <label htmlFor="nameproject" className="block text-sm font-medium text-gray-700">Nombre del Proyecto :</label>
-          <input
-            type="text" 
-            id="nameproject"
-            name="nameproject"
-            value={proyecto.nameproject}
-            onChange={handleChange}
-            className="mt-1 p-2 block w-full border border-gray-300 rounded-md focus:outline-none focus:border-custom-orange"
-            placeholder="Ingrese el nombre del proyecto aquí"
-            required
+    <div className="container mx-auto px-6 py-6 rounded-lg mt-6 mb-6" style={{ maxWidth: '95vw', maxHeight: '90vh'}}>
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-12 mb-6">
+        <div className="col-span-1">
+          <ProyectoEdit
+            proyectoInicial={proyectoActualizado}
+            onSubmit={handleProjectUpdate}
+            onProjectUpdate={handleProjectUpdate}
           />
         </div>
-        <div className="mb-4">
-          <label htmlFor="description" className="block text-sm font-medium text-gray-700">Descripción : </label>
-          <textarea
-            id="description"
-            name="description"
-            value={proyecto.description}
-            onChange={handleChange}
-            className="mt-1 p-2 block w-full border border-gray-300 rounded-md focus:outline-none focus:border-custom-orange"
-            placeholder="Descripción del proyecto"
-            required
-          />
+        <div className="col-span-2 space-y-8">
+          <div className="bg-gray-100 p-6 rounded-lg shadow-md">
+            <h2 className="text-xl font-bold mb-4">Colaboradores</h2>
+            <button
+              onClick={openColaboradoresModal}
+              className="w-full bg-custom-purple text-white font-bold py-2 px-4 rounded mb-4 transition duration-300"
+            >
+              Gestionar Colaboradores
+            </button>
+            {isColaboradoresModalOpen && (
+              <div className="fixed inset-0 z-50 flex items-center justify-center bg-gray-800 bg-opacity-75">
+                <div className="max-w-xl w-full bg-white rounded-lg shadow-lg p-8 relative">
+                  <button
+                    className="absolute top-4 right-4 text-gray-600 hover:text-gray-800"
+                    onClick={closeColaboradoresModal}
+                  >
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      className="h-6 w-6"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke="currentColor"
+                    >
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                    </svg>
+                  </button>
+                  <Colaboradores onClose={closeColaboradoresModal} onSave={handleSaveColaboradores} />
+                </div>
+              </div>
+            )}
+            {colaboradores.length > 0 ? (
+              <div className="max-h-[10rem] overflow-y-auto">
+                <ul>
+                  {colaboradores.map((collaborator, index) => (
+                    <li key={index} className="py-2 border-b border-gray-300 text-center">
+                      {collaborator.username}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            ) : (
+              <p className="text-center">No hay colaboradores asignados.</p>
+            )}
+          </div>
+          <div className="bg-gray-100 p-6 rounded-lg shadow-md">
+            <h2 className="text-xl font-bold mb-4">Cliente</h2>
+            <button
+              onClick={openClientesModal}
+              className="w-full bg-custom-bluecito text-white font-bold py-2 px-4 rounded mb-4 transition duration-300"
+            >
+              Gestionar Clientes
+            </button>
+            {isClientesModalOpen && (
+              <div className="fixed inset-0 z-50 flex items-center justify-center bg-gray-800 bg-opacity-75">
+                <div className="max-w-xl w-full bg-white rounded-lg shadow-lg p-8 relative">
+                  <button
+                    className="absolute top-4 right-4 text-gray-600 hover:text-gray-800"
+                    onClick={closeClientesModal}
+                  >
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      className="h-6 w-6"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke="currentColor"
+                    >
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                    </svg>
+                  </button>
+                  <Clientes
+                    onClienteSeleccionado={handleSaveCliente}
+                    onClose={closeClientesModal}
+                    clientesSeleccionados={[clienteAsignado]}
+                  />
+                </div>
+              </div>
+            )}
+            {clienteAsignado ? (
+              <p className="text-center">{clienteAsignado}</p>
+            ) : (
+              <p className="text-center">No hay cliente asignado.</p>
+            )}
+          </div>
         </div>
-        <div className="mb-4">
-          <label htmlFor="fechaInicio" className="block text-sm font-medium text-gray-700">Fecha de Inicio :</label>
-          <input
-            type="date"
-            id="fechaInicio"
-            name="fechaInicio"
-            value={proyecto.fechaInicio}
-            onChange={handleChange}
-            className="mt-1 p-2 block w-full border border-gray-300 rounded-md focus:outline-none focus:border-custom-orange"
-            required
-          />
-        </div>
-        <div className="mb-4">
-          <label htmlFor="fechaFinalizacion" className="block text-sm font-medium text-gray-700">Fecha de Finalización :</label>
-          <input
-            type="date"
-            id="fechaFinalizacion"
-            name="fechaFinalizacion"
-            value={proyecto.fechaFinalizacion}
-            onChange={handleChange}
-            className="mt-1 p-2 block w-full border border-gray-300 rounded-md focus:outline-none focus:border-custom-orange"
-            required
-          />
-        </div>
-        
-      </form>
+      </div>
+      <div className="flex justify-center space-x-8 mt-8">
+        <button
+          onClick={handleSubmit}
+          className="bg-custom-orange text-white font-bold py-3 px-6 rounded transition duration-300"
+        >
+          Guardar Todos los Cambios
+        </button>
+        <button
+          onClick={handleDeleteProject}
+          className="bg-custom-rojo text-white font-bold py-3 px-6 rounded transition duration-300"
+        >
+          Eliminar Proyecto
+        </button>
+      </div>
     </div>
   );
 };
 
-export default ProyectoEdit;
+export default ProyectoDetails;

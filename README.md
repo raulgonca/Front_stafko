@@ -17,16 +17,16 @@ Stafko-Gestor de proyectos
 ## Screenshots
 
 ### Registro :
-<img src="/Screenshot/Register.png">
+<img src="/Screenshot/Registro.png">
 
 ### Login :
 <img src="/Screenshot/Login.png">
 
 ### Main-Proyectos :
-<img src="/Screenshot/Last-Main.png">
+<img src="/Screenshot/MainConBotones.png">
 
 ### Crear-Proyecto :
-<img src="/Screenshot/Crear_Proyecto.png">
+<img src="/Screenshot/Create.png">
 
 ### Editar-Proyecto :
 <img src="/Screenshot/Proyecto Details.png">
