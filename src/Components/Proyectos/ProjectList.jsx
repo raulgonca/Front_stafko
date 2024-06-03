@@ -14,12 +14,17 @@ const ProjectList = ({ proyectos }) => {
 
   return (
     <div>
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 p-6" style={{ maxWidth: '90vw', maxHeight: '600h' }}>
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 p-6" style={{ maxWidth: '90vw' }}>
         {proyectos.map((proyecto) => (
-          <div key={proyecto.id} className="bg-white p-6 rounded-lg shadow-md flex flex-col justify-between">
+          <div
+            key={proyecto.id}
+            className="bg-white p-6 rounded-lg shadow-md flex flex-col justify-between border border-custom-orange h-48 w-128"
+          >
             <div>
-              <h3 className="text-xl font-semibold mb-4">{proyecto.nameproject}</h3>
-              <p className="text-gray-800 mb-6">{proyecto.description}</p>
+              <h3 className="text-xl font-semibold mb-2">{proyecto.nameproject}</h3>
+              <p className="text-gray-800 mb-4 overflow-hidden overflow-ellipsis h-12">
+                {proyecto.description}
+              </p>
             </div>
             <div className="mt-auto">
               <button

@@ -125,7 +125,7 @@ const ProyectoDetails = ({ proyecto, onSubmit, onClose }) => {
   };
 
   return (
-    <div className="container mx-auto px-6 py-6 rounded-lg mt-6 mb-6 " style={{ maxWidth: '95vw', maxHeight: '90vh' }}>
+    <div className="container mx-auto px-6 py-6 rounded-lg mt-6 mb-6 " style={{ maxWidth: '95vw', maxHeight: '90vh'}}>
       <div className="grid grid-cols-1 md:grid-cols-3 gap-12 mb-6">
         <div className="col-span-1">
           <ProyectoEdit

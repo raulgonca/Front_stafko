@@ -13,14 +13,14 @@ const Contacto = ({ onClose }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    
-    emailjs.send('default_service', 'template_5ai3oao', contact, 'iGslFMQnHvoPnYpc1')
+    //NO FUNCIONA CON VARIABLES DE ENTORNO MIRARLO MEJOR POR SI ACASO
+    emailjs.send('default_service', 'template_5ai3oao', contact, 'wddBkczmRcqERVsDO')
       .then((response) => {
         console.log('SUCCESS!', response.status, response.text);
         setContact(frmContact);
         Swal.fire({
           title: '¡Correo enviado!',
-          text: "Tu correo ha sido enviado correctamente.",
+          text: "Tu correo ha sido enviado correctamente. Nos pondremos en contacto lo mas rapido posible",
           icon: 'success',
           confirmButtonText: 'Aceptar'
         });
