@@ -49,7 +49,7 @@ function Registro() {
     try {
       const newUser = { username, password, gmail };
       
-      const response = await fetch(`http://0.0.0.0:8055/items/Users`, {
+      const response = await fetch(`${process.env.REACT_APP_API_DIRECTUS}/Users`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

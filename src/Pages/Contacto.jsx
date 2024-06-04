@@ -20,10 +20,11 @@ const Contacto = ({ onClose }) => {
         setContact(frmContact);
         Swal.fire({
           title: '¡Correo enviado!',
-          text: "Tu correo ha sido enviado correctamente. Nos pondremos en contacto lo mas rapido posible",
+          text: "Nos pondremos en contacto lo más rápido posible",
           icon: 'success',
           confirmButtonText: 'Aceptar'
         });
+        
       })
       .catch((err) => {
         console.log('FAILED...', err);

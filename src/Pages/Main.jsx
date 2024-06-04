@@ -25,7 +25,7 @@ const Main = () => {
       const response = await fetch(`${process.env.REACT_APP_API_DIRECTUS}/Projects?filter[owner][_eq]=${username}`);
       if (response.ok) {
         const data = await response.json();
-        setProyectos(data.data); // Ajuste para la estructura de respuesta de Directus
+        setProyectos(data.data); 
       } else {
         throw new Error('Error al obtener los proyectos: ' + response.statusText);
       }
@@ -46,7 +46,7 @@ const Main = () => {
   };
 
   const handleVerDetalles = (proyecto) => {
-    setProyectoSeleccionado(proyecto); // Actualiza el estado del proyecto seleccionado
+    setProyectoSeleccionado(proyecto); 
     const modal = document.getElementById('projectDetails');
     if (modal) {
       modal.style.display = 'block';
@@ -54,7 +54,7 @@ const Main = () => {
   };
 
   const handleCloseModal = () => {
-    setProyectoSeleccionado(null); // Reinicia el estado del proyecto seleccionado
+    setProyectoSeleccionado(null);
     const modal = document.getElementById('projectDetails');
     if (modal) {
       modal.style.display = 'none';

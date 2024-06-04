@@ -25,12 +25,10 @@ const Login = () => {
         const user = data.data[0];
         console.log('User data:', user.username, user.gmail);
 
-        // Assuming user.password is the hashed password retrieved from Directus
         const storedHashedPassword = user.password;
         //console.log(storedHashedPassword)
         //console.log(user.password)
 
-        // Compare the entered password with the stored hashed password
         if (storedHashedPassword === user.password) {
           console.log('Inicio de sesión exitoso');
           localStorage.setItem('directusUser', JSON.stringify(user));

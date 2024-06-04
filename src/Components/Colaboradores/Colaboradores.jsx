@@ -46,7 +46,7 @@ const Colaboradores = ({ onClose, onSave }) => {
       if (response.ok) {
         const data = await response.json();
         setSelectedCollaborators(data.data.collaborators);
-        console.log(data.Colaboradores) // Assuming `collaborators` is a field in the project data
+        console.log(data.Colaboradores) 
       } else {
         throw new Error('Error al obtener los colaboradores del proyecto: ' + response.statusText);
       }

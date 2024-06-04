@@ -47,19 +47,18 @@ const ProyectoDetails = ({ proyecto, onSubmit, onClose }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      // Construir el objeto del proyecto para guardar solo con los nombres de los colaboradores y el cliente
       const colaboradoresNombres = colaboradores.map(colaborador => colaborador.username);
       const proyectoParaGuardar = {
         id: proyectoActualizado.id,
         cliente: clienteAsignado,
         collaborators: colaboradoresNombres,
       };
-  
+
       // Validar el objeto del proyecto antes de enviarlo
       if (!proyectoParaGuardar.id) {
         throw new Error('El ID del proyecto es requerido.');
       }
-  
+
       // Realizar la solicitud PATCH al servidor
       const response = await fetch(`${process.env.REACT_APP_API_DIRECTUS}/Projects/${proyectoParaGuardar.id}`, {
         method: "PATCH",
@@ -69,7 +68,7 @@ const ProyectoDetails = ({ proyecto, onSubmit, onClose }) => {
         },
         body: JSON.stringify(proyectoParaGuardar),
       });
-  
+
       // Manejar la respuesta del servidor
       if (response.ok) {
         console.log("Proyecto actualizado correctamente");
@@ -100,7 +99,7 @@ const ProyectoDetails = ({ proyecto, onSubmit, onClose }) => {
       });
     }
   };
-  
+
 
   const handleDeleteProject = async (e) => {
     e.preventDefault();
@@ -215,7 +214,7 @@ const ProyectoDetails = ({ proyecto, onSubmit, onClose }) => {
                   <Clientes
                     onClienteSeleccionado={handleSaveCliente}
                     onClose={closeClientesModal}
-                    clientesSeleccionados={[clienteAsignado]} // Pasar clientes ya seleccionados
+                    clientesSeleccionados={[clienteAsignado]} 
                   />
                 </div>
               </div>
@@ -226,21 +225,21 @@ const ProyectoDetails = ({ proyecto, onSubmit, onClose }) => {
               <p className='text-center'>No hay cliente asignado.</p>
             )}
           </div>
+          <div className="flex justify-center space-x-8">
+            <button
+              onClick={handleSubmit}
+              className="bg-custom-orange text-white font-bold py-2 px-4 rounded"
+            >
+              Guardar Colaboradores/Clientes
+            </button>
+            <button
+              onClick={handleDeleteProject}
+              className="bg-red-600 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"
+            >
+              Eliminar Proyecto
+            </button>
+          </div>
         </div>
-      </div>
-      <div className="flex justify-center space-x-8 mt-8">
-        <button
-          onClick={handleSubmit}
-          className="bg-orange-600 hover:bg-orange-700 text-white font-bold py-3 px-6 rounded transition duration-300"
-        >
-          Guardar Todos los Cambios
-        </button>
-        <button
-          onClick={handleDeleteProject}
-          className="bg-red-600 hover:bg-red-700 text-white font-bold py-3 px-6 rounded transition duration-300"
-        >
-          Eliminar Proyecto
-        </button>
       </div>
     </div>
   );

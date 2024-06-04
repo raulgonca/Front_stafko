@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
 
 const Clientes = ({ onClienteSeleccionado, clientesSeleccionados }) => {
-  const [clientes, setClientes] = useState([]);
-  const [searchQuery, setSearchQuery] = useState("");
-  const [error, setError] = useState(null);
+  const [ clientes, setClientes ] = useState([]);
+  const [ searchQuery, setSearchQuery ] = useState("");
+  const [ setError ] = useState(null);
 
   useEffect(() => {
     fetchClientes(); 
@@ -19,17 +19,16 @@ const Clientes = ({ onClienteSeleccionado, clientesSeleccionados }) => {
       const clientesFiltrados = data.data.filter(
         (cliente) => !clientesSeleccionados.some(selected => selected.id === cliente.id)
       );
-      setClientes(clientesFiltrados); // Ajuste para la estructura de respuesta de Directus
-      setError(null); // Reiniciamos el error si se recuperan los datos correctamente
+      setClientes(clientesFiltrados);
     } catch (error) {
       console.error('Error al obtener los clientes:', error);
       setError('Error al obtener los clientes');
-      setClientes([]); // Aseguramos que clientes sea un array vacío en caso de error
+      setClientes([]); 
     }
   };
   
   const handleSearch = async (e) => {
-    e.preventDefault(); // Evitar la recarga de la página por defecto
+    e.preventDefault(); 
     try {
       const response = await fetch(`${process.env.REACT_APP_API_DIRECTUS}/Clientes?filter[nombre][_contains]=${searchQuery}`);
       if (!response.ok) {
@@ -39,12 +38,12 @@ const Clientes = ({ onClienteSeleccionado, clientesSeleccionados }) => {
       const clientesFiltrados = data.data.filter(
         (cliente) => !clientesSeleccionados.some(selected => selected.id === cliente.id)
       );
-      setClientes(clientesFiltrados); // Ajuste para la estructura de respuesta de Directus
-      setError(null); // Reiniciamos el error si se recuperan los datos correctamente
+      setClientes(clientesFiltrados); 
+      setError(null); 
     } catch (error) {
       console.error('Error al buscar clientes:', error);
       setError('Error al buscar clientes');
-      setClientes([]); // Aseguramos que clientes sea un array vacío en caso de error
+      setClientes([]);
     }
   };
 

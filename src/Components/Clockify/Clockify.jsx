@@ -20,7 +20,7 @@ const Clockify = () => {
                     },
                     body: JSON.stringify({
                         start: startTime,
-                        description: description || 'Trabajo en curso' // Usar la descripción ingresada o predeterminada
+                        description: description || 'Trabajo en curso'
                     })
                 });
 
@@ -28,7 +28,7 @@ const Clockify = () => {
                     const data = await response.json();
                     // Temporizador iniciado exitosamente
                     setTimerActive(true);
-                    setTimeEntryId(data.id); // Guardar el ID de la entrada de tiempo
+                    setTimeEntryId(data.id); 
                     Swal.fire({
                         icon: 'success',
                         title: 'Temporizador Iniciado',
@@ -52,7 +52,6 @@ const Clockify = () => {
         try {
             if (timerActive && timeEntryId) {
                 const endTime = new Date().toISOString();
-
                 // Realizar la solicitud para detener el temporizador
                 const response = await fetch(`${process.env.REACT_APP_CLOCKIFY}/time-entries`, {
                     method: 'PATCH',
