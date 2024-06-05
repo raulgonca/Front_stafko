@@ -124,7 +124,7 @@ const ProyectoEdit = ({ proyectoInicial, onSubmit, onProjectUpdate }) => {
             required
           />
         </div>
-        <button type="submit" className="w-full bg-custom-orange text-white font-bold py-2 px-4 rounded">
+        <button type="submit" className="w-full bg-custom-orange text-white font-bold py-2 px-4 rounded mt-4">
           Guardar Cambios
         </button>
       </form>

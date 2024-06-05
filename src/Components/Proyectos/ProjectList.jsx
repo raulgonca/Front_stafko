@@ -6,6 +6,8 @@ const ProjectList = ({ proyectos }) => {
 
   const handleVerDetalles = (proyecto) => {
     setSelectedProyecto(proyecto);
+    console.log(proyecto)
+
   };
 
   const closeProyectoDetails = () => {

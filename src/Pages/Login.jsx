@@ -23,7 +23,7 @@ const Login = () => {
 
       if (response.ok && data.data.length > 0) {
         const user = data.data[0];
-        console.log('User data:', user.username, user.gmail);
+        console.log('User data:', user.username,' / ', user.gmail);
 
         const storedHashedPassword = user.password;
         //console.log(storedHashedPassword)

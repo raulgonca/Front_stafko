@@ -1,29 +1,26 @@
 import React, { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
 
-const Colaboradores = ({ onClose, onSave }) => {
+const Colaboradores = ({ proyecto, onClose, onSave }) => {
   const [selectedUsers, setSelectedUsers] = useState([]);
   const [allUsers, setAllUsers] = useState([]);
   const [selectedCollaborators, setSelectedCollaborators] = useState([]);
-  const { projectId } = useParams();
   const [showModal, setShowModal] = useState(true);
 
   useEffect(() => {
     getAllUsers();
-    fetchCollaborators(projectId);
-  }, [projectId]);
+    fetchCollaborators(proyecto);
+  }, []); 
 
   const getAllUsers = async () => {
     try {
       const response = await fetch(`${process.env.REACT_APP_API_DIRECTUS}/Users`, {
         method: 'GET',
         headers: {
-          'Authorization': `Bearer kLe310-xPP66p0IbJ6iyt7ww5Cvb97WX`
+          'Authorization': `Bearer jMmotYSthQpp8laAI9vzewV-sOfSi6NH`
         }
       });
       if (response.ok) {
         const data = await response.json();
-        // Filtrar los usuarios disponibles excluyendo aquellos que ya son colaboradores
         const filteredUsers = data.data.filter(user => !selectedCollaborators.find(collaborator => collaborator.username === user.username));
         setAllUsers(filteredUsers);
       } else {
@@ -33,25 +30,29 @@ const Colaboradores = ({ onClose, onSave }) => {
       console.error('Error al obtener los usuarios:', error);
     }
   };
-  
 
-  const fetchCollaborators = async (projectId) => {
-    try {
-      const response = await fetch(`${process.env.REACT_APP_API_DIRECTUS}/Projects/${projectId}`, {
+  const fetchCollaborators = async (proyecto) => {
+    try {      
+      const response = await fetch(`${process.env.REACT_APP_API_DIRECTUS}/Projects/${proyecto.id}`, {
         method: 'GET',
         headers: {
-          'Authorization': `Bearer kLe310-xPP66p0IbJ6iyt7ww5Cvb97WX`,
+          'Authorization': `Bearer jMmotYSthQpp8laAI9vzewV-sOfSi6NH`,
+          'Content-Type': 'application/json'
         }
       });
+    
       if (response.ok) {
         const data = await response.json();
-        setSelectedCollaborators(data.data.collaborators);
-        console.log(data.Colaboradores) 
+        if (data && data.data && data.data.collaborators) {
+          setSelectedCollaborators(data.data.collaborators);
+        } else {
+          setSelectedCollaborators([]);
+        }
       } else {
         throw new Error('Error al obtener los colaboradores del proyecto: ' + response.statusText);
       }
     } catch (error) {
-      console.error('Este proyecto no tienes colaboradores asignados: ', error);
+      console.error('Este proyecto no tiene colaboradores asignados: ', error);
     }
   };
 
@@ -81,14 +82,14 @@ const Colaboradores = ({ onClose, onSave }) => {
     <>
       {showModal && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-gray-800 bg-opacity-75">
-          <div className="max-w-xl w-full bg-white rounded-lg shadow-lg p-6 relative" style={{ maxWidth: '60vw', maxHeight: '80vh' }}>
+          <div className="w-full bg-white rounded-lg shadow-lg p-6 relative" style={{ maxWidth: '60vw', maxHeight: '80vh' }}>
             <button
               className="absolute top-4 right-4 text-gray-600 hover:text-gray-800"
               onClick={closeModal}
             >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
-                className="h-6 w-6"
+                className="h-3 w-3"
                 fill="none"
                 viewBox="0 0 24 24"
                 stroke="currentColor"
@@ -167,15 +168,16 @@ const Colaboradores = ({ onClose, onSave }) => {
               <button
                 onClick={handleSaveChanges}
                 className="bg-green-500 hover:bg-green-600 text-white py-2 px-4 rounded-full transition duration-300"
-              >
-                Guardar Cambios
-              </button>
+                >
+                  Guardar Cambios
+                </button>
+              </div>
             </div>
           </div>
-        </div>
-      )}
-    </>
-  );
-};
-
-export default Colaboradores;
+        )}
+      </>
+    );
+  };
+  
+  export default Colaboradores;
+  

@@ -9,7 +9,7 @@ const ProyectoDetails = ({ proyecto, onSubmit, onClose }) => {
   const [isColaboradoresModalOpen, setColaboradoresModalOpen] = useState(false);
   const [isClientesModalOpen, setClientesModalOpen] = useState(false);
   const [colaboradores, setColaboradores] = useState(proyecto.colaboradores || []);
-  const [clienteAsignado, setClienteAsignado] = useState(proyecto.clienteNombre || "");
+  const [clienteAsignado, setClienteAsignado] = useState(proyecto.clienteNombre|| "");
   const [proyectoActualizado, setProyectoActualizado] = useState(proyecto);
 
   const openColaboradoresModal = () => setColaboradoresModalOpen(true);
@@ -64,7 +64,7 @@ const ProyectoDetails = ({ proyecto, onSubmit, onClose }) => {
         method: "PATCH",
         headers: {
           "Content-Type": "application/json",
-          "Authorization": 'Bearer kLe310-xPP66p0IbJ6iyt7ww5Cvb97WX'
+          "Authorization": 'Bearer jMmotYSthQpp8laAI9vzewV-sOfSi6NH'
         },
         body: JSON.stringify(proyectoParaGuardar),
       });
@@ -162,7 +162,10 @@ const ProyectoDetails = ({ proyecto, onSubmit, onClose }) => {
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
                     </svg>
                   </button>
-                  <Colaboradores onClose={closeColaboradoresModal} onSave={handleSaveColaboradores} />
+                  <Colaboradores 
+                      projectId={proyecto} 
+                      onClose={closeColaboradoresModal} 
+                      onSave={handleSaveColaboradores} />
                 </div>
               </div>
             )}
