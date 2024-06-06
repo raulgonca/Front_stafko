@@ -1,4 +1,6 @@
 import React, { useState, useEffect } from 'react';
+import UserList from './UserList';
+import CollaboratorList from './CollaboratorList';
 
 const Colaboradores = ({ proyecto, onClose, onSave }) => {
   const [selectedUsers, setSelectedUsers] = useState([]);
@@ -33,30 +35,43 @@ const Colaboradores = ({ proyecto, onClose, onSave }) => {
 
   const fetchCollaborators = async (proyecto) => {
     try {
-      //mirar este metodo porque no funciona correctamente
-      const response = await fetch(`${process.env.REACT_APP_API_DIRECTUS}/Projects/${proyecto.id}`, {
+      const response = await fetch(`${process.env.REACT_APP_API_DIRECTUS}/Projects/${proyecto.id}?fields=collaborators`, {
         method: 'GET',
         headers: {
           'Authorization': `Bearer jMmotYSthQpp8laAI9vzewV-sOfSi6NH`,
           'Content-Type': 'application/json'
         }
       });
-
+  
       if (response.ok) {
-        const data = await response.json();
-        if (data && data.data && data.data.collaborators) {
-          setSelectedCollaborators(data.data.collaborators);
-        } else {
-          setSelectedCollaborators([]);
+        const result = await response.json();
+        console.log("API Response:", result);
+  
+        // Obtener los colaboradores desde el campo 'data.collaborators'
+        const collaboratorsStr = result.data.collaborators;
+  
+        // Verificar si 'collaboratorsStr' es una cadena JSON válida
+        let collaborators;
+        try {
+          collaborators = JSON.parse(collaboratorsStr);
+          console.log("Parsed collaborators:", collaborators);
+        } catch (parseError) {
+          console.error('Error parsing collaborators:', parseError);
+          collaborators = [];
         }
+  
+        // Convertir los nombres de usuario en objetos para mantener consistencia en el estado
+        const collaboratorsObjects = collaborators.map(username => ({ username }));
+        setSelectedCollaborators(collaboratorsObjects);
       } else {
         throw new Error('Error al obtener los colaboradores del proyecto: ' + response.statusText);
       }
     } catch (error) {
-      console.error('Este proyecto no tiene colaboradores asignados: ', error);
+      console.error('Error al obtener los colaboradores:', error);
+      setSelectedCollaborators([]); // En caso de error, establece selectedCollaborators como un array vacío
     }
   };
-
+  
   const handleUserSelect = (user) => {
     setSelectedUsers([...selectedUsers, user]);
     setAllUsers(allUsers.filter((u) => u.id !== user.id));
@@ -66,7 +81,7 @@ const Colaboradores = ({ proyecto, onClose, onSave }) => {
   const handleRemoveUser = (user) => {
     setSelectedUsers(selectedUsers.filter((u) => u.id !== user.id));
     setAllUsers([...allUsers, user]);
-    setSelectedCollaborators(selectedCollaborators.filter((c) => c.id !== user.id));
+    setSelectedCollaborators(selectedCollaborators.filter((c) => c.username !== user.username));
   };
 
   const handleSaveChanges = () => {
@@ -102,67 +117,15 @@ const Colaboradores = ({ proyecto, onClose, onSave }) => {
             <h2 className="text-2xl font-bold text-center mb-4">Gestión de Colaboradores</h2>
 
             <div className="flex flex-row">
-              <div className="w-1/2 pr-4 overflow-y-auto" style={{ maxHeight: '60vh' }}>
-                <h3 className="text-lg font-semibold mb-4 text-center mt-3">Usuarios Disponibles:</h3>
-                {allUsers.length > 0 ? (
-                  <ul className="divide-y divide-gray-200">
-                    {allUsers.map((user) => (
-                      <li key={user.id} className="flex items-center justify-between py-2">
-                        <div className="flex items-center space-x-4">
-                          <img
-                            src="https://cdn-icons-png.freepik.com/512/64/64572.png"
-                            alt="User Avatar"
-                            className="w-10 h-10 rounded-full"
-                          />
-                          <span className="text-base">{user.username}</span>
-                        </div>
-                        <button
-                          onClick={() => handleUserSelect(user)}
-                          className="bg-blue-500 hover:bg-blue-600 text-white py-1 px-3 rounded-full transition duration-300 text-sm"
-                        >
-                          Añadir
-                        </button>
-                      </li>
-                    ))}
-                  </ul>
-                ) : (
-                  <>
-                    <br />
-                    <p className="text-gray-400 text-center">No hay usuarios disponibles para añadir como colaboradores.</p>
-                  </>
-                )}
-              </div>
+              <UserList 
+                users={allUsers} 
+                onUserSelect={handleUserSelect} 
+              />
 
-              <div className="w-1/2 pl-4 overflow-y-auto" style={{ maxHeight: '60vh' }}>
-                <h3 className="text-lg font-semibold mb-4 text-center mt-3">Colaboradores Seleccionados:</h3>
-                {selectedCollaborators.length > 0 ? (
-                  <ul className="divide-y divide-gray-200">
-                    {selectedCollaborators.map((collaborator) => (
-                      <li key={collaborator.id} className="flex items-center justify-between py-2">
-                        <div className="flex items-center space-x-4">
-                          <img
-                            src="https://cdn-icons-png.freepik.com/512/64/64572.png"
-                            alt="User Avatar"
-                            className="w-10 h-10 rounded-full"
-                          />
-                          <span className="text-base font-medium">{collaborator.username}</span>
-                        </div>
-                        <button
-                          onClick={() => handleRemoveUser(collaborator)}
-                          className="bg-red-500 hover:bg-red-600 text-white py-1 px-3 rounded-full transition duration-300 text-sm"
-                        >
-                          Remover
-                        </button>
-                      </li>
-                    ))}
-                  </ul>
-                ) : (
-                  <>
-                    <br />
-                    <p className="text-gray-400 text-center">No hay colaboradores asociados al proyecto.</p>
-                  </>
-                )}
-              </div>
+              <CollaboratorList 
+                collaborators={selectedCollaborators} 
+                onRemoveUser={handleRemoveUser} 
+              />
             </div>
 
             <div className="flex justify-center mt-6">
@@ -181,4 +144,3 @@ const Colaboradores = ({ proyecto, onClose, onSave }) => {
 };
 
 export default Colaboradores;
-

@@ -157,23 +157,13 @@ const ProyectoDetails = ({ proyecto, onSubmit, onClose }) => {
                     </svg>
                   </button>
                   <Colaboradores 
-                    projectId={proyecto} 
+                    proyecto={proyecto} 
                     onClose={closeColaboradoresModal} 
                     onSave={handleSaveColaboradores} />
                 </div>
               </div>
             )}
-            {colaboradores.length > 2 ? (
-              <div className="max-h-[10rem] overflow-y-auto">
-                <ul>
-                  {colaboradores.map((collaborator, index) => (
-                    <li key={index} className="py-2 border-b border-gray-300 text-center">
-                      {collaborator.username}
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            ) : (
+            <div className="max-h-24 overflow-y-auto">
               <ul>
                 {colaboradores.map((collaborator, index) => (
                   <li key={index} className="py-2 border-b border-gray-300 text-center">
@@ -181,7 +171,7 @@ const ProyectoDetails = ({ proyecto, onSubmit, onClose }) => {
                   </li>
                 ))}
               </ul>
-            )}
+            </div>
           </div>
           <div className="bg-gray-100 p-6 rounded-lg shadow-md">
             <h2 className="text-xl font-bold mb-4">Cliente</h2>
@@ -243,4 +233,3 @@ const ProyectoDetails = ({ proyecto, onSubmit, onClose }) => {
 };
 
 export default ProyectoDetails;
-

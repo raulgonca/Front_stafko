@@ -76,8 +76,8 @@ const Main = () => {
   return (
     <>
       <Header />
-      <div className="container mx-auto p-8 mt-2">
-        <h1 className="text-3xl font-bold text-gray-800 mb-4 justify-start">Gestiona tus Proyectos</h1>
+      <div className="container mx-auto p-4 sm:p-8 mt-2">
+        <h1 className="text-2xl sm:text-3xl font-bold text-gray-800 mb-4">Gestiona tus Proyectos</h1>
         <div className="mb-4">
           <button
             onClick={handleCrearProyecto}
@@ -90,18 +90,16 @@ const Main = () => {
         
         {/* Modal de Detalles del Proyecto */}
         {proyectoSeleccionado && (
-          <div id="projectDetailsModal" className="modal" style={{ display: 'none' }}>
-            <div className="modal-dialog">
-              <div className="modal-content">
-                <div className="modal-header">
-                  <h5 className="modal-title">{proyectoSeleccionado.nameproject}</h5>
-                  <button type="button" className="close" onClick={handleCloseModal}>
-                    <span aria-hidden="true">&times;</span>
-                  </button>
-                </div>
-                <div className="modal-body">
-                  <p>{proyectoSeleccionado.description}</p>
-                </div>
+          <div id="projectDetailsModal" className="fixed inset-0 flex items-center justify-center bg-gray-800 bg-opacity-75 z-50">
+            <div className="bg-white p-4 rounded-lg shadow-lg w-full max-w-lg mx-2">
+              <div className="flex justify-between items-center mb-4">
+                <h5 className="text-xl font-bold">{proyectoSeleccionado.nameproject}</h5>
+                <button type="button" className="text-gray-500 hover:text-gray-700" onClick={handleCloseModal}>
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div>
+                <p>{proyectoSeleccionado.description}</p>
               </div>
             </div>
           </div>
@@ -116,7 +114,7 @@ const Main = () => {
         {/* Botón para desplazarse al principio de la página */}
         <button
           onClick={handleScrollToTop}
-          className="fixed top-4 right-4 flex items-center bg-white bg-opacity-50 backdrop-blur-sm border border-black  text-black font-bold py-2 px-2 rounded-full mt-14">
+          className="fixed top-4 right-4 flex items-center bg-white bg-opacity-50 backdrop-blur-sm border border-black text-black font-bold py-2 px-2 rounded-full mt-14">
           <ArrowUpIcon className="h-4 w-4" />
         </button>
 
@@ -130,18 +128,17 @@ const Main = () => {
         <button
           onClick={abrirModal}
           className="fixed bottom-4 left-5 flex items-center bg-custom-rojo bg-opacity-50 backdrop-blur-sm border border-black text-black font-bold py-1.5 px-2 rounded-full mb-7">
-          Contactanos          
+          Contacto          
           <InboxArrowDownIcon className="h-4 w-4 ml-2" />
         </button>
 
         {mostrarModal && (
-        <div className="fixed inset-0 flex items-center justify-center bg-gray-800 bg-opacity-75 z-50">
-          <div className="relative bg-white p-4 rounded-lg shadow-lg max-w-lg mx-auto">
-            <Contacto
-            onClose={() => setMostrarModal(false)} />
+          <div className="fixed inset-0 flex items-center justify-center bg-gray-800 bg-opacity-75 z-50">
+            <div className="bg-white p-4 rounded-lg shadow-lg w-full max-w-lg mx-2">
+              <Contacto onClose={() => setMostrarModal(false)} />
+            </div>
           </div>
-        </div>
-      )}
+        )}
       </div>
     </>
   );
