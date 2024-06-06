@@ -9,7 +9,7 @@ const Colaboradores = ({ proyecto, onClose, onSave }) => {
   useEffect(() => {
     getAllUsers();
     fetchCollaborators(proyecto);
-  }, []); 
+  }, []);
 
   const getAllUsers = async () => {
     try {
@@ -32,7 +32,8 @@ const Colaboradores = ({ proyecto, onClose, onSave }) => {
   };
 
   const fetchCollaborators = async (proyecto) => {
-    try {      
+    try {
+      //mirar este metodo porque no funciona correctamente
       const response = await fetch(`${process.env.REACT_APP_API_DIRECTUS}/Projects/${proyecto.id}`, {
         method: 'GET',
         headers: {
@@ -40,7 +41,7 @@ const Colaboradores = ({ proyecto, onClose, onSave }) => {
           'Content-Type': 'application/json'
         }
       });
-    
+
       if (response.ok) {
         const data = await response.json();
         if (data && data.data && data.data.collaborators) {
@@ -89,7 +90,7 @@ const Colaboradores = ({ proyecto, onClose, onSave }) => {
             >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
-                className="h-3 w-3"
+                className="h-6 w-6"
                 fill="none"
                 viewBox="0 0 24 24"
                 stroke="currentColor"
@@ -139,7 +140,7 @@ const Colaboradores = ({ proyecto, onClose, onSave }) => {
                     {selectedCollaborators.map((collaborator) => (
                       <li key={collaborator.id} className="flex items-center justify-between py-2">
                         <div className="flex items-center space-x-4">
-                        <img
+                          <img
                             src="https://cdn-icons-png.freepik.com/512/64/64572.png"
                             alt="User Avatar"
                             className="w-10 h-10 rounded-full"
@@ -168,16 +169,16 @@ const Colaboradores = ({ proyecto, onClose, onSave }) => {
               <button
                 onClick={handleSaveChanges}
                 className="bg-green-500 hover:bg-green-600 text-white py-2 px-4 rounded-full transition duration-300"
-                >
-                  Guardar Cambios
-                </button>
-              </div>
+              >
+                Guardar Cambios
+              </button>
             </div>
           </div>
-        )}
-      </>
-    );
-  };
-  
-  export default Colaboradores;
-  
+        </div>
+      )}
+    </>
+  );
+};
+
+export default Colaboradores;
+

@@ -75,8 +75,9 @@ const Main = () => {
 
   return (
     <>
-      <Header /><div className="container mx-auto p-8 mt-2">
-        <h1 className="text-3xl font-bold text-gray-800 mb-4">Gestiona tus Proyectos</h1>
+      <Header />
+      <div className="container mx-auto p-8 mt-2">
+        <h1 className="text-3xl font-bold text-gray-800 mb-4 justify-start">Gestiona tus Proyectos</h1>
         <div className="mb-4">
           <button
             onClick={handleCrearProyecto}
@@ -100,7 +101,6 @@ const Main = () => {
                 </div>
                 <div className="modal-body">
                   <p>{proyectoSeleccionado.description}</p>
-                  {/* Agrega más detalles del proyecto aquí si es necesario */}
                 </div>
               </div>
             </div>

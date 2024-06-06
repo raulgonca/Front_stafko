@@ -94,10 +94,10 @@ const Contacto = ({ onClose }) => {
                 name="concernCategory"
                 id="concernCategory"
               >
-                <option value=""> ------ </option>
+                <option value="default"> ------ </option>
                 <option value="info">Información</option>
-                <option value="buy">Error</option>
-                <option value="play tennis">Propuestas</option>
+                <option value="Error">Error</option>
+                <option value="Propuestas">Propuestas</option>
                 <option value="other">Otro</option>
               </select>
             </div>

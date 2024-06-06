@@ -3,13 +3,12 @@ import Colaboradores from '../Colaboradores/Colaboradores';
 import ProyectoEdit from './ProyectoEdit';
 import Clientes from '../Clientes/Clientes';
 import Swal from 'sweetalert2';
-//import Clockify from '../Clockify/Clockify';
 
 const ProyectoDetails = ({ proyecto, onSubmit, onClose }) => {
   const [isColaboradoresModalOpen, setColaboradoresModalOpen] = useState(false);
   const [isClientesModalOpen, setClientesModalOpen] = useState(false);
   const [colaboradores, setColaboradores] = useState(proyecto.colaboradores || []);
-  const [clienteAsignado, setClienteAsignado] = useState(proyecto.clienteNombre|| "");
+  const [clienteAsignado, setClienteAsignado] = useState(proyecto.clienteNombre || "");
   const [proyectoActualizado, setProyectoActualizado] = useState(proyecto);
 
   const openColaboradoresModal = () => setColaboradoresModalOpen(true);
@@ -20,7 +19,7 @@ const ProyectoDetails = ({ proyecto, onSubmit, onClose }) => {
 
   const handleSaveColaboradores = (nuevosColaboradores) => {
     setColaboradores(nuevosColaboradores);
-    setProyectoActualizado((prevProyecto) => ({
+    setProyectoActualizado(prevProyecto => ({
       ...prevProyecto,
       collaborators: nuevosColaboradores,
     }));
@@ -30,7 +29,7 @@ const ProyectoDetails = ({ proyecto, onSubmit, onClose }) => {
   const handleSaveCliente = (nuevoCliente) => {
     const nombreCliente = nuevoCliente.nombre;
     setClienteAsignado(nombreCliente);
-    setProyectoActualizado((prevProyecto) => ({
+    setProyectoActualizado(prevProyecto => ({
       ...prevProyecto,
       cliente: nombreCliente,
     }));
@@ -38,7 +37,7 @@ const ProyectoDetails = ({ proyecto, onSubmit, onClose }) => {
   };
 
   const handleProjectUpdate = (nuevoProyecto) => {
-    setProyectoActualizado((prevProyecto) => ({
+    setProyectoActualizado(prevProyecto => ({
       ...prevProyecto,
       ...nuevoProyecto,
     }));
@@ -54,12 +53,10 @@ const ProyectoDetails = ({ proyecto, onSubmit, onClose }) => {
         collaborators: colaboradoresNombres,
       };
 
-      // Validar el objeto del proyecto antes de enviarlo
       if (!proyectoParaGuardar.id) {
         throw new Error('El ID del proyecto es requerido.');
       }
 
-      // Realizar la solicitud PATCH al servidor
       const response = await fetch(`${process.env.REACT_APP_API_DIRECTUS}/Projects/${proyectoParaGuardar.id}`, {
         method: "PATCH",
         headers: {
@@ -69,7 +66,6 @@ const ProyectoDetails = ({ proyecto, onSubmit, onClose }) => {
         body: JSON.stringify(proyectoParaGuardar),
       });
 
-      // Manejar la respuesta del servidor
       if (response.ok) {
         console.log("Proyecto actualizado correctamente");
         onSubmit(proyectoParaGuardar);
@@ -82,12 +78,7 @@ const ProyectoDetails = ({ proyecto, onSubmit, onClose }) => {
       } else {
         const errorData = await response.json();
         console.error("Error al actualizar el proyecto:", response.statusText, errorData);
-        Swal.fire({
-          title: 'Error',
-          text: `Hubo un error al guardar los cambios: ${response.statusText}`,
-          icon: 'error',
-          confirmButtonText: 'Aceptar'
-        });
+        throw new Error(`Hubo un error al guardar los cambios: ${response.statusText}`);
       }
     } catch (error) {
       console.error("Error al comunicarse con el servidor:", error);
@@ -99,7 +90,6 @@ const ProyectoDetails = ({ proyecto, onSubmit, onClose }) => {
       });
     }
   };
-
 
   const handleDeleteProject = async (e) => {
     e.preventDefault();
@@ -121,12 +111,17 @@ const ProyectoDetails = ({ proyecto, onSubmit, onClose }) => {
       }
     } catch (error) {
       console.error("Error al comunicarse con el servidor:", error);
-      throw new Error('Hubo un error al eliminar el proyecto.');
+      Swal.fire({
+        title: 'Error',
+        text: `Hubo un error al eliminar el proyecto: ${error.message}`,
+        icon: 'error',
+        confirmButtonText: 'Aceptar'
+      });
     }
   };
 
   return (
-    <div className="container mx-auto px-6 py-6 rounded-lg mt-6 mb-6 " style={{ maxWidth: '95vw', maxHeight: '90vh' }}>
+    <div className="container mx-auto px-6 py-6 rounded-lg mt-6 mb-6" style={{ maxWidth: '95vw', maxHeight: '90vh' }}>
       <div className="grid grid-cols-1 md:grid-cols-3 gap-12 mb-6">
         <div className="col-span-1">
           <ProyectoEdit
@@ -140,8 +135,7 @@ const ProyectoDetails = ({ proyecto, onSubmit, onClose }) => {
             <h2 className="text-xl font-bold mb-4"> Colaboradores </h2>
             <button
               onClick={openColaboradoresModal}
-              className="w-full bg-custom-purple text-white
-              font-bold py-2 px-4 rounded mb-4 transition duration-300"
+              className="w-full bg-custom-purple text-white font-bold py-2 px-4 rounded mb-4 transition duration-300"
             >
               Gestionar Colaboradores
             </button>
@@ -163,9 +157,9 @@ const ProyectoDetails = ({ proyecto, onSubmit, onClose }) => {
                     </svg>
                   </button>
                   <Colaboradores 
-                      projectId={proyecto} 
-                      onClose={closeColaboradoresModal} 
-                      onSave={handleSaveColaboradores} />
+                    projectId={proyecto} 
+                    onClose={closeColaboradoresModal} 
+                    onSave={handleSaveColaboradores} />
                 </div>
               </div>
             )}
@@ -237,7 +231,7 @@ const ProyectoDetails = ({ proyecto, onSubmit, onClose }) => {
             </button>
             <button
               onClick={handleDeleteProject}
-              className="bg-red-600 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"
+              className="bg-custom-rojo text-white font-bold py-2 px-4 rounded"
             >
               Eliminar Proyecto
             </button>
@@ -249,3 +243,4 @@ const ProyectoDetails = ({ proyecto, onSubmit, onClose }) => {
 };
 
 export default ProyectoDetails;
+

@@ -20,7 +20,7 @@ const ProjectList = ({ proyectos }) => {
         {proyectos.map((proyecto) => (
           <div
             key={proyecto.id}
-            className="bg-white p-6 rounded-lg shadow-md flex flex-col justify-between border border-custom-orange h-48 w-128"
+            className="bg-custom-plus p-6 rounded-lg shadow-md flex flex-col justify-between border border-custom-orange h-48 w-128"
           >
             <div>
               <h3 className="text-xl font-semibold mb-2">{proyecto.nameproject}</h3>

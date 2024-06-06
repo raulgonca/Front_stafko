@@ -15,9 +15,9 @@ function Header({ handleCancel }) {
         <div className="flex items-center justify-between h-16">
           {/* Logo */}
           <div className="flex-shrink-0">
-            <Link to="/login">
+            <p>
               <img className="h-10 w-auto" src="https://raw.githubusercontent.com/raulgonca/Front_stafko/main/src/Image/logito.svg" alt="Logo" />
-            </Link>
+            </p>
             
           </div>
 

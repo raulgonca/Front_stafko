@@ -1,5 +1,5 @@
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import React, { useState } from 'react';
 import Swal from 'sweetalert2';
 
 const Login = () => {
@@ -8,6 +8,19 @@ const Login = () => {
   const [errorMessage, setErrorMessage] = useState('');
   const navigate = useNavigate();
 
+  useEffect(() => {
+    // Función para deshabilitar el scroll
+    const disableScroll = () => {
+      document.body.style.overflow = 'hidden';
+    };
+    // Llamada a la función cuando el componente se monta
+    disableScroll();
+    // Limpia el efecto al desmontar el componente
+    return () => {
+      document.body.style.overflow = 'unset';
+    };
+  }, []); 
+  
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -23,14 +36,10 @@ const Login = () => {
 
       if (response.ok && data.data.length > 0) {
         const user = data.data[0];
-        console.log('User data:', user.username,' / ', user.gmail);
 
         const storedHashedPassword = user.password;
-        //console.log(storedHashedPassword)
-        //console.log(user.password)
 
         if (storedHashedPassword === user.password) {
-          console.log('Inicio de sesión exitoso');
           localStorage.setItem('directusUser', JSON.stringify(user));
           navigate(`/main/${username}`);
         } else {
@@ -50,14 +59,13 @@ const Login = () => {
     }
   };
 
-
   return (
     <div className="min-h-screen flex items-center justify-center">
-      <div className="max-w-lg w-full bg-white p-8 rounded-lg shadow-lg flex">
-        <div className="w-1/3 pr-4 flex justify-center items-center">
-          <a href="/login">
-            <img className="h-36 w-36 rounded-full" src="https://raw.githubusercontent.com/raulgonca/Front_stafko/main/src/Image/logito.svg" alt="Logo" />
-          </a>
+      <div className="max-w-3xl w-full bg-custom-plus p-8 rounded-lg shadow-lg flex border border-custom-orange">
+        <div className="w-1/3 pr-8 flex justify-center items-center">
+          <a href="/register">
+              <img className="h-50 w-50" src="https://raw.githubusercontent.com/raulgonca/Front_stafko/main/src/Image/logito.png" alt="Logo" />
+            </a>
         </div>
         <div className="w-2/3 pl-4 flex justify-center">
           <div className="w-full">
@@ -70,10 +78,11 @@ const Login = () => {
                   name="username"
                   type="text"
                   autoComplete="username"
-                  required
                   className="input-field appearance-none block w-full text-gray-700 border rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-custom-orange"
                   value={username}
-                  onChange={(e) => setUsername(e.target.value)} />
+                  onChange={(e) => setUsername(e.target.value)}
+                  placeholder='Nombre de usuario'
+                  required />
               </div>
               <div>
                 <label htmlFor="password" className="block text-gray-700">Contraseña</label>
@@ -82,10 +91,12 @@ const Login = () => {
                   name="password"
                   type="password"
                   autoComplete="current-password"
-                  required
                   className="input-field appearance-none block w-full text-gray-700 border rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-custom-orange"
                   value={password}
-                  onChange={(e) => setPassword(e.target.value)} />
+                  onChange={(e) => setPassword(e.target.value)} 
+                  placeholder='Contraseña'
+                  required />
+
               </div>
               <div>
                 <button

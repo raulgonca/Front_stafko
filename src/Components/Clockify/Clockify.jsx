@@ -11,7 +11,7 @@ const Clockify = () => {
             if (!timerActive) {
                 const startTime = new Date().toISOString();
 
-                // Realizar la solicitud para iniciar el temporizador
+                // Realizo la solicitud para iniciar el temporizador
                 const response = await fetch(`${process.env.REACT_APP_CLOCKIFY}/time-entries`, {
                     method: 'POST',
                     headers: {
@@ -52,7 +52,7 @@ const Clockify = () => {
         try {
             if (timerActive && timeEntryId) {
                 const endTime = new Date().toISOString();
-                // Realizar la solicitud para detener el temporizador
+                // Realizo la solicitud para detener el temporizador
                 const response = await fetch(`${process.env.REACT_APP_CLOCKIFY}/time-entries`, {
                     method: 'PATCH',
                     headers: {
