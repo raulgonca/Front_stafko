@@ -23,22 +23,22 @@ Stafko-Gestor de proyectos
 <img src="/Screenshot/Login.png">
 
 ### Main-Proyectos :
-<img src="/Screenshot/MainConBotones.png">
+<img src="/Screenshot/Main.png">
 
 ### Crear-Proyecto :
-<img src="/Screenshot/Create.png">
+<img src="/Screenshot/CreateProject.png">
 
 ### Editar-Proyecto :
-<img src="/Screenshot/Proyecto Details.png">
+<img src="/Screenshot/ProjectEdit.png">
 
 ### Añadir-Colaboradores :
-<img src="/Screenshot/Modal-Colaboradores.png">
+<img src="/Screenshot/Collaborators.png">
 
 ### Añadir-Clientes :
-<img src="/Screenshot/Modal-Clientes.png">
+<img src="/Screenshot/Client.png">
 
 ### Formulario-Contacto :
-<img src="/Screenshot/Contacto-New.png">
+<img src="/Screenshot/Contacto.png">
 
 
 ## Contribución

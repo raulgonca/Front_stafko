@@ -42,15 +42,13 @@ const Colaboradores = ({ proyecto, onClose, onSave }) => {
           'Content-Type': 'application/json'
         }
       });
-  
+
       if (response.ok) {
         const result = await response.json();
         console.log("API Response:", result);
-  
-        // Obtener los colaboradores desde el campo 'data.collaborators'
+
         const collaboratorsStr = result.data.collaborators;
-  
-        // Verificar si 'collaboratorsStr' es una cadena JSON válida
+
         let collaborators;
         try {
           collaborators = JSON.parse(collaboratorsStr);
@@ -59,8 +57,7 @@ const Colaboradores = ({ proyecto, onClose, onSave }) => {
           console.error('Error parsing collaborators:', parseError);
           collaborators = [];
         }
-  
-        // Convertir los nombres de usuario en objetos para mantener consistencia en el estado
+
         const collaboratorsObjects = collaborators.map(username => ({ username }));
         setSelectedCollaborators(collaboratorsObjects);
       } else {
@@ -68,10 +65,10 @@ const Colaboradores = ({ proyecto, onClose, onSave }) => {
       }
     } catch (error) {
       console.error('Error al obtener los colaboradores:', error);
-      setSelectedCollaborators([]); // En caso de error, establece selectedCollaborators como un array vacío
+      setSelectedCollaborators([]);
     }
   };
-  
+
   const handleUserSelect = (user) => {
     setSelectedUsers([...selectedUsers, user]);
     setAllUsers(allUsers.filter((u) => u.id !== user.id));
@@ -117,14 +114,14 @@ const Colaboradores = ({ proyecto, onClose, onSave }) => {
             <h2 className="text-2xl font-bold text-center mb-4">Gestión de Colaboradores</h2>
 
             <div className="flex flex-row">
-              <UserList 
-                users={allUsers} 
-                onUserSelect={handleUserSelect} 
+              <UserList
+                users={allUsers}
+                onUserSelect={handleUserSelect}
               />
 
-              <CollaboratorList 
-                collaborators={selectedCollaborators} 
-                onRemoveUser={handleRemoveUser} 
+              <CollaboratorList
+                collaborators={selectedCollaborators}
+                onRemoveUser={handleRemoveUser}
               />
             </div>
 
