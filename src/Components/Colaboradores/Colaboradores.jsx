@@ -15,7 +15,7 @@ const Colaboradores = ({ proyecto, onClose, onSave }) => {
 
   const getAllUsers = async () => {
     try {
-      const response = await fetch(`${process.env.REACT_APP_API_DIRECTUS}/Users`, {
+      const response = await fetch(`${process.env.REACT_APP_API_DIRECTUS}/users`, {
         method: 'GET',
         headers: {
           'Authorization': `Bearer jMmotYSthQpp8laAI9vzewV-sOfSi6NH`

@@ -60,9 +60,9 @@ function Registro() {
     }
 
     try {
-      const newUser = { username, password, gmail };
-      
-      const response = await fetch(`${process.env.REACT_APP_API_DIRECTUS}/Users`, {
+      const newUser = { first_name:username, password:password, email:gmail, role:"59677e8f-fafc-426a-b61b-daabc2b97788" };
+      //cambiar url
+      const response = await fetch(`${process.env.REACT_APP_API_REGISTER}/users`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

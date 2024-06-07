@@ -121,49 +121,49 @@ const ProyectoDetails = ({ proyecto, onSubmit, onClose }) => {
   };
 
   return (
-    <div className="container mx-auto px-6 py-6 rounded-lg mt-6 mb-6" style={{ maxWidth: '95vw', maxHeight: '90vh' }}>
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-12 mb-6">
-        <div className="col-span-1">
+    <div className="container mx-auto px-4 lg:px-6 py-6 rounded-lg mt-6 mb-6">
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-4 lg:gap-6 mb-6">
+        <div className="col-span-1 md:mr-4">
           <ProyectoEdit
             proyectoInicial={proyectoActualizado}
             onSubmit={handleProjectUpdate}
             onProjectUpdate={handleProjectUpdate}
           />
         </div>
-        <div className="col-span-2 space-y-8">
-          <div className="bg-gray-100 p-6 rounded-lg shadow-md">
-            <h2 className="text-xl font-bold mb-4"> Colaboradores </h2>
-            <button
-              onClick={openColaboradoresModal}
-              className="w-full bg-custom-purple text-white font-bold py-2 px-4 rounded mb-4 transition duration-300"
-            >
-              Gestionar Colaboradores
-            </button>
-            {isColaboradoresModalOpen && (
-              <div className="fixed inset-0 z-50 flex items-center justify-center bg-gray-800 bg-opacity-75">
-                <div className="max-w-xl w-full bg-white rounded-lg shadow-lg p-8 relative">
-                  <button
-                    className="absolute top-4 right-4 text-gray-600 hover:text-gray-800"
-                    onClick={closeColaboradoresModal}
-                  >
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      className="h-6 w-6"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                      stroke="currentColor"
+        <div className="col-span-2 space-y-4 md:space-y-8">
+          <div className="bg-gray-100 p-4 md:p-6 rounded-lg shadow-md">
+            <h2 className="text-xl font-bold mb-2 md:mb-4"> Colaboradores </h2>
+            <div className="overflow-y-auto max-h-40">
+              <button
+                onClick={openColaboradoresModal}
+                className="w-full bg-custom-purple text-white font-bold py-2 px-4 rounded mb-2 md:mb-4 transition duration-300"
+              >
+                Gestionar Colaboradores
+              </button>
+              {isColaboradoresModalOpen && (
+                <div className="fixed inset-0 z-50 flex items-center justify-center bg-gray-800 bg-opacity-75">
+                  <div className="max-w-xl w-full bg-white rounded-lg shadow-lg p-8 relative">
+                    <button
+                      className="absolute top-4 right-4 text-gray-600 hover:text-gray-800"
+                      onClick={closeColaboradoresModal}
                     >
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-                    </svg>
-                  </button>
-                  <Colaboradores 
-                    proyecto={proyecto} 
-                    onClose={closeColaboradoresModal} 
-                    onSave={handleSaveColaboradores} />
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        className="h-6 w-6"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        stroke="currentColor"
+                      >
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                      </svg>
+                    </button>
+                    <Colaboradores
+                      proyecto={proyecto}
+                      onClose={closeColaboradoresModal}
+                      onSave={handleSaveColaboradores} />
+                  </div>
                 </div>
-              </div>
-            )}
-            <div className="max-h-24 overflow-y-auto">
+              )}
               <ul>
                 {colaboradores.map((collaborator, index) => (
                   <li key={index} className="py-2 border-b border-gray-300 text-center">
@@ -173,11 +173,11 @@ const ProyectoDetails = ({ proyecto, onSubmit, onClose }) => {
               </ul>
             </div>
           </div>
-          <div className="bg-gray-100 p-6 rounded-lg shadow-md">
-            <h2 className="text-xl font-bold mb-4">Cliente</h2>
+          <div className="bg-gray-100 p-4 md:p-6 rounded-lg shadow-md">
+            <h2 className="text-xl font-bold mb-2 md:mb-4">Cliente</h2>
             <button
               onClick={openClientesModal}
-              className="w-full bg-custom-bluecito text-white font-bold py-2 px-4 rounded mb-4 transition duration-300"
+              className="w-full bg-custom-bluecito text-white font-bold py-2 px-4 rounded mb-2 md:mb-4 transition duration-300"
             >
               Gestionar Clientes
             </button>
@@ -212,10 +212,10 @@ const ProyectoDetails = ({ proyecto, onSubmit, onClose }) => {
               <p className='text-center'>No hay cliente asignado.</p>
             )}
           </div>
-          <div className="flex justify-center space-x-8">
+          <div className="flex flex-col md:flex-row justify-center md:space-x-4">
             <button
               onClick={handleSubmit}
-              className="bg-custom-orange text-white font-bold py-2 px-4 rounded"
+              className="bg-custom-orange text-white font-bold py-2 px-4 rounded mb-2 md:mb-0"
             >
               Guardar Colaboradores/Clientes
             </button>
@@ -233,3 +233,5 @@ const ProyectoDetails = ({ proyecto, onSubmit, onClose }) => {
 };
 
 export default ProyectoDetails;
+
+                  
