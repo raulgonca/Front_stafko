@@ -46,7 +46,7 @@ const ProyectoDetails = ({ proyecto, onSubmit, onClose }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const colaboradoresNombres = colaboradores.map(colaborador => colaborador.username);
+      const colaboradoresNombres = colaboradores.map(colaborador => colaborador.first_name);
       const proyectoParaGuardar = {
         id: proyectoActualizado.id,
         cliente: clienteAsignado,
@@ -165,9 +165,9 @@ const ProyectoDetails = ({ proyecto, onSubmit, onClose }) => {
                 </div>
               )}
               <ul>
-                {colaboradores.map((collaborator, index) => (
-                  <li key={index} className="py-2 border-b border-gray-300 text-center">
-                    {collaborator.username}
+                {colaboradores.map((collaborator) => (
+                  <li key={collaborator} className="py-2 border-b border-gray-300 text-center">
+                    {collaborator.first_name}
                   </li>
                 ))}
               </ul>

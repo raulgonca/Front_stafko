@@ -15,15 +15,12 @@ const Colaboradores = ({ proyecto, onClose, onSave }) => {
 
   const getAllUsers = async () => {
     try {
-      const response = await fetch(`${process.env.REACT_APP_API_DIRECTUS}/users`, {
+      const response = await fetch(`${process.env.REACT_APP_API_REGISTER}/users`, {
         method: 'GET',
-        headers: {
-          'Authorization': `Bearer jMmotYSthQpp8laAI9vzewV-sOfSi6NH`
-        }
       });
       if (response.ok) {
         const data = await response.json();
-        const filteredUsers = data.data.filter(user => !selectedCollaborators.find(collaborator => collaborator.username === user.username));
+        const filteredUsers = data.data.filter(user => !selectedCollaborators.find(collaborator => collaborator.first_name === user.first_name));
         setAllUsers(filteredUsers);
       } else {
         throw new Error('Error al obtener los usuarios: ' + response.statusText);
@@ -45,20 +42,17 @@ const Colaboradores = ({ proyecto, onClose, onSave }) => {
 
       if (response.ok) {
         const result = await response.json();
-        console.log("API Response:", result);
-
         const collaboratorsStr = result.data.collaborators;
 
         let collaborators;
         try {
           collaborators = JSON.parse(collaboratorsStr);
-          console.log("Parsed collaborators:", collaborators);
         } catch (parseError) {
           console.error('Error parsing collaborators:', parseError);
           collaborators = [];
         }
 
-        const collaboratorsObjects = collaborators.map(username => ({ username }));
+        const collaboratorsObjects = collaborators.map(first_name => ({ first_name }));
         setSelectedCollaborators(collaboratorsObjects);
       } else {
         throw new Error('Error al obtener los colaboradores del proyecto: ' + response.statusText);
@@ -78,12 +72,17 @@ const Colaboradores = ({ proyecto, onClose, onSave }) => {
   const handleRemoveUser = (user) => {
     setSelectedUsers(selectedUsers.filter((u) => u.id !== user.id));
     setAllUsers([...allUsers, user]);
-    setSelectedCollaborators(selectedCollaborators.filter((c) => c.username !== user.username));
+    setSelectedCollaborators(selectedCollaborators.filter((c) => c.first_name !== user.first_name));
   };
 
-  const handleSaveChanges = () => {
-    onSave(selectedCollaborators);
-    setShowModal(false);
+  const handleSaveChanges = async () => {
+    try {
+      await onSave(selectedCollaborators);
+      setShowModal(false);
+    } catch (error) {
+      console.error('Error al guardar los colaboradores:', error);
+      // Manejar el error adecuadamente (mostrar mensaje al usuario, etc.)
+    }
   };
 
   const closeModal = () => {

@@ -14,7 +14,7 @@ const UserList = ({ users, onUserSelect }) => {
                   alt="User Avatar"
                   className="w-10 h-10 rounded-full"
                 />
-                <span className="text-base">{user.username}</span>
+                <span className="text-base">{user.first_name}</span>
               </div>
               <button
                 onClick={() => onUserSelect(user)}

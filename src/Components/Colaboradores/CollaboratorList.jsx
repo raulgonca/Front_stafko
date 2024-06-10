@@ -6,15 +6,15 @@ const CollaboratorList = ({ collaborators, onRemoveUser }) => {
       <h3 className="text-lg font-semibold mb-4 text-center mt-3">Colaboradores Seleccionados:</h3>
       {collaborators.length > 0 ? (
         <ul className="divide-y divide-gray-200">
-          {collaborators.map((collaborator, index) => (
-            <li key={index} className="flex items-center justify-between py-2">
+          {collaborators.map((collaborator) => (
+            <li key={collaborator.first_name} className="flex items-center justify-between py-2">
               <div className="flex items-center space-x-4">
                 <img
                   src="https://cdn-icons-png.freepik.com/512/64/64572.png"
                   alt="User Avatar"
                   className="w-10 h-10 rounded-full"
                 />
-                <span className="text-base font-medium">{collaborator.username}</span>
+                <span className="text-base font-medium">{collaborator.first_name}</span>
               </div>
               <button
                 onClick={() => onRemoveUser(collaborator)}
