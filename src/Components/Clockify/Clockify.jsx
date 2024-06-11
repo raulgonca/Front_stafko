@@ -1,57 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import Swal from 'sweetalert2';
 
-// Function to start a time entry using fetch
-export const startTimeEntry = async (startTime, projectId, description) => {
-    try {
-        const response = await fetch(`${process.env.REACT_APP_CLOCKIFY}/time-entries`, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                'X-Api-Key': process.env.REACT_APP_API_KEY,
-            },
-            body: JSON.stringify({
-                start: startTime,
-                projectId,
-                description,
-            }),
-        });
-
-        if (!response.ok) {
-            throw new Error('Error starting time entry');
-        }
-
-        return await response.json();
-    } catch (error) {
-        console.error('Error starting time entry:', error);
-        throw error;
-    }
-};
-
-// Function to create a project using fetch
-export const createProject = async (projectName) => {
-    try {
-        const response = await fetch(`${process.env.REACT_APP_CLOCKIFY}/projects`, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                'X-Api-Key': process.env.REACT_APP_API_KEY,
-            },
-            body: JSON.stringify({ name: projectName }),
-        });
-
-        if (!response.ok) {
-            const errorData = await response.json();
-            throw new Error(errorData.message || 'Error creating project');
-        }
-
-        return await response.json();
-    } catch (error) {
-        console.error('Error creating project:', error);
-        throw error;
-    }
-};
-
 const Clockify = ({ projectName }) => {
     const [timerActive, setTimerActive] = useState(false);
     const [description, setDescription] = useState('');
@@ -64,12 +13,62 @@ const Clockify = ({ projectName }) => {
         }
     }, [projectName]);
 
+    const startTimeEntry = async (startTime, projectId, description) => {
+        try {
+            const response = await fetch(`${process.env.REACT_APP_CLOCKIFY}/time-entries`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-Api-Key': process.env.REACT_APP_API_KEY,
+                },
+                body: JSON.stringify({
+                    start: startTime,
+                    projectId,
+                    description,
+                }),
+            });
+
+            if (!response.ok) {
+                throw new Error('Error starting time entry');
+            }
+
+            return await response.json();
+        } catch (error) {
+            console.error('Error starting time entry:', error);
+            throw error;
+        }
+    };
+
+    const createProject = async (projectName) => {
+        try {
+            const response = await fetch(`${process.env.REACT_APP_CLOCKIFY}/projects`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-Api-Key': process.env.REACT_APP_API_KEY,
+                },
+                body: JSON.stringify({ name: projectName }),
+            });
+
+            if (!response.ok) {
+                const errorData = await response.json();
+                throw new Error(errorData.message || 'Error creating project');
+            }
+
+            const projectData = await response.json();
+            return projectData.id; // Devolver el ID del proyecto
+        } catch (error) {
+            console.error('Error creating project:', error);
+            throw error;
+        }
+    };
+
     const handleStartTimer = async () => {
         try {
             if (!timerActive && projectName) {
                 if (!projectId) {
-                    const projectData = await createProject(projectName);
-                    setProjectId(projectData.id);
+                    const projectId = await createProject(projectName);
+                    setProjectId(projectId);
                 }
 
                 const startTime = new Date().toISOString();
@@ -154,7 +153,7 @@ const Clockify = ({ projectName }) => {
                     <input
                         type="text"
                         placeholder="Descripción del temporizador"
-                        className="w-full px-3 py-2 border rounded-lg focus:outline-none"
+                        className="w-full px-3py-2 border rounded-lg focus:outline-none"
                         value={description}
                         onChange={(e) => setDescription(e.target.value)}
                     />
